@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
 		03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
+		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
+		03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +30,10 @@
 		03DDF3961917FD1000306788 /* GETConsolidate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GETConsolidate; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
+		03DDF3A21917FD9100306788 /* GETFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrame.cpp; sourceTree = "<group>"; };
+		03DDF3A31917FD9100306788 /* GETFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrame.h; sourceTree = "<group>"; };
+		03DDF3A51918026900306788 /* GETFrameDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrameDataItem.cpp; sourceTree = "<group>"; };
+		03DDF3A61918026900306788 /* GETFrameDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrameDataItem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,10 @@
 		03DDF3981917FD1000306788 /* GETConsolidate */ = {
 			isa = PBXGroup;
 			children = (
+				03DDF3A61918026900306788 /* GETFrameDataItem.h */,
+				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
+				03DDF3A31917FD9100306788 /* GETFrame.h */,
+				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
 				03DDF3991917FD1000306788 /* main.cpp */,
 				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
 			);
@@ -117,6 +127,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
+				03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
