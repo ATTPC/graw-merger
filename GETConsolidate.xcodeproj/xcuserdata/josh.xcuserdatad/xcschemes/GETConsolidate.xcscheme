@@ -62,6 +62,10 @@
             argument = "&quot;/Users/josh/Documents/Data/20140323182024&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/josh/Documents/Data/pads_lookup.csv&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

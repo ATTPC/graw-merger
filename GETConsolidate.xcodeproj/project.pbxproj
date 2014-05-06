@@ -13,6 +13,9 @@
 		03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
 		03DDF3A9191936FA00306788 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */; };
 		03DDF3AB1919380700306788 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3AA1919380700306788 /* libboost_system.dylib */; };
+		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
+		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
+		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +41,12 @@
 		03DDF3A61918026900306788 /* GETFrameDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrameDataItem.h; sourceTree = "<group>"; };
 		03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = /usr/local/lib/libboost_filesystem.dylib; sourceTree = "<absolute>"; };
 		03DDF3AA1919380700306788 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../usr/local/lib/libboost_system.dylib; sourceTree = "<group>"; };
+		03DDF3AC19195A5E00306788 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
+		03DDF3AD19195A5E00306788 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		03DDF3AF19195B6100306788 /* Trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trace.cpp; sourceTree = "<group>"; };
+		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trace.h; sourceTree = "<group>"; };
+		03DDF3B21919621A00306788 /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
+		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PadLookupTable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +85,12 @@
 				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
 				03DDF3A31917FD9100306788 /* GETFrame.h */,
 				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
+				03DDF3AD19195A5E00306788 /* Event.h */,
+				03DDF3AC19195A5E00306788 /* Event.cpp */,
+				03DDF3B31919621A00306788 /* PadLookupTable.h */,
+				03DDF3B21919621A00306788 /* PadLookupTable.cpp */,
+				03DDF3B019195B6100306788 /* Trace.h */,
+				03DDF3AF19195B6100306788 /* Trace.cpp */,
 				03DDF3991917FD1000306788 /* main.cpp */,
 				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
 				03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */,
@@ -135,9 +150,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03DDF3AE19195A5E00306788 /* Event.cpp in Sources */,
 				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
+				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
 				03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,
+				03DDF3B119195B6100306788 /* Trace.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
