@@ -23,7 +23,7 @@ private:
     std::map<int,float> *data;
     
 public:
-    Trace();
+    Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
     
 };
 
