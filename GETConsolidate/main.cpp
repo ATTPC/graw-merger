@@ -17,7 +17,7 @@ int main(int argc, const char * argv[])
     std::ifstream testFile;
     std::vector<uint8_t> *frame_raw;
     
-    testFile.open("/Users/josh/Desktop/sample.graw",std::ios::in|std::ios::binary);
+    testFile.open("/Users/josh/Dropbox/Research/sample.graw",std::ios::in|std::ios::binary);
     if (testFile.good()) {
         std::vector<uint8_t> size_raw;
         uint16_t size;
@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
             size_raw.push_back((uint8_t)temp);
         }
         
-        size = GETFrame::ExtractByteSwapInt16(size_raw.begin(), size_raw.end());
+        size = GETFrame::ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
         std::cout << "Found frame of size " << size << std::endl;
         
         testFile.seekg(-4,std::ios::cur); // rewind to start of frame

@@ -29,7 +29,7 @@ private:
     uint16_t itemSize;
     uint32_t nItems;
     uint32_t eventTime;
-    uint16_t eventId;
+    uint32_t eventId;
     uint8_t coboId;
     uint8_t asadId;
     uint16_t readOffset;
@@ -44,7 +44,8 @@ public:
     GETFrame(std::vector<uint8_t> *rawFrame);
     ~GETFrame();
     
-    static uint16_t ExtractByteSwapInt16(std::vector<uint8_t>::iterator begin,std::vector<uint8_t>::iterator end);
+    template<typename outType>
+    static outType ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,std::vector<uint8_t>::iterator end);
 };
 
 #endif /* defined(__GETConsolidate__GETFrame__) */

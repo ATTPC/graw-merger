@@ -239,6 +239,7 @@
 				03DDF3A11917FD1000306788 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
