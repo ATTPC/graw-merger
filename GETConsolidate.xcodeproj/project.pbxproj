@@ -11,6 +11,8 @@
 		03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
 		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
 		03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
+		03DDF3A9191936FA00306788 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */; };
+		03DDF3AB1919380700306788 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3AA1919380700306788 /* libboost_system.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +36,8 @@
 		03DDF3A31917FD9100306788 /* GETFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrame.h; sourceTree = "<group>"; };
 		03DDF3A51918026900306788 /* GETFrameDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrameDataItem.cpp; sourceTree = "<group>"; };
 		03DDF3A61918026900306788 /* GETFrameDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrameDataItem.h; sourceTree = "<group>"; };
+		03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = /usr/local/lib/libboost_filesystem.dylib; sourceTree = "<absolute>"; };
+		03DDF3AA1919380700306788 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../usr/local/lib/libboost_system.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03DDF3A9191936FA00306788 /* libboost_filesystem.dylib in Frameworks */,
+				03DDF3AB1919380700306788 /* libboost_system.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +78,8 @@
 				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
 				03DDF3991917FD1000306788 /* main.cpp */,
 				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
+				03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */,
+				03DDF3AA1919380700306788 /* libboost_system.dylib */,
 			);
 			path = GETConsolidate;
 			sourceTree = "<group>";
@@ -209,6 +217,13 @@
 		03DDF3A01917FD1000306788 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -216,6 +231,13 @@
 		03DDF3A11917FD1000306788 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
