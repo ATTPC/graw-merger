@@ -94,6 +94,30 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
         rawFrameIter++;
     }
     
+    // Extract data items
+    auto dataBegin = rawFrame->begin() + headerSize*64;
+
+    data = new std::vector<GETFrameDataItem*>;
     
-    
+    for (rawFrameIter = dataBegin; rawFrameIter != rawFrame->end(); rawFrameIter+=4) {
+        uint32_t item = ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
+//        std::cout << std::hex << item << std::dec << std::endl;
+        
+        uint8_t aget    =         (item & 0xC0000000)>>30;
+        uint8_t channel =         (item & 0x3F800000)>>22;
+        uint16_t tbid   =         (item & 0x007FC000)>>14;
+        float sample    = (float) (item & 0x00000FFF);
+        
+        GETFrameDataItem* dataItem = new GETFrameDataItem(aget,channel,tbid,sample);
+        data->push_back(dataItem);
+        dataItem = NULL;
+    }
+}
+
+GETFrame::~GETFrame()
+{
+    for (auto item : *data) {
+        delete item;
+    }
+    delete data;
 }

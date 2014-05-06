@@ -48,6 +48,10 @@ int main(int argc, const char * argv[])
         GETFrame *frame = new GETFrame(frame_raw);
         
         testFile.close();
+        
+        std::cout << "Done" << std::endl;
+        delete frame;
+        delete frame_raw;
     }
     else {
         std::cout << "Bad file." << std::endl;
