@@ -18,6 +18,9 @@ class GETFrameDataItem;
 
 class GETFrame
 {
+    // Friends
+    friend class Event;
+
 private:
     // Header fields
     uint8_t metaType; // set to 0x6

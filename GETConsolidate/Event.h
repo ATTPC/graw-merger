@@ -11,11 +11,31 @@
 
 #include <iostream>
 #include <vector>
+#include "GETFrame.h"
+#include "GETFrameDataItem.h"
+#include "Trace.h"
+#include "PadLookupTable.h"
+#include <map>
 
 class Event
 {
 private:
-
+    // Lookup table pointer and hash functions
+    PadLookupTable *lookupTable;
+    int CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
+    
+    // Event Header fields
+    
+    // Traces for each pad
+    std::map<int,Trace*> *traces;
+    
+    
+public:
+    Event();
+    ~Event();
+    
+    void SetLookupTable(PadLookupTable* table);
+    void AppendFrame(GETFrame* frame);
 };
 
 #endif /* defined(__GETConsolidate__Event__) */

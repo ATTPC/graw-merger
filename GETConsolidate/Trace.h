@@ -10,21 +10,25 @@
 #define __GETConsolidate__Trace__
 
 #include <iostream>
-#include <map>
+#include <array>
 
 class Trace
 {
 private:
+    static const int nTimeBuckets = 512;
+    
     uint8_t coboId;
     uint8_t asadId;
     uint8_t agetId;
     uint8_t channel;
     uint16_t padId;
-    std::map<int,float> *data;
+    std::array<float,nTimeBuckets> *data;
     
 public:
     Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
+    ~Trace();
     
+    void AppendSample(int tBucket, float sample);
 };
 
 #endif /* defined(__GETConsolidate__Trace__) */
