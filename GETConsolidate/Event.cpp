@@ -76,3 +76,13 @@ Event::~Event()
     // Event class should not own the lookup table, so it shouldn't have to
     // delete the table when it is destroyed.
 }
+
+std::ostream& operator<<(std::ostream& stream, const Event& event)
+{
+    for (auto item : *(event.traces))
+    {
+        stream << *(item.second);
+    }
+
+    return stream;
+}

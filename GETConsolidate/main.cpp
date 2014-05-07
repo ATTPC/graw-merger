@@ -11,6 +11,9 @@
 #include <boost/filesystem.hpp>
 #include "GETFrame.h"
 #include "PadLookupTable.h"
+#include "Event.h"
+
+long int gTotalSize = 0;
 
 std::vector<boost::filesystem::path*>* FindFilesInEventDir(boost::filesystem::path eventRoot)
 {
@@ -27,7 +30,7 @@ std::vector<boost::filesystem::path*>* FindFilesInEventDir(boost::filesystem::pa
                     std::cout << "Entering directory: " << (*dirIter).path().string() << std::endl;
                 }
                 else if (is_regular_file(dirIter->path()) && (*dirIter).path().extension() == ".graw") {
-                    std::cout << "Found file: " << (*dirIter).path().filename().string() << std::endl;
+                    std::cout << "    Found file: " << (*dirIter).path().filename().string() << std::endl;
                     boost::filesystem::path *file = new boost::filesystem::path (dirIter->path());
                     filesFound->push_back(file);
                 }
@@ -37,6 +40,8 @@ std::vector<boost::filesystem::path*>* FindFilesInEventDir(boost::filesystem::pa
     catch (const boost::filesystem::filesystem_error& ex) {
                 std::cout << ex.what() << std::endl;
     }
+    
+    std::cout << "Found " << filesFound->size() << " GRAW files." << std::endl;
     
     return filesFound;
 }
@@ -57,6 +62,7 @@ std::vector<uint8_t>* GetRawFrame(std::ifstream* file)
     
     size = GETFrame::ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
     std::cout << "Found frame of size " << size << std::endl;
+    gTotalSize += size;
     
     file->seekg(-4,std::ios::cur); // rewind to start of frame
     
@@ -114,7 +120,44 @@ int main(int argc, const char * argv[])
         frames->push_back(frame);
     }
     
+    // Create an event
     
+    Event* testEvent = new Event();
+    testEvent->SetLookupTable(lookupTable);
+    
+    for (auto frame : *frames) {
+        testEvent->AppendFrame(frame);
+        std::cout << "Appended frame." << std::endl;
+    }
+    
+    std::ofstream output ("/Users/josh/Desktop/output.bin", std::ios::out|std::ios::binary);
+    
+    if (output.good())
+    {
+        output << *testEvent << std::flush;
+        output.close();
+    }
+    else {
+        std::cout << "Bad output file." << std::endl;
+    }
+    
+    delete testEvent;
+    delete lookupTable;
+    
+    for (auto fileStream : fileStreams) {
+        fileStream->close();
+        delete fileStream;
+    }
+    
+    for (auto item : *files) {
+        delete item;
+    }
+    delete files;
+    
+    for (auto item : *frames) {
+        delete item;
+    }
+    delete frames;
     
     return 0;
 }

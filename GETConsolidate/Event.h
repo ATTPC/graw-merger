@@ -36,6 +36,8 @@ public:
     
     void SetLookupTable(PadLookupTable* table);
     void AppendFrame(GETFrame* frame);
+    
+    friend std::ostream& operator<<(std::ostream& stream, const Event& event);
 };
 
 #endif /* defined(__GETConsolidate__Event__) */

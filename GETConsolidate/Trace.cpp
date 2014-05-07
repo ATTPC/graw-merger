@@ -12,8 +12,7 @@
 Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 : coboId(cobo), asadId(asad), agetId(aget), channel(ch), padId(pad)
 {
-    data = new std::array<float,nTimeBuckets>;
-    data->fill(0);
+    data = new std::map<uint16_t,float>;
 }
 
 Trace::~Trace()
@@ -23,10 +22,27 @@ Trace::~Trace()
 
 void Trace::AppendSample(int tBucket, float sample)
 {
-    try {
-        data->at(tBucket) = sample;
+    data->emplace(tBucket, sample);
+}
+
+std::ostream& operator<<(std::ostream& stream, const Trace& trace)
+{
+    stream.write((char*) &(trace.coboId), sizeof(trace.coboId));
+    stream.write((char*) &(trace.asadId), sizeof(trace.asadId));
+    stream.write((char*) &(trace.agetId), sizeof(trace.agetId));
+    stream.write((char*) &(trace.channel), sizeof(trace.channel));
+    stream.write((char*) &(trace.padId), sizeof(trace.padId));
+    
+    // Number of time buckets
+    
+    uint16_t nTimeBuckets = trace.data->size();
+    stream.write((char*) &nTimeBuckets, sizeof(nTimeBuckets));
+    
+    for (auto item : *(trace.data))
+    {
+        stream.write((char*) &(item.first), sizeof(item.first));
+        stream.write((char*) &(item.second), sizeof(item.second));
     }
-    catch (const std::out_of_range& range_err) {
-        std::cout << "Out of Range Error in Trace::AppendSample: " << range_err.what() << std::endl;
-    }
+
+    return stream;
 }
