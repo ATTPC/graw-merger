@@ -25,10 +25,12 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
 {
     auto rawFrameIter = rawFrame->begin();
     
+    std::cout << "Parsing raw frame." << std::endl;
+    
     metaType = *rawFrameIter;
     rawFrameIter++;
     if (metaType != 6) {
-        std::cout << "Wrong metaType " << metaType << ", should be 6." << std::endl;
+        std::cout << "    Wrong metaType " << metaType << ", should be 6." << std::endl;
     }
     
     frameSize = ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter + 3);
@@ -46,21 +48,21 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
     headerSize = ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
     if (headerSize != 4) {
-        std::cout << "Wrong headerSize " << headerSize << ", should be 4. Correcting." << std::endl;
+        std::cout << "    Wrong headerSize " << headerSize << ", should be 4. Correcting." << std::endl;
         headerSize = 4;
     }
     
     itemSize = ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
     if (itemSize != 4) {
-        std::cout << "Wrong itemSize " << itemSize << ", should be 4. Correcting." << std::endl;
+        std::cout << "    Wrong itemSize " << itemSize << ", should be 4. Correcting." << std::endl;
         itemSize = 4;
     }
     
     nItems = ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
     rawFrameIter += 4;
     if (frameSize*64 != nItems*itemSize + headerSize*64) {
-        std::cout << "Mismatched frameSize. Correcting nItems." << std::endl;
+        std::cout << "    Mismatched frameSize. Correcting nItems." << std::endl;
         nItems = (frameSize*64 - headerSize*64)/4;
     }
     
@@ -75,6 +77,8 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
     
     asadId = *rawFrameIter;
     rawFrameIter++;
+    
+    std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
     
     readOffset = ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter+2;

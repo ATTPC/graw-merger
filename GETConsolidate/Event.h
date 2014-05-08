@@ -26,6 +26,9 @@ private:
     
     // Event Header fields
     
+    uint32_t eventId = 0;
+    uint32_t eventTime = 0;
+    
     // Traces for each pad
     std::map<int,Trace*> *traces;
     

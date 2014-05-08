@@ -36,8 +36,22 @@ void Event::AppendFrame(GETFrame *frame)
     
     // Get header information from frame
     
-    auto cobo = frame->coboId;
-    auto asad = frame->asadId;
+    uint8_t cobo = frame->coboId;
+    uint8_t asad = frame->asadId;
+    
+    if (this->eventId == 0) {
+        this->eventId = frame->eventId;
+    }
+    else if (this->eventId != frame->eventId) {
+        std::cout << "Appended frame's event ID doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+    }
+    
+    if (this->eventTime == 0) {
+        this->eventTime = frame->eventTime;
+    }
+    else if (this->eventTime != frame->eventTime) {
+        std::cout << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+    }
     
     // Extract data items and create traces for them
     
@@ -79,6 +93,12 @@ Event::~Event()
 
 std::ostream& operator<<(std::ostream& stream, const Event& event)
 {
+    uint32_t nTraces = (uint32_t) event.traces->size(); // loses precision
+    
+    stream.write((char*) &event.eventId, sizeof(event.eventId));
+    stream.write((char*) &event.eventTime, sizeof(event.eventTime));
+    stream.write((char*) &nTraces, sizeof(nTraces));
+    
     for (auto item : *(event.traces))
     {
         stream << *(item.second);
