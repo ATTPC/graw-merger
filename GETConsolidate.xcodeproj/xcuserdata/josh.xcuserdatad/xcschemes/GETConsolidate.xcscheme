@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "03AB4099191C269F0021ABD4"
+               BuildableName = "GETConsolidate Tests.xctest"
+               BlueprintName = "GETConsolidate Tests"
+               ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

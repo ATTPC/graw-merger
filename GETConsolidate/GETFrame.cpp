@@ -116,6 +116,8 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
         data->push_back(dataItem);
         dataItem = NULL;
     }
+    
+    delete rawFrame;
 }
 
 GETFrame::~GETFrame()

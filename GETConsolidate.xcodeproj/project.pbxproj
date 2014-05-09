@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
+		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
+		03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
+		03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
+		03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
+		03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
+		03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
+		03AB40B3191D0D950021ABD4 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
+		03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
+		03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */; };
+		03AB40B7191D26D10021ABD4 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */; };
+		03AB40B8191D26D40021ABD4 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3AA1919380700306788 /* libboost_system.dylib */; };
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
 		03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
 		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
@@ -17,6 +29,16 @@
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03AB40A7191C269F0021ABD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03DDF38E1917FD0F00306788 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03DDF3951917FD1000306788;
+			remoteInfo = GETConsolidate;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		03DDF3941917FD1000306788 /* CopyFiles */ = {
@@ -32,6 +54,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GETConsolidate Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GETConsolidate Tests-Info.plist"; sourceTree = "<group>"; };
+		03AB40A2191C269F0021ABD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		03AB40A6191C269F0021ABD4 /* GETConsolidate Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GETConsolidate Tests-Prefix.pch"; sourceTree = "<group>"; };
+		03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETDataFile.cpp; sourceTree = "<group>"; };
+		03AB40B2191D0D950021ABD4 /* GETDataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETDataFile.h; sourceTree = "<group>"; };
+		03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETDataFileTests.mm; sourceTree = "<group>"; };
 		03DDF3961917FD1000306788 /* GETConsolidate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GETConsolidate; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
@@ -50,6 +80,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		03AB4097191C269F0021ABD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */,
+				03AB40B7191D26D10021ABD4 /* libboost_filesystem.dylib in Frameworks */,
+				03AB40B8191D26D40021ABD4 /* libboost_system.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03DDF3931917FD1000306788 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -62,10 +102,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03AB409B191C269F0021ABD4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03AB409C191C269F0021ABD4 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		03AB409E191C269F0021ABD4 /* GETConsolidate Tests */ = {
+			isa = PBXGroup;
+			children = (
+				03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */,
+				03AB409F191C269F0021ABD4 /* Supporting Files */,
+			);
+			path = "GETConsolidate Tests";
+			sourceTree = "<group>";
+		};
+		03AB409F191C269F0021ABD4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */,
+				03AB40A1191C269F0021ABD4 /* InfoPlist.strings */,
+				03AB40A6191C269F0021ABD4 /* GETConsolidate Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		03DDF38D1917FD0F00306788 = {
 			isa = PBXGroup;
 			children = (
 				03DDF3981917FD1000306788 /* GETConsolidate */,
+				03AB409E191C269F0021ABD4 /* GETConsolidate Tests */,
+				03AB409B191C269F0021ABD4 /* Frameworks */,
 				03DDF3971917FD1000306788 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				03DDF3961917FD1000306788 /* GETConsolidate */,
+				03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,6 +151,8 @@
 		03DDF3981917FD1000306788 /* GETConsolidate */ = {
 			isa = PBXGroup;
 			children = (
+				03AB40B2191D0D950021ABD4 /* GETDataFile.h */,
+				03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */,
 				03DDF3A61918026900306788 /* GETFrameDataItem.h */,
 				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
 				03DDF3A31917FD9100306788 /* GETFrame.h */,
@@ -102,6 +174,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		03AB4099191C269F0021ABD4 /* GETConsolidate Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03AB40A9191C269F0021ABD4 /* Build configuration list for PBXNativeTarget "GETConsolidate Tests" */;
+			buildPhases = (
+				03AB4096191C269F0021ABD4 /* Sources */,
+				03AB4097191C269F0021ABD4 /* Frameworks */,
+				03AB4098191C269F0021ABD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03AB40A8191C269F0021ABD4 /* PBXTargetDependency */,
+			);
+			name = "GETConsolidate Tests";
+			productName = "GETConsolidate Tests";
+			productReference = 03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		03DDF3951917FD1000306788 /* GETConsolidate */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03DDF39F1917FD1000306788 /* Build configuration list for PBXNativeTarget "GETConsolidate" */;
@@ -127,6 +217,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = NSCL;
+				TargetAttributes = {
+					03AB4099191C269F0021ABD4 = {
+						TestTargetID = 03DDF3951917FD1000306788;
+					};
+				};
 			};
 			buildConfigurationList = 03DDF3911917FD0F00306788 /* Build configuration list for PBXProject "GETConsolidate" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -141,15 +236,42 @@
 			projectRoot = "";
 			targets = (
 				03DDF3951917FD1000306788 /* GETConsolidate */,
+				03AB4099191C269F0021ABD4 /* GETConsolidate Tests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		03AB4098191C269F0021ABD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		03AB4096191C269F0021ABD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */,
+				03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */,
+				03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */,
+				03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */,
+				03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */,
+				03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */,
+				03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03DDF3921917FD1000306788 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03AB40B3191D0D950021ABD4 /* GETDataFile.cpp in Sources */,
 				03DDF3AE19195A5E00306788 /* Event.cpp in Sources */,
 				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
 				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
@@ -161,7 +283,72 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		03AB40A8191C269F0021ABD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03DDF3951917FD1000306788 /* GETConsolidate */;
+			targetProxy = 03AB40A7191C269F0021ABD4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		03AB40A1191C269F0021ABD4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03AB40A2191C269F0021ABD4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		03AB40AA191C269F0021ABD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GETConsolidate Tests/GETConsolidate Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				INFOPLIST_FILE = "GETConsolidate Tests/GETConsolidate Tests-Info.plist";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		03AB40AB191C269F0021ABD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GETConsolidate Tests/GETConsolidate Tests-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				INFOPLIST_FILE = "GETConsolidate Tests/GETConsolidate Tests-Info.plist";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		03DDF39D1917FD1000306788 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -263,6 +450,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		03AB40A9191C269F0021ABD4 /* Build configuration list for PBXNativeTarget "GETConsolidate Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03AB40AA191C269F0021ABD4 /* Debug */,
+				03AB40AB191C269F0021ABD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		03DDF3911917FD0F00306788 /* Build configuration list for PBXProject "GETConsolidate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
