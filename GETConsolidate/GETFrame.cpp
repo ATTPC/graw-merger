@@ -21,7 +21,7 @@ outType GETFrame::ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,
     return result;
 }
 
-GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
+GETFrame::GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t file_asad)
 {
     auto rawFrameIter = rawFrame->begin();
     
@@ -75,10 +75,20 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame)
     coboId = *rawFrameIter;
     rawFrameIter++;
     
+    if (coboId != file_cobo) {
+        std::cout << "    CoBo ID in file does not match CoBo ID in path. Using path value." << std::endl;
+        coboId = file_cobo;
+    }
+    
     asadId = *rawFrameIter;
     rawFrameIter++;
     
     std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
+    
+    if (asadId != file_asad) {
+        std::cout << "    AsAd ID in file does not match AsAd ID in path. Using path value." << std::endl;
+        asadId = file_asad;
+    }
     
     readOffset = ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter+2;

@@ -49,10 +49,10 @@ GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
     
     std::string mmnStr = filePath.parent_path().string();
     
-    coboId = (uint8_t) *(mmnStr.end()-1); // Last character
+    coboId = std::stoi(&mmnStr.back()); // Last character
     
     std::string filename = filePath.filename().string();
-    asadId = filename.at(filename.find("AsAd") + 4);
+    asadId = filename.at(filename.find("AsAd") + 4) - '0'; // this is kludgy
     
     // Open file pointer
     
@@ -106,4 +106,14 @@ std::vector<uint8_t>* GETDataFile::GetNextRawFrame()
     
     return frame_raw;
     // Leaves file pointer at end of frame. This assumes the frame size is correct.
+}
+
+uint8_t GETDataFile::GetFileCobo()
+{
+    return coboId;
+}
+
+uint8_t GETDataFile::GetFileAsad()
+{
+    return asadId;
 }

@@ -16,6 +16,8 @@
 #include <exception>
 #include <string>
 
+#include "GETFrame.h"
+
 class GETDataFile
 {
 private:
@@ -27,13 +29,15 @@ private:
     
     template<typename outType>
     outType ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin, std::vector<uint8_t>::iterator end);
-    
 
 public:
     GETDataFile(const boost::filesystem::path& filePath_in);
     ~GETDataFile();
     
     std::vector<uint8_t>* GetNextRawFrame();
+    
+    uint8_t GetFileCobo ();
+    uint8_t GetFileAsad ();
 };
 
 #endif /* defined(__GETConsolidate__GETDataFile__) */

@@ -117,7 +117,7 @@ int main(int argc, const char * argv[])
             GETDataFile* currentFile = dataFiles_inbox.front();
             dataFiles_inbox.pop();
             try {
-                GETFrame *frame = new GETFrame(currentFile->GetNextRawFrame());
+                GETFrame *frame = new GETFrame(currentFile->GetNextRawFrame(),currentFile->GetFileCobo(),currentFile->GetFileAsad());
                 frames->push_back(frame);
                 dataFiles_outbox.push(currentFile);
             }

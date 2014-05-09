@@ -44,7 +44,7 @@ private:
     std::vector<GETFrameDataItem*> *data;
     
 public:
-    GETFrame(std::vector<uint8_t> *rawFrame);
+    GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t file_asad);
     ~GETFrame();
     
     template<typename outType>
