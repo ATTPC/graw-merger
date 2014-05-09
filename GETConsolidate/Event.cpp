@@ -96,7 +96,7 @@ uint32_t Event::Size() const
     // Size depends on what is written to disk. This is defined by
     // the stream insertion operator.
     
-    uint32_t size = sizeof("EVT") + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime);
+    uint32_t size = sizeof("EVT") + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime) + sizeof(uint16_t);
     for (auto item : *traces) {
         size += item.second->Size();
     }
@@ -112,6 +112,9 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
     stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
     stream.write((char*) &event.eventId, sizeof(event.eventId));
     stream.write((char*) &event.eventTime, sizeof(event.eventTime));
+    
+    uint16_t nTraces = (uint16_t) event.traces->size();
+    stream.write((char*) &nTraces, sizeof(nTraces));
     
     for (auto item : *(event.traces))
     {
