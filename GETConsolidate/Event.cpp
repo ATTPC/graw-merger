@@ -91,13 +91,27 @@ Event::~Event()
     // delete the table when it is destroyed.
 }
 
+uint32_t Event::Size() const
+{
+    // Size depends on what is written to disk. This is defined by
+    // the stream insertion operator.
+    
+    uint32_t size = sizeof("EVT") + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime);
+    for (auto item : *traces) {
+        size += item.second->Size();
+    }
+    return size;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Event& event)
 {
-    uint32_t nTraces = (uint32_t) event.traces->size(); // loses precision
+    uint32_t sizeOfEvent = event.Size();
     
+    stream.write("EVT", sizeof("EVT"));
+    
+    stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
     stream.write((char*) &event.eventId, sizeof(event.eventId));
     stream.write((char*) &event.eventTime, sizeof(event.eventTime));
-    stream.write((char*) &nTraces, sizeof(nTraces));
     
     for (auto item : *(event.traces))
     {

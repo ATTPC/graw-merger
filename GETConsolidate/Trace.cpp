@@ -25,6 +25,14 @@ void Trace::AppendSample(int tBucket, float sample)
     data->emplace(tBucket, sample);
 }
 
+uint32_t Trace::Size()
+{
+    // Size depends on what is recorded. This is set in the
+    // stream insertion operator for the trace.
+    uint32_t size = sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + sizeof(uint16_t) + uint32_t(data->size())*(sizeof(uint16_t)+sizeof(float));
+    return size;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Trace& trace)
 {
     stream.write((char*) &(trace.coboId), sizeof(trace.coboId));

@@ -32,6 +32,8 @@ private:
     // Traces for each pad
     std::map<int,Trace*> *traces;
     
+    friend class EventFile;
+    
     
 public:
     Event();
@@ -39,6 +41,7 @@ public:
     
     void SetLookupTable(PadLookupTable* table);
     void AppendFrame(GETFrame* frame);
+    uint32_t Size() const;
     
     friend std::ostream& operator<<(std::ostream& stream, const Event& event);
 };

@@ -29,6 +29,8 @@ public:
     
     void AppendSample(int tBucket, float sample);
     
+    uint32_t Size();
+    
     friend std::ostream& operator<<(std::ostream& stream, const Trace& trace);
 };
 

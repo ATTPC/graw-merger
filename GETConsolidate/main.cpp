@@ -13,6 +13,7 @@
 #include "PadLookupTable.h"
 #include "Event.h"
 #include "GETDataFile.h"
+#include "EventFile.h"
 #include <exception>
 #include <queue>
 
@@ -102,7 +103,10 @@ int main(int argc, const char * argv[])
     
     // Open the output file
     
-    std::ofstream output ("/Users/josh/Desktop/output.bin", std::ios::out|std::ios::binary);
+//    std::ofstream output ("/Users/josh/Desktop/output.bin", std::ios::out|std::ios::binary);
+    
+    EventFile output;
+    output.OpenFileForWrite("/Users/josh/Desktop/output.bin");
     
     // Main loop
     
@@ -151,19 +155,14 @@ int main(int argc, const char * argv[])
         
         // Write the event to the output file.
 
-        if (output.good())
-        {
-            output << *testEvent << std::flush;
-        }
-        else {
-            std::cout << "Bad output file." << std::endl;
-        }
+        output.WriteEvent(testEvent);
         
         // Now throw out the event.
         
         delete testEvent;
     }
     
+    output.CloseFile();
     
     delete lookupTable;
     
