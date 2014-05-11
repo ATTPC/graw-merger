@@ -143,7 +143,7 @@ int main(int argc, const char * argv[])
         
         for (auto frame : *frames) {
             testEvent->AppendFrame(frame);
-            std::cout << "Appended frame." << std::endl;
+            //std::cout << "Appended frame." << std::endl;
         }
         
         // Now we're done with these frames, so delete them.
