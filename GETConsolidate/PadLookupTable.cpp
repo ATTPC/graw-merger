@@ -17,10 +17,10 @@ uint32_t PadLookupTable::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget,
 
 uint16_t PadLookupTable::FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
 {
-    if (table != NULL) {
+    if (!table.empty()) {
         uint16_t hash = CalculateHash(cobo, asad, aget, channel);
-        auto foundItem = table->find(hash);
-        if (foundItem != table->end()) {
+        auto foundItem = table.find(hash);
+        if (foundItem != table.end()) {
             return foundItem->second;
         }
         else {
@@ -29,52 +29,45 @@ uint16_t PadLookupTable::FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget,
     }
     else {
         std::cout << "Error: attempted to access lookup table before it was initialized!" << std::endl;
-        return -1;
+        return 0;
     }
 }
 
-PadLookupTable::PadLookupTable(std::ifstream& file)
+PadLookupTable::PadLookupTable(const std::string& path)
 {
+    std::ifstream file (path, std::ios::in|std::ios::binary);
+    
     // MUST throw out the first two junk lines in file. No headers!
-    if (file.good()) {
-        std::string line;
+    
+    if (!file.good()) throw 0; // FIX THIS!
         
-        table = new std::map<uint32_t,uint16_t>;
+    std::string line;
         
-        while (!file.eof()) {
-            int cobo, asad, aget, channel;
-            int padNumber;
-            getline(file,line,'\n'); // PROBLEM: Igor outputs \r
-            std::stringstream lineStream(line);
-            std::string element;
-            
-            getline(lineStream, element,',');
-            if (element == "-1" || element == "") continue; // KLUDGE!
-            cobo = stoi(element);
-            
-            getline(lineStream, element,',');
-            asad = stoi(element);
-            
-            getline(lineStream, element,',');
-            aget = stoi(element);
-            
-            getline(lineStream, element,',');
-            channel = stoi(element);
-            
-            uint32_t hash = CalculateHash(cobo, asad, aget, channel);
-            
-            getline(lineStream, element);
-            padNumber = stoi(element);
-            
-            table->emplace(hash, padNumber);
-        }
+    while (!file.eof()) {
+        int cobo, asad, aget, channel;
+        int padNumber;
+        getline(file,line,'\n'); // PROBLEM: Igor outputs \r
+        std::stringstream lineStream(line);
+        std::string element;
+        
+        getline(lineStream, element,',');
+        if (element == "-1" || element == "") continue; // KLUDGE!
+        cobo = stoi(element);
+        
+        getline(lineStream, element,',');
+        asad = stoi(element);
+        
+        getline(lineStream, element,',');
+        aget = stoi(element);
+        
+        getline(lineStream, element,',');
+        channel = stoi(element);
+        
+        uint32_t hash = CalculateHash(cobo, asad, aget, channel);
+        
+        getline(lineStream, element);
+        padNumber = stoi(element);
+        
+        table.emplace(hash, padNumber);
     }
-    else {
-        std::cout << "PadLookupTable received bad file." << std::endl;
-    }
-}
-
-PadLookupTable::~PadLookupTable()
-{
-    delete table;
 }

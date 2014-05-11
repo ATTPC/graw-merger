@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "GETFrameDataItem.h"
+#include "GETDataFile.h"
 
 class GETFrameDataItem;
 
@@ -41,14 +42,15 @@ private:
     uint16_t multiplicity[4];
     
     // Data items
-    std::vector<GETFrameDataItem*> *data;
+    std::vector<GETFrameDataItem> data;
     
-public:
-    GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t file_asad);
-    ~GETFrame();
+    // Private functions
     
     template<typename outType>
-    static outType ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,std::vector<uint8_t>::iterator end);
+    outType ExtractByteSwappedInt(std::vector<uint8_t>::const_iterator begin,std::vector<uint8_t>::const_iterator end);
+    
+public:
+    GETFrame(GETDataFile& file);
 };
 
 #endif /* defined(__GETConsolidate__GETFrame__) */

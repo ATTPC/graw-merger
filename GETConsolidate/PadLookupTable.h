@@ -18,11 +18,10 @@ class PadLookupTable
 private:
     uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
-    std::map<uint32_t,uint16_t> *table;
+    std::map<uint32_t,uint16_t> table;
     
 public:
-    PadLookupTable(std::ifstream& file);
-    ~PadLookupTable();
+    PadLookupTable(const std::string& path);
     
     uint16_t FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
 };

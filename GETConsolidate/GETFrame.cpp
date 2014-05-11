@@ -9,8 +9,8 @@
 #include "GETFrame.h"
 
 template<typename outType>
-outType GETFrame::ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,
-                              std::vector<uint8_t>::iterator end)
+outType GETFrame::ExtractByteSwappedInt(std::vector<uint8_t>::const_iterator begin,
+                              std::vector<uint8_t>::const_iterator end)
 {
     outType result = 0;
     int n = 0;
@@ -21,9 +21,10 @@ outType GETFrame::ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,
     return result;
 }
 
-GETFrame::GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t file_asad)
+GETFrame::GETFrame(GETDataFile& file)
 {
-    auto rawFrameIter = rawFrame->begin();
+    auto rawFrame = file.GetNextRawFrame();
+    auto rawFrameIter = rawFrame.begin();
     
     std::cout << "Parsing raw frame." << std::endl;
     
@@ -75,9 +76,9 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t fi
     coboId = *rawFrameIter;
     rawFrameIter++;
     
-    if (coboId != file_cobo) {
+    if (coboId != file.GetFileCobo()) {
         std::cout << "    CoBo ID in file does not match CoBo ID in path. Using path value." << std::endl;
-        coboId = file_cobo;
+        coboId = file.GetFileCobo();
     }
     
     asadId = *rawFrameIter;
@@ -85,9 +86,9 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t fi
     
     std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
     
-    if (asadId != file_asad) {
+    if (asadId != file.GetFileAsad()) {
         std::cout << "    AsAd ID in file does not match AsAd ID in path. Using path value." << std::endl;
-        asadId = file_asad;
+        asadId = file.GetFileAsad();
     }
     
     readOffset = ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
@@ -109,11 +110,9 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t fi
     }
     
     // Extract data items
-    auto dataBegin = rawFrame->begin() + headerSize*64;
-
-    data = new std::vector<GETFrameDataItem*>;
+    auto dataBegin = rawFrame.begin() + headerSize*64;
     
-    for (rawFrameIter = dataBegin; rawFrameIter != rawFrame->end(); rawFrameIter+=4) {
+    for (rawFrameIter = dataBegin; rawFrameIter != rawFrame.end(); rawFrameIter+=4) {
         uint32_t item = ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
 //        std::cout << std::hex << item << std::dec << std::endl;
         
@@ -121,19 +120,7 @@ GETFrame::GETFrame(std::vector<uint8_t> *rawFrame, uint8_t file_cobo, uint8_t fi
         uint8_t channel =         (item & 0x3F800000)>>22;
         uint16_t tbid   =         (item & 0x007FC000)>>14;
         float sample    = (float) (item & 0x00000FFF);
-        
-        GETFrameDataItem* dataItem = new GETFrameDataItem(aget,channel,tbid,sample);
-        data->push_back(dataItem);
-        dataItem = NULL;
-    }
     
-    delete rawFrame;
-}
-
-GETFrame::~GETFrame()
-{
-    for (auto item : *data) {
-        delete item;
+        data.push_back(GETFrameDataItem(aget,channel,tbid,sample));
     }
-    delete data;
 }

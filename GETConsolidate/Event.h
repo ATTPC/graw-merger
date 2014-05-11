@@ -30,17 +30,16 @@ private:
     uint32_t eventTime = 0;
     
     // Traces for each pad
-    std::map<int,Trace*> *traces;
+    std::map<int,Trace> traces;
     
     friend class EventFile;
     
     
 public:
     Event();
-    ~Event();
     
     void SetLookupTable(PadLookupTable* table);
-    void AppendFrame(GETFrame* frame);
+    void AppendFrame(const GETFrame& frame);
     uint32_t Size() const;
     
     friend std::ostream& operator<<(std::ostream& stream, const Event& event);

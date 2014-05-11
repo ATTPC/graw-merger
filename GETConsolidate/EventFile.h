@@ -19,14 +19,14 @@
 class EventFile
 {
 private:
-    std::map<unsigned int,unsigned long long> *offsetTable; // evt# : offset
+    std::map<unsigned int,unsigned long long> offsetTable; // evt# : offset
     std::fstream file;
     
     // Magic string for file ID: EVTFILE\0
     
     const char* magic = "EVTFILE"; // 8 char, null-term
     
-    bool isInitialized;
+    bool isInitialized = false;
     
 public:
     EventFile();
@@ -36,13 +36,13 @@ public:
     
     // Functions for writing events to file
     void OpenFileForWrite(std::string path);
-    void WriteEvent(Event* event);
+    void WriteEvent(const Event& event);
     
     // Functions for reading events from a file
-    void OpenFileForRead(std::string path);
-    Event* GetNextEvent();
-    Event* GetPreviousEvent();
-    Event* GetEventByNumber(unsigned int evtNumber);
+    void OpenFileForRead(const std::string path);
+    Event& GetNextEvent();
+    Event& GetPreviousEvent();
+    Event& GetEventByNumber(const unsigned int evtNumber);
     
 
 };

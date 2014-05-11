@@ -12,24 +12,18 @@
 Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 : coboId(cobo), asadId(asad), agetId(aget), channel(ch), padId(pad)
 {
-    data = new std::map<uint16_t,float>;
-}
-
-Trace::~Trace()
-{
-    delete data;
 }
 
 void Trace::AppendSample(int tBucket, float sample)
 {
-    data->emplace(tBucket, sample);
+    data.emplace(tBucket, sample);
 }
 
 uint32_t Trace::Size()
 {
     // Size depends on what is recorded. This is set in the
     // stream insertion operator for the trace.
-    uint32_t size = sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + sizeof(uint16_t) + uint32_t(data->size())*(sizeof(uint16_t)+sizeof(float));
+    uint32_t size = sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + sizeof(uint16_t) + uint32_t(data.size())*(sizeof(uint16_t)+sizeof(float));
     return size;
 }
 
@@ -43,10 +37,10 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     
     // Number of time buckets
     
-    uint16_t nTimeBuckets = trace.data->size();
+    uint16_t nTimeBuckets = trace.data.size();
     stream.write((char*) &nTimeBuckets, sizeof(nTimeBuckets));
     
-    for (auto item : *(trace.data))
+    for (auto item : trace.data)
     {
         stream.write((char*) &(item.first), sizeof(item.first));
         stream.write((char*) &(item.second), sizeof(item.second));

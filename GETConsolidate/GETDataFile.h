@@ -16,13 +16,11 @@
 #include <exception>
 #include <string>
 
-#include "GETFrame.h"
-
 class GETDataFile
 {
 private:
     boost::filesystem::path filePath;
-    std::ifstream* filestream;
+    std::ifstream filestream;
     
     uint8_t coboId;
     uint8_t asadId;
@@ -34,10 +32,18 @@ public:
     GETDataFile(const boost::filesystem::path& filePath_in);
     ~GETDataFile();
     
-    std::vector<uint8_t>* GetNextRawFrame();
+    GETDataFile(const GETDataFile& orig) =delete;
+    GETDataFile& operator=(const GETDataFile& other) =delete;
     
-    uint8_t GetFileCobo ();
-    uint8_t GetFileAsad ();
+    GETDataFile(GETDataFile&& orig);
+    GETDataFile& operator=(GETDataFile&& orig);
+    
+    std::vector<uint8_t> GetNextRawFrame();
+    
+    uint8_t GetFileCobo() const;
+    uint8_t GetFileAsad() const;
+    
+    bool eof() const;
 };
 
 #endif /* defined(__GETConsolidate__GETDataFile__) */

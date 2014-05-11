@@ -11,17 +11,11 @@
 
 EventFile::EventFile ()
 {
-    offsetTable = new std::map<unsigned int,unsigned long long>;
-    
-    isInitialized = false;
 }
 
 EventFile::~EventFile ()
 {
-    if (file.is_open()) {
-        file.close();
-    }
-    delete offsetTable;
+    this->CloseFile();
 }
 
 void EventFile::CloseFile()
@@ -46,7 +40,7 @@ void EventFile::OpenFileForWrite(std::string path)
     file.write(magic,sizeof(magic));
 }
 
-void EventFile::WriteEvent(Event* event)
+void EventFile::WriteEvent(const Event& event)
 {
     // Make sure file is initialized
     
@@ -55,7 +49,7 @@ void EventFile::WriteEvent(Event* event)
     }
     
     unsigned long long currentPos = file.tellg();
-    offsetTable->emplace(event->eventId, currentPos);
+    offsetTable.emplace(event.eventId, currentPos);
     
-    file << *event;
+    file << event;
 }
