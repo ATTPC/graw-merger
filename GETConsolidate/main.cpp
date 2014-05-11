@@ -111,7 +111,7 @@ int main(int argc, const char * argv[])
         // Go through the files and get rid of eofs
         
         dataFiles.erase(std::remove_if(dataFiles.begin(), dataFiles.end(),
-                                       [&] (const GETDataFile & x) {return x.eof();}),
+                                       [] (const GETDataFile & x) {return x.eof();}),
                         dataFiles.end());
         
         // Create an event from this set of frames, if there are any.
