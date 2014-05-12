@@ -19,7 +19,7 @@
 #include <vector>
 #include <algorithm>
 
-std::vector<boost::filesystem::path> FindFilesInEventDir(boost::filesystem::path eventRoot)
+std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
     if (!exists(eventRoot)) {
         throw 0;                 // FIX THIS
@@ -44,33 +44,28 @@ std::vector<boost::filesystem::path> FindFilesInEventDir(boost::filesystem::path
     return filesFound;
 }
 
-int main(int argc, const char * argv[])
+void MergeFiles(boost::filesystem::path input_path,
+                boost::filesystem::path output_path,
+                boost::filesystem::path lookup_path)
 {
-    boost::filesystem::path rootDir (argv[1]); // check these
-    boost::filesystem::path lookupTablePath (argv[2]);
-    
     // Import the lookup table
     
-    if (!exists(lookupTablePath) or !is_regular_file(lookupTablePath)) {
-        std::cout << "Must provide good lookup table as second argument." << std::endl;
-        return 1;
-    }
-
-    PadLookupTable lookupTable (lookupTablePath.string());
+    PadLookupTable lookupTable (lookup_path.string());
     
     // Find files in the provided directory
     
     std::vector<boost::filesystem::path> filePaths;
     
     try {
-        filePaths = FindFilesInEventDir(rootDir);
+        filePaths = FindGRAWFilesInDir(input_path);
     }
     catch (int) {
         std::cout << "An error occurred." << std::endl;     // FIX!
     }
     if (filePaths.size() == 0) {
         std::cout << "No files found in that directory." << std::endl;
-        return 1;
+        //return 1;
+        abort();        // Replace this with a throw
     }
     
     std::vector<GETDataFile> dataFiles;
@@ -89,12 +84,22 @@ int main(int argc, const char * argv[])
     // Open the output file
     
     EventFile output;
-    output.OpenFileForWrite("/Users/josh/Desktop/output.bin");
+    
+    if (is_directory(output_path)) {
+        std::string output_path_string = output_path.string();
+        if (output_path_string.back() == '/') {
+            output_path_string = output_path_string.append("output.bin");
+        }
+        else {
+            output_path_string = output_path_string.append("/output.bin");
+        }
+        output.OpenFileForWrite(output_path_string);
+    }
     
     // Main loop
     
     while (!dataFiles.empty()) {
-       
+        
         std::queue<GETFrame> frames;
         
         // Read in a frame from each file
@@ -128,11 +133,73 @@ int main(int argc, const char * argv[])
         }
         
         // Write the event to the output file.
-
+        
         output.WriteEvent(testEvent);
     }
     
     output.CloseFile();
+
+}
+
+int main(int argc, const char * argv[])
+{
+    /* Arguments passed from command line:
+     *     [command] [verb] [options] [input directory] [output file]
+     */
+    
+    // Usage:
+    
+    std::string usage = "Usage:\n"
+        "[command] [verb] [options] [inputs] [outputs] \n"
+        "Verbs include: merge, info\n"
+        "See documentation for more information.";
+    
+    std::string merge_usage = "Verb 'merge' usage:\n"
+        "[command] merge [options] input_directory output_file\n"
+        "The input directory must have the correct structure.";
+    
+    // Is the number of arguments appropriate?
+    
+    if (argc < 2) {
+        std::cout << usage << std::endl;
+        exit(1);
+    }
+    
+    // Extract the arguments into a better container
+    
+    std::vector<std::string> args;
+    std::vector<char> flags;
+    
+    for (int i = 2; i < argc; i++) {
+        args.push_back(argv[i]);
+    }
+    
+    // Look for the verb
+    
+    if (args.front() == "merge" && args.size() >= 3) {
+        // Get the rest of the arguments
+        for (auto iter = args.begin() + 1; iter != args.end(); iter++) {
+            if (iter->front() == '-') {
+                // This is a flag. Strip the hyphen and push each char onto flags
+                for (auto ch : *iter) {
+                    if (ch == '-') {
+                        continue;
+                    }
+                    else {
+                        flags.push_back(ch);
+                    }
+                }
+            }
+            else {
+                // Assume it's a path?
+                
+            }
+        }
+    }
+    
+    boost::filesystem::path rootDir (argv[1]); // check these
+    boost::filesystem::path lookupTablePath (argv[2]);
+    
     
     return 0;
 }

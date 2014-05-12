@@ -70,11 +70,11 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "&quot;/Users/josh/Documents/Data/20140323182024&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/josh/Documents/Data/pads_lookup.csv&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
