@@ -119,7 +119,7 @@ GETFrame::GETFrame(GETDataFile& file)
         uint8_t aget    =         (item & 0xC0000000)>>30;
         uint8_t channel =         (item & 0x3F800000)>>22;
         uint16_t tbid   =         (item & 0x007FC000)>>14;
-        float sample    = (float) (item & 0x00000FFF);
+        int16_t sample  = (int16_t) (item & 0x00000FFF);
     
         data.push_back(GETFrameDataItem(aget,channel,tbid,sample));
     }

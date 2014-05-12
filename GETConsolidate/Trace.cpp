@@ -14,7 +14,7 @@ Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 {
 }
 
-void Trace::AppendSample(int tBucket, float sample)
+void Trace::AppendSample(int tBucket, int sample)
 {
     data.emplace(tBucket, sample);
 }
@@ -23,7 +23,7 @@ uint32_t Trace::Size()
 {
     // Size depends on what is recorded. This is set in the
     // stream insertion operator for the trace.
-    uint32_t size = sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + sizeof(uint16_t) + uint32_t(data.size())*(sizeof(uint16_t)+sizeof(float));
+    uint32_t size = sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + sizeof(uint16_t) + uint32_t(data.size())*(sizeof(uint16_t)+sizeof(int16_t));
     return size;
 }
 

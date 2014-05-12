@@ -21,12 +21,12 @@ private:
     uint8_t agetId;
     uint8_t channel;
     uint16_t padId;
-    std::map<uint16_t,float> data;
+    std::map<uint16_t,int16_t> data;
     
 public:
     Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
     
-    void AppendSample(int tBucket, float sample);
+    void AppendSample(int tBucket, int sample);
     
     uint32_t Size();
     
