@@ -32,6 +32,8 @@
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
+		03F8548D1921120A00D723EB /* libboost_program_options.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F8548C1921120A00D723EB /* libboost_program_options.dylib */; };
+		03F8548E1921120A00D723EB /* libboost_program_options.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F8548C1921120A00D723EB /* libboost_program_options.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,7 @@
 		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trace.h; sourceTree = "<group>"; };
 		03DDF3B21919621A00306788 /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
 		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PadLookupTable.h; sourceTree = "<group>"; };
+		03F8548C1921120A00D723EB /* libboost_program_options.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_program_options.dylib; path = ../../../../../../../usr/local/lib/libboost_program_options.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03F8548E1921120A00D723EB /* libboost_program_options.dylib in Frameworks */,
 				03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */,
 				03AB40B7191D26D10021ABD4 /* libboost_filesystem.dylib in Frameworks */,
 				03AB40B8191D26D40021ABD4 /* libboost_system.dylib in Frameworks */,
@@ -104,6 +108,7 @@
 			files = (
 				03DDF3A9191936FA00306788 /* libboost_filesystem.dylib in Frameworks */,
 				03DDF3AB1919380700306788 /* libboost_system.dylib in Frameworks */,
+				03F8548D1921120A00D723EB /* libboost_program_options.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +200,7 @@
 				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
 				03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */,
 				03DDF3AA1919380700306788 /* libboost_system.dylib */,
+				03F8548C1921120A00D723EB /* libboost_program_options.dylib */,
 			);
 			path = GETConsolidate;
 			sourceTree = "<group>";

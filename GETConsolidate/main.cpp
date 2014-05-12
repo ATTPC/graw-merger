@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
+#include <boost/program_options.hpp>
 #include "GETFrame.h"
 #include "PadLookupTable.h"
 #include "Event.h"
@@ -85,16 +86,19 @@ void MergeFiles(boost::filesystem::path input_path,
     
     EventFile output;
     
+    std::string output_path_string = output_path.string();
+    
     if (is_directory(output_path)) {
-        std::string output_path_string = output_path.string();
         if (output_path_string.back() == '/') {
             output_path_string = output_path_string.append("output.bin");
         }
         else {
             output_path_string = output_path_string.append("/output.bin");
         }
-        output.OpenFileForWrite(output_path_string);
     }
+    
+    output.OpenFileForWrite(output_path_string);
+
     
     // Main loop
     
@@ -158,47 +162,35 @@ int main(int argc, const char * argv[])
         "[command] merge [options] input_directory output_file\n"
         "The input directory must have the correct structure.";
     
-    // Is the number of arguments appropriate?
+    boost::program_options::options_description opts_desc ("Allowed options.");
+
     
-    if (argc < 2) {
+    opts_desc.add_options()
+        ("help", "Output a help message")
+        ("merge,m", "Merge input files")
+        ("lookup,l", boost::program_options::value<boost::filesystem::path>(), "Lookup table")
+        ("input,i", boost::program_options::value<boost::filesystem::path>(), "Input directory")
+        ("output,o", boost::program_options::value<boost::filesystem::path>(), "Output file")
+    ;
+    
+    boost::program_options::variables_map vm;
+    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, opts_desc), vm);
+    boost::program_options::notify(vm);
+    
+    if (vm.count("help")) {
         std::cout << usage << std::endl;
-        exit(1);
+        return 0;
     }
-    
-    // Extract the arguments into a better container
-    
-    std::vector<std::string> args;
-    std::vector<char> flags;
-    
-    for (int i = 2; i < argc; i++) {
-        args.push_back(argv[i]);
-    }
-    
-    // Look for the verb
-    
-    if (args.front() == "merge" && args.size() >= 3) {
-        // Get the rest of the arguments
-        for (auto iter = args.begin() + 1; iter != args.end(); iter++) {
-            if (iter->front() == '-') {
-                // This is a flag. Strip the hyphen and push each char onto flags
-                for (auto ch : *iter) {
-                    if (ch == '-') {
-                        continue;
-                    }
-                    else {
-                        flags.push_back(ch);
-                    }
-                }
-            }
-            else {
-                // Assume it's a path?
-                
-            }
+
+    if (vm.count("merge")) {
+        if (vm.count("lookup") and vm.count("input") and vm.count("output")) {
+            auto rootDir = vm["input"].as<boost::filesystem::path>();
+            auto lookupTablePath = vm["lookup"].as<boost::filesystem::path>();
+            auto outputFilePath = vm["output"].as<boost::filesystem::path>();
+            
+            MergeFiles(rootDir, outputFilePath, lookupTablePath);
         }
     }
-    
-    boost::filesystem::path rootDir (argv[1]); // check these
-    boost::filesystem::path lookupTablePath (argv[2]);
     
     
     return 0;

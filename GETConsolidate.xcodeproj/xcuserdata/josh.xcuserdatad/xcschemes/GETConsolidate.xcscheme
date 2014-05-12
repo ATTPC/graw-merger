@@ -69,12 +69,20 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/20140323182024&quot;"
-            isEnabled = "NO">
+            argument = "--output &quot;/Users/josh/Desktop/output.bin&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/pads_lookup.csv&quot;"
-            isEnabled = "NO">
+            argument = "--lookup &quot;/Users/josh/Documents/Data/pads_lookup.csv&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--merge"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--input &quot;/Users/josh/Documents/Data/20140323182024&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
