@@ -41,6 +41,8 @@ public:
     
     uint32_t Size();
     
+    unsigned long GetNumberOfTimeBuckets();
+    
     friend std::ostream& operator<<(std::ostream& stream, const Trace& trace);
 };
 

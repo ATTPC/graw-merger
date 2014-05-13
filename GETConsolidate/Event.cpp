@@ -137,18 +137,24 @@ void Event::SubtractFPN()
                     }
                 }
                 
+                // Check if there's any FPN data. If not, skip the next part.
+                
+                if (mean_fpn.GetNumberOfTimeBuckets() == 0) continue;
+                
                 mean_fpn /= num_fpns;
+                
+                // Renormalize mean FPN to zero
+
+                mean_fpn.RenormalizeToZero();
                 
                 // Now subtract this mean from the other channels, binwise.
                 // This iteration includes the FPN channels.
-                // Then, renormalize to zero.
                 
                 auto begin = traces.lower_bound(CalculateHash(cobo, asad, aget, 0));
                 auto end = traces.upper_bound(CalculateHash(cobo, asad, aget, 68));
                 
                 for (auto pos = begin; pos != end; pos++) {
                     pos->second -= mean_fpn;
-                    pos->second.RenormalizeToZero();
                 }
                 
                 // Finally, kill the traces that represent the FPN, since

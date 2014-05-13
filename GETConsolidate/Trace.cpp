@@ -32,6 +32,11 @@ uint32_t Trace::Size()
     return size;
 }
 
+unsigned long Trace::GetNumberOfTimeBuckets()
+{
+    return data.size();
+}
+
 Trace& Trace::operator+=(Trace& other)
 {
     for (auto& other_item : other.data) {
