@@ -10,7 +10,6 @@
 #define __GETConsolidate__GETFrameDataItem__
 
 #include <iostream>
-#include "GETFrame.h"
 
 class GETFrameDataItem {
 private:

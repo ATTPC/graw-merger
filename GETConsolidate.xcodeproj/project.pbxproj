@@ -23,6 +23,7 @@
 		03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
 		03AB40C1191D546C0021ABD4 /* ExceptionWithString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40BF191D546C0021ABD4 /* ExceptionWithString.cpp */; };
 		03AB40C2191D546C0021ABD4 /* ExceptionWithString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40BF191D546C0021ABD4 /* ExceptionWithString.cpp */; };
+		03B0AF8819224FAB0027E9F2 /* GETFrameTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */; };
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
 		03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
 		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
@@ -72,6 +73,7 @@
 		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFile.h; sourceTree = "<group>"; };
 		03AB40BF191D546C0021ABD4 /* ExceptionWithString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExceptionWithString.cpp; sourceTree = "<group>"; };
 		03AB40C0191D546C0021ABD4 /* ExceptionWithString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionWithString.h; sourceTree = "<group>"; };
+		03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETFrameTests.mm; sourceTree = "<group>"; };
 		03DDF3961917FD1000306788 /* GETConsolidate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GETConsolidate; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		03AB409E191C269F0021ABD4 /* GETConsolidate Tests */ = {
 			isa = PBXGroup;
 			children = (
+				03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */,
 				03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */,
 				03AB409F191C269F0021ABD4 /* Supporting Files */,
 			);
@@ -291,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03B0AF8819224FAB0027E9F2 /* GETFrameTests.mm in Sources */,
 				03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */,
 				03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */,
 				03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */,

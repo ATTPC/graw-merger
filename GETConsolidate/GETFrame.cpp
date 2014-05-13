@@ -21,6 +21,26 @@ outType GETFrame::ExtractByteSwappedInt(std::vector<uint8_t>::const_iterator beg
     return result;
 }
 
+uint8_t GETFrame::ExtractAgetId(const uint32_t raw)
+{
+    return (raw & 0xC0000000)>>30;
+}
+
+uint8_t GETFrame::ExtractChannel(const uint32_t raw)
+{
+    return (raw & 0x3F800000)>>23;
+}
+
+uint16_t GETFrame::ExtractTBid(const uint32_t raw)
+{
+    return (raw & 0x007FC000)>>14;
+}
+
+int16_t GETFrame::ExtractSample(const uint32_t raw)
+{
+    return (raw & 0x00000FFF);
+}
+
 GETFrame::GETFrame(GETDataFile& file)
 {
     auto rawFrame = file.GetNextRawFrame();
@@ -98,14 +118,17 @@ GETFrame::GETFrame(GETDataFile& file)
     rawFrameIter++;
     
     for (int aget = 0; aget<4; aget++) {
+        std::bitset<9*8> bs {};   // init to 0
         for (int byte = 0; byte<9; byte++) {
-            hitPattern[aget][byte] = *rawFrameIter;
+            //hitPattern[aget][byte] = *rawFrameIter;
+            bs &= (*rawFrameIter) << byte*8;
             rawFrameIter++;
         }
+        hitPatterns.push_back(bs);
     }
     
     for (int aget = 0; aget<4; aget++) {
-        multiplicity[aget] = *rawFrameIter;
+        multiplicity.push_back(*rawFrameIter);
         rawFrameIter++;
     }
     
@@ -116,10 +139,10 @@ GETFrame::GETFrame(GETDataFile& file)
         uint32_t item = ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
 //        std::cout << std::hex << item << std::dec << std::endl;
         
-        uint8_t aget    =         (item & 0xC0000000)>>30;
-        uint8_t channel =         (item & 0x3F800000)>>22;
-        uint16_t tbid   =         (item & 0x007FC000)>>14;
-        int16_t sample  = (int16_t) (item & 0x00000FFF);
+        uint8_t aget    = ExtractAgetId(item);
+        uint8_t channel = ExtractChannel(item);
+        uint16_t tbid   = ExtractTBid(item);
+        int16_t sample  = ExtractSample(item);
     
         data.push_back(GETFrameDataItem(aget,channel,tbid,sample));
     }

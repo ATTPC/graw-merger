@@ -11,11 +11,10 @@
 
 #include <iostream>
 #include <vector>
+#include <bitset>
 
 #include "GETFrameDataItem.h"
 #include "GETDataFile.h"
-
-class GETFrameDataItem;
 
 class GETFrame
 {
@@ -38,8 +37,10 @@ private:
     uint8_t asadId;
     uint16_t readOffset;
     uint8_t status;
-    uint8_t hitPattern[4][9];
-    uint16_t multiplicity[4];
+//    uint8_t hitPattern[4][9];
+    std::vector< std::bitset<9*8> > hitPatterns;
+//    uint16_t multiplicity[4];
+    std::vector<uint8_t> multiplicity;
     
     // Data items
     std::vector<GETFrameDataItem> data;
@@ -51,6 +52,11 @@ private:
     
 public:
     GETFrame(GETDataFile& file);
+    
+    static uint8_t ExtractAgetId(const uint32_t raw);
+    static uint8_t ExtractChannel(const uint32_t raw);
+    static uint16_t ExtractTBid(const uint32_t raw);
+    static int16_t ExtractSample(const uint32_t raw);
 };
 
 #endif /* defined(__GETConsolidate__GETFrame__) */
