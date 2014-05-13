@@ -9,6 +9,11 @@
 #include "Trace.h"
 #include <stdexcept>
 
+Trace::Trace()
+: coboId(0),asadId(0),agetId(0),channel(0),padId(0)
+{}
+
+
 Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 : coboId(cobo), asadId(asad), agetId(aget), channel(ch), padId(pad)
 {
@@ -25,6 +30,61 @@ uint32_t Trace::Size()
     // stream insertion operator for the trace.
     uint32_t size = sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + sizeof(uint16_t) + uint32_t(data.size())*(sizeof(uint16_t)+sizeof(int16_t));
     return size;
+}
+
+Trace& Trace::operator+=(Trace& other)
+{
+    for (auto& other_item : other.data) {
+        if (this->data.find(other_item.first) != this->data.end()) {
+            this->data.at(other_item.first) += other_item.second;
+        }
+        else {
+            this->data.insert(other_item);
+        }
+    }
+    return *this;
+}
+
+Trace& Trace::operator-=(Trace& other)
+{
+    for (auto& other_item : other.data) {
+        if (this->data.find(other_item.first) != this->data.end()) {
+            this->data.at(other_item.first) -= other_item.second;
+        }
+        else {
+            this->data.emplace(other_item.first,other_item.second * -1);
+        }
+    }
+    return *this;
+}
+
+Trace& Trace::operator/=(Trace& other)
+{
+    for (auto& other_item : other.data) {
+        if (this->data.find(other_item.first) != this->data.end()) {
+            this->data.at(other_item.first) /= other_item.second;
+        }
+    }
+    return *this;
+}
+
+Trace& Trace::operator/=(int i)
+{
+    for (auto& item : data) {
+        item.second /= i;
+    }
+    return *this;
+}
+
+void Trace::RenormalizeToZero()
+{
+    int32_t total = std::accumulate(data.begin(),data.end(),0,
+                                    [](int i, const std::pair<uint16_t,int16_t> p){return i + p.second;});
+    total /= data.size();
+    
+    for (auto& el : data) {
+        el.second -= total;
+    }
 }
 
 std::ostream& operator<<(std::ostream& stream, const Trace& trace)

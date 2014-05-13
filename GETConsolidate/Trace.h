@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <map>
+#include <numeric>
 
 class Trace
 {
@@ -21,10 +22,20 @@ private:
     uint8_t agetId;
     uint8_t channel;
     uint16_t padId;
-    std::map<uint16_t,int16_t> data;
+    std::map<uint16_t,int16_t> data;   // maps timebucket:sample
+    
+    friend class Event;
     
 public:
+    Trace();
     Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
+    
+    Trace& operator/=(Trace& other);    // division by another trace
+    Trace& operator/=(int i);           // division by an integer
+    Trace& operator+=(Trace& other);
+    Trace& operator-=(Trace& other);
+    
+    void RenormalizeToZero();
     
     void AppendSample(int tBucket, int sample);
     
