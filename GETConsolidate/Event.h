@@ -42,6 +42,10 @@ public:
     void AppendFrame(const GETFrame& frame);
     uint32_t Size() const;
     
+    Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
+    
+    void SubtractFPN();
+    
     friend std::ostream& operator<<(std::ostream& stream, const Event& event);
 };
 

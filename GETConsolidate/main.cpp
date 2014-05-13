@@ -136,6 +136,8 @@ void MergeFiles(boost::filesystem::path input_path,
             //std::cout << "Appended frame." << std::endl;
         }
         
+        testEvent.SubtractFPN();
+        
         // Write the event to the output file.
         
         output.WriteEvent(testEvent);

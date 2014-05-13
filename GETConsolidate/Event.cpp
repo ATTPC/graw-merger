@@ -108,3 +108,56 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
 
     return stream;
 }
+
+Trace& Event::GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
+{
+    auto index = CalculateHash(cobo, asad, aget, channel);
+    return traces.at(index);  // could throw out_of_range
+}
+
+void Event::SubtractFPN()
+{
+    std::vector<uint8_t> fpn_channels {11,22,45,56};  // from AGET Docs
+    
+    for (int cobo = 0; cobo < 10; cobo++) {
+        for (int asad = 0; asad < 4; asad++) {
+            for (int aget = 0; aget < 4; aget++) {
+                
+                // Get the FPN channels and find the mean
+                Trace mean_fpn {};
+                int num_fpns = 0;
+                
+                for (auto ch : fpn_channels) {
+                    try {
+                        mean_fpn += GetTrace(cobo, asad, aget, ch);
+                        num_fpns++;
+                    }
+                    catch (std::out_of_range& e) {
+                        continue;
+                    }
+                }
+                
+                mean_fpn /= num_fpns;
+                
+                // Now subtract this mean from the other channels, binwise.
+                // This iteration includes the FPN channels.
+                // Then, renormalize to zero.
+                
+                auto begin = traces.lower_bound(CalculateHash(cobo, asad, aget, 0));
+                auto end = traces.upper_bound(CalculateHash(cobo, asad, aget, 68));
+                
+                for (auto pos = begin; pos != end; pos++) {
+                    pos->second -= mean_fpn;
+                    pos->second.RenormalizeToZero();
+                }
+                
+                // Finally, kill the traces that represent the FPN, since
+                // we don't need them for anything else
+                
+                for (auto ch : fpn_channels) {
+                    traces.erase(CalculateHash(cobo, asad, aget, ch));
+                }
+            }
+        }
+    }
+}
