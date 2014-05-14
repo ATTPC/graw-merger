@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0332FDBC1922EED00065697C /* TraceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0332FDBB1922EED00065697C /* TraceTests.mm */; };
+		03517E0D192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
+		03517E0E192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
+		03517E0F192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
+		03517E10192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
+		03517E11192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
+		03517E12192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
 		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
 		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
 		03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
@@ -18,8 +24,6 @@
 		03AB40B3191D0D950021ABD4 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
 		03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
 		03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */; };
-		03AB40B7191D26D10021ABD4 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */; };
-		03AB40B8191D26D40021ABD4 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3AA1919380700306788 /* libboost_system.dylib */; };
 		03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
 		03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
 		03AB40C1191D546C0021ABD4 /* ExceptionWithString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40BF191D546C0021ABD4 /* ExceptionWithString.cpp */; };
@@ -29,13 +33,9 @@
 		03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
 		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
 		03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
-		03DDF3A9191936FA00306788 /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */; };
-		03DDF3AB1919380700306788 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DDF3AA1919380700306788 /* libboost_system.dylib */; };
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
-		03F8548D1921120A00D723EB /* libboost_program_options.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F8548C1921120A00D723EB /* libboost_program_options.dylib */; };
-		03F8548E1921120A00D723EB /* libboost_program_options.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F8548C1921120A00D723EB /* libboost_program_options.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +63,9 @@
 
 /* Begin PBXFileReference section */
 		0332FDBB1922EED00065697C /* TraceTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TraceTests.mm; sourceTree = "<group>"; };
+		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
+		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
+		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
 		03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GETConsolidate Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GETConsolidate Tests-Info.plist"; sourceTree = "<group>"; };
@@ -83,15 +86,12 @@
 		03DDF3A31917FD9100306788 /* GETFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrame.h; sourceTree = "<group>"; };
 		03DDF3A51918026900306788 /* GETFrameDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrameDataItem.cpp; sourceTree = "<group>"; };
 		03DDF3A61918026900306788 /* GETFrameDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrameDataItem.h; sourceTree = "<group>"; };
-		03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = /usr/local/lib/libboost_filesystem.dylib; sourceTree = "<absolute>"; };
-		03DDF3AA1919380700306788 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../usr/local/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		03DDF3AC19195A5E00306788 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
 		03DDF3AD19195A5E00306788 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		03DDF3AF19195B6100306788 /* Trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trace.cpp; sourceTree = "<group>"; };
 		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trace.h; sourceTree = "<group>"; };
 		03DDF3B21919621A00306788 /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
 		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PadLookupTable.h; sourceTree = "<group>"; };
-		03F8548C1921120A00D723EB /* libboost_program_options.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_program_options.dylib; path = ../../../../../../../usr/local/lib/libboost_program_options.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +99,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03F8548E1921120A00D723EB /* libboost_program_options.dylib in Frameworks */,
+				03517E12192307A700F2C732 /* libboost_system.a in Frameworks */,
 				03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */,
-				03AB40B7191D26D10021ABD4 /* libboost_filesystem.dylib in Frameworks */,
-				03AB40B8191D26D40021ABD4 /* libboost_system.dylib in Frameworks */,
+				03517E0E192307A700F2C732 /* libboost_filesystem.a in Frameworks */,
+				03517E10192307A700F2C732 /* libboost_program_options.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,9 +110,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03DDF3A9191936FA00306788 /* libboost_filesystem.dylib in Frameworks */,
-				03DDF3AB1919380700306788 /* libboost_system.dylib in Frameworks */,
-				03F8548D1921120A00D723EB /* libboost_program_options.dylib in Frameworks */,
+				03517E11192307A700F2C732 /* libboost_system.a in Frameworks */,
+				03517E0F192307A700F2C732 /* libboost_program_options.a in Frameworks */,
+				03517E0D192307A700F2C732 /* libboost_filesystem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,9 +204,9 @@
 				03AB40BD191D45A90021ABD4 /* Headers */,
 				03AB40BE191D45C10021ABD4 /* Source */,
 				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
-				03DDF3A8191936FA00306788 /* libboost_filesystem.dylib */,
-				03DDF3AA1919380700306788 /* libboost_system.dylib */,
-				03F8548C1921120A00D723EB /* libboost_program_options.dylib */,
+				03517E0A192307A700F2C732 /* libboost_filesystem.a */,
+				03517E0B192307A700F2C732 /* libboost_program_options.a */,
+				03517E0C192307A700F2C732 /* libboost_system.a */,
 			);
 			path = GETConsolidate;
 			sourceTree = "<group>";
