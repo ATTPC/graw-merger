@@ -7,7 +7,7 @@
 //
 
 #include "EventFile.h"
-#include "ExceptionWithString.h"
+#include "GETExceptions.h"
 
 EventFile::EventFile ()
 {
@@ -28,12 +28,12 @@ void EventFile::OpenFileForWrite(std::string path)
     // Make sure the object isn't already initialized
     
     if (isInitialized) {
-        throw ExceptionWithString("Event file object already initialized.");
+        throw Exceptions::Already_Init();
     }
     
     file.open(path, std::ios::out|std::ios::binary|std::ios::trunc);
     if (!file.good()) {
-        throw ExceptionWithString("Failed to open file for write.");
+        throw Exceptions::Bad_File(path);
     }
     isInitialized = true;
     
@@ -45,7 +45,7 @@ void EventFile::WriteEvent(const Event& event)
     // Make sure file is initialized
     
     if (!isInitialized) {
-        throw ExceptionWithString("Tried to write event to uninitialized file object.");
+        throw Exceptions::Not_Init();
     }
     
     unsigned long long currentPos = file.tellg();

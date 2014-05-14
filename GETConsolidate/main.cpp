@@ -15,6 +15,7 @@
 #include "Event.h"
 #include "GETDataFile.h"
 #include "EventFile.h"
+#include "GETExceptions.h"
 #include <exception>
 #include <queue>
 #include <vector>
@@ -25,7 +26,7 @@ bool g_verbose = false;
 std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
     if (!exists(eventRoot)) {
-        throw 0;                 // FIX THIS
+        throw Exceptions::Does_Not_Exist(eventRoot.string());
     }
     
     boost::filesystem::recursive_directory_iterator dirIter(eventRoot);
@@ -64,13 +65,12 @@ void MergeFiles(boost::filesystem::path input_path,
     try {
         filePaths = FindGRAWFilesInDir(input_path);
     }
-    catch (int) {
-        std::cout << "An error occurred." << std::endl;     // FIX!
+    catch (std::exception& e) {
+        std::cout << e.what() << std::endl;
     }
     if (filePaths.size() == 0) {
         std::cout << "No files found in that directory." << std::endl;
-        //return 1;
-        abort();        // Replace this with a throw
+        throw Exceptions::Dir_is_Empty(input_path.string());
     }
     
     std::vector<GETDataFile> dataFiles;
@@ -82,7 +82,7 @@ void MergeFiles(boost::filesystem::path input_path,
             dataFiles.push_back( GETDataFile(filename.string()) );
         }
         catch (std::exception& e) {
-            std::cout << "Exception thrown when opening file " << filename.string() << ": " << e.what() << std::endl;
+            std::cout << e.what() << std::endl;
         }
     }
     

@@ -7,19 +7,8 @@
 //
 
 #include "GETDataFile.h"
+#include "GETExceptions.h"
 
-class ioError : public std::exception
-{
-private:
-    const char* reasonString;
-
-public:
-    ioError(const char* reason) : reasonString(reason) {};
-    virtual const char* what() const throw()
-    {
-        return reasonString;
-    }
-};
 
 template<typename outType>
 outType GETDataFile::ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,std::vector<uint8_t>::iterator end)
@@ -38,10 +27,10 @@ GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
 {
     // Check validity of file path
     if (not (exists(filePath) and is_regular_file(filePath))) {
-        throw ioError("Invalid file path.");
+        throw Exceptions::Bad_File(filePath.string());
     }
     if (filePath.extension() != ".graw") {
-        throw ioError("File provided is not of extension .graw.");
+        throw Exceptions::Wrong_File_Type(filePath.filename().string());
     }
     
     // Extract info from path:
@@ -58,7 +47,7 @@ GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
     
     filestream.open(filePath.string(), std::ios::in|std::ios::binary);
     if (filestream.bad()) {
-        throw ioError("Failed to open filestream.");
+        throw Exceptions::Bad_File(filename);
     }
 }
 
@@ -108,7 +97,7 @@ std::vector<uint8_t> GETDataFile::GetNextRawFrame()
     // Test the input file for validity
     
     if (!filestream.good()) {
-        throw ioError("Input file is bad.");
+        throw Exceptions::Bad_File(filePath.filename().string());
     }
     
     filestream.seekg(1,std::ios::cur); // Skip the metaType char
@@ -121,7 +110,7 @@ std::vector<uint8_t> GETDataFile::GetNextRawFrame()
     
     size = ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
     
-    if (size == 0) throw ioError("Failed to read frame.");
+    if (size == 0) throw Exceptions::Frame_Read_Error();
     
     std::cout << "Found frame of size " << size << std::endl;
     

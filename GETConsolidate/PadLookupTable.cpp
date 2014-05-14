@@ -7,6 +7,7 @@
 //
 
 #include "PadLookupTable.h"
+#include "GETExceptions.h"
 #include <string>
 #include <sstream>
 
@@ -28,8 +29,7 @@ uint16_t PadLookupTable::FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget,
         }
     }
     else {
-        std::cout << "Error: attempted to access lookup table before it was initialized!" << std::endl;
-        return 0;
+        throw Exceptions::Not_Init();
     }
 }
 
