@@ -53,3 +53,26 @@ void EventFile::WriteEvent(const Event& event)
     
     file << event;
 }
+
+void EventFile::OpenFileForRead(const std::string path)
+{
+    // Make sure the object isn't already initialized
+    
+    if (isInitialized) {
+        throw Exceptions::Already_Init();
+    }
+    
+    file.open(path, std::ios::in|std::ios::binary);
+    if (!file.good()) {
+        throw Exceptions::Bad_File(path);
+    }
+    isInitialized = true;
+    
+    // Check if this is the correct file format
+    
+    char read_magic[8];
+    file >> read_magic;
+    if (read_magic != magic) throw Exceptions::Wrong_File_Type(path);
+    
+    // This should leave the file position at the start of the first event.
+}
