@@ -24,6 +24,11 @@ void Trace::AppendSample(int tBucket, int sample)
     data.emplace(tBucket, sample);
 }
 
+int16_t Trace::GetSample(int tBucket) const
+{
+    return data.at(tBucket);
+}
+
 uint32_t Trace::Size()
 {
     // Size depends on what is recorded. This is set in the
@@ -92,6 +97,13 @@ void Trace::RenormalizeToZero()
     }
 }
 
+uint32_t Trace::CompactSample(uint16_t tb, int16_t val)
+{
+    // val is 12-bits and tb is 9 bits. Fit this in 24 bits.
+    uint32_t joined = (tb << 15) | val;
+    return joined;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Trace& trace)
 {
     stream.write((char*) &(trace.coboId), sizeof(trace.coboId));
@@ -107,8 +119,10 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     
     for (auto item : trace.data)
     {
-        stream.write((char*) &(item.first), sizeof(item.first));
-        stream.write((char*) &(item.second), sizeof(item.second));
+//        stream.write((char*) &(item.first), sizeof(item.first));
+//        stream.write((char*) &(item.second), sizeof(item.second));
+        auto compacted_data = Trace::CompactSample(item.first, item.second);
+        stream.write((char*) &compacted_data ,3*sizeof(char));
     }
 
     return stream;

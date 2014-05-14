@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0332FDBC1922EED00065697C /* TraceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0332FDBB1922EED00065697C /* TraceTests.mm */; };
 		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
 		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
 		03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
@@ -61,6 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0332FDBB1922EED00065697C /* TraceTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TraceTests.mm; sourceTree = "<group>"; };
 		03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GETConsolidate Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GETConsolidate Tests-Info.plist"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		03AB409E191C269F0021ABD4 /* GETConsolidate Tests */ = {
 			isa = PBXGroup;
 			children = (
+				0332FDBB1922EED00065697C /* TraceTests.mm */,
 				03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */,
 				03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */,
 				03AB409F191C269F0021ABD4 /* Supporting Files */,
@@ -299,6 +302,7 @@
 				03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */,
 				03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */,
 				03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */,
+				0332FDBC1922EED00065697C /* TraceTests.mm in Sources */,
 				03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */,
 				03AB40C2191D546C0021ABD4 /* ExceptionWithString.cpp in Sources */,
 				03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */,

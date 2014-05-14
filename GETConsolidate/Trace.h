@@ -38,10 +38,14 @@ public:
     void RenormalizeToZero();
     
     void AppendSample(int tBucket, int sample);
+
+    int16_t GetSample(int tBucket) const;
     
     uint32_t Size();
     
     unsigned long GetNumberOfTimeBuckets();
+    
+    static uint32_t CompactSample(uint16_t tb, int16_t val);
     
     friend std::ostream& operator<<(std::ostream& stream, const Trace& trace);
 };

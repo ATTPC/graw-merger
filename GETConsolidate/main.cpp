@@ -20,6 +20,8 @@
 #include <vector>
 #include <algorithm>
 
+bool g_verbose = false;
+
 std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
     if (!exists(eventRoot)) {
@@ -32,7 +34,9 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
     
     for ( ; dirIter != endOfDir; dirIter++) {
         if (is_directory(dirIter->path())) {
-            std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
+            if (g_verbose) {
+                std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
+            }
         }
         else if (is_regular_file(dirIter->path()) && dirIter->path().extension() == ".graw") {
             std::cout << "    Found file: " << dirIter->path().filename().string() << std::endl;
@@ -173,6 +177,7 @@ int main(int argc, const char * argv[])
         ("lookup,l", boost::program_options::value<boost::filesystem::path>(), "Lookup table")
         ("input,i", boost::program_options::value<boost::filesystem::path>(), "Input directory")
         ("output,o", boost::program_options::value<boost::filesystem::path>(), "Output file")
+        ("verbose,v", "Print more output.")
     ;
     
     boost::program_options::variables_map vm;
@@ -182,6 +187,10 @@ int main(int argc, const char * argv[])
     if (vm.count("help")) {
         std::cout << usage << std::endl;
         return 0;
+    }
+    
+    if (vm.count("verbose")) {
+        g_verbose = true;
     }
 
     if (vm.count("merge")) {
