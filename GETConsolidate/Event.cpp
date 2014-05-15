@@ -8,8 +8,61 @@
 
 #include "Event.h"
 
+const char* Event::magic = "EVT";
+
+template<typename outType>
+outType Event::ExtractInt(std::vector<char>::const_iterator begin,
+                          std::vector<char>::const_iterator end)
+{
+    outType result = 0;
+    int n = 0;
+    for (auto iter = begin; iter != end; iter++) {
+        result |= (*iter)<<(8*n);
+        n++;
+    }
+    return result;
+}
+
 Event::Event()
 {
+}
+
+Event::Event(std::vector<char>& raw)
+{
+    char magic_in[4] {};
+    auto rawIter = raw.begin();
+    
+    for (int i = 0; i < 4; i++) {
+        magic_in[i] = *rawIter;
+        rawIter++;
+    }
+    if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
+    
+//    uint32_t sizeOfEvent = ExtractInt<uint32_t>(rawIter, rawIter+4);
+    rawIter += 4;
+    
+    eventId = ExtractInt<decltype(eventId)>(rawIter, rawIter+sizeof(eventId));
+    rawIter += sizeof(eventId);
+    
+    eventTime = ExtractInt<decltype(eventTime)>(rawIter, rawIter+sizeof(eventTime));
+    rawIter += sizeof(eventTime);
+    
+    uint16_t nTraces = ExtractInt<uint16_t>(rawIter, rawIter+sizeof(uint16_t));
+    rawIter += sizeof(uint16_t);
+    
+    for (decltype(nTraces) n = 0; n < nTraces; n++) {
+        // Find trace size
+        uint32_t traceSize = ExtractInt<decltype(traceSize)>(rawIter, rawIter+sizeof(traceSize));
+        std::vector<char> rawTrace {rawIter,rawIter+traceSize};
+        
+        // Create and emplace the new trace
+        Trace newTrace {rawTrace};
+        auto newHash = CalculateHash(newTrace.coboId, newTrace.asadId, newTrace.agetId, newTrace.channel);
+        traces.emplace(newHash,newTrace);
+        
+        // Increment the iterator
+        rawIter += traceSize;
+    }
 }
 
 int Event::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
@@ -83,7 +136,7 @@ uint32_t Event::Size() const
     
     uint32_t size = sizeof("EVT") + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime) + sizeof(uint16_t);
     for (auto item : traces) {
-        size += item.second.Size();
+        size += item.second.size();
     }
     return size;
 }
@@ -92,7 +145,7 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
 {
     uint32_t sizeOfEvent = event.Size();
     
-    stream.write("EVT", sizeof("EVT"));
+    stream.write(event.magic, sizeof(event.magic));
     
     stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
     stream.write((char*) &event.eventId, sizeof(event.eventId));
@@ -113,6 +166,26 @@ Trace& Event::GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel
 {
     auto index = CalculateHash(cobo, asad, aget, channel);
     return traces.at(index);  // could throw out_of_range
+}
+
+uint32_t Event::GetEventId() const
+{
+    return eventId;
+}
+
+uint32_t Event::GetEventTime() const
+{
+    return eventTime;
+}
+
+void Event::SetEventId(uint32_t eventId_in)
+{
+    eventId = eventId_in;
+}
+
+void Event::SetEventTime(uint32_t eventTime_in)
+{
+    eventTime = eventTime_in;
 }
 
 void Event::SubtractFPN()

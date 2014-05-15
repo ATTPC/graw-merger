@@ -11,7 +11,9 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 #include <numeric>
+#include "GETExceptions.h"
 
 class Trace
 {
@@ -19,16 +21,21 @@ private:
     
     uint8_t coboId;
     uint8_t asadId;
-    uint8_t agetId;
+    uint8_t agetId; 
     uint8_t channel;
     uint16_t padId;
     std::map<uint16_t,int16_t> data;   // maps timebucket:sample
     
     friend class Event;
     
+    template<typename outType>
+    outType ExtractInt(std::vector<char>::const_iterator begin,
+                       std::vector<char>::const_iterator end);
+    
 public:
     Trace();
     Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
+    Trace(std::vector<char> raw);
     
     Trace& operator/=(Trace& other);    // division by another trace
     Trace& operator/=(int i);           // division by an integer
@@ -41,11 +48,14 @@ public:
 
     int16_t GetSample(int tBucket) const;
     
-    uint32_t Size();
+    uint32_t size() const;
     
     unsigned long GetNumberOfTimeBuckets();
     
     static uint32_t CompactSample(uint16_t tb, int16_t val);
+    static std::pair<uint16_t,int16_t> UnpackSample(const uint32_t packed);
+    
+    static const uint32_t sampleSize;
     
     friend std::ostream& operator<<(std::ostream& stream, const Trace& trace);
 };

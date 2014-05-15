@@ -13,24 +13,34 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "Event.h"
+#include "GETExceptions.h"
 
 class EventFile
 {
 private:
     std::map<unsigned int,unsigned long long> offsetTable; // evt# : offset
+    std::map<unsigned int,unsigned long long>::iterator currentEvt;
+    
     std::fstream file;
     
     // Magic string for file ID: EVTFILE\0
     
-    const char* magic = "EVTFILE"; // 8 char, null-term
+    static const char* magic; // 8 char, null-term
     
     bool isInitialized = false;
     
 public:
     EventFile();
     ~EventFile();
+    
+    EventFile(EventFile& orig) =delete;
+    EventFile(EventFile&& orig) =delete;
+    
+    EventFile& operator=(EventFile& other) =delete;
+    EventFile& operator=(EventFile&& other) =delete;
     
     void CloseFile();
     
@@ -40,11 +50,11 @@ public:
     
     // Functions for reading events from a file
     void OpenFileForRead(const std::string path);
-    Event& GetNextEvent();
-    Event& GetPreviousEvent();
-    Event& GetEventByNumber(const unsigned int evtNumber);
-    
-
+    void RebuildIndex();
+    Event ReadEvent();
+    Event GetNextEvent();
+    Event GetPreviousEvent();
+    Event GetEventByNumber(const unsigned int evtNumber);
 };
 
 #endif /* defined(__GETConsolidate__EventFile__) */

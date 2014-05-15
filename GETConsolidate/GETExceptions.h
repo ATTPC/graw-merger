@@ -89,6 +89,24 @@ namespace Exceptions {
     public:
         virtual const char* what() const throw() {return msg.c_str();};
     };
+    
+    class Wrong_File_Position : public std::exception
+    {
+    private:
+        std::string msg {"Item not found at this file position."};
+        
+    public:
+        virtual const char* what() const throw() {return msg.c_str();};
+    };
+    
+    class Bad_Data : public std::exception
+    {
+    private:
+        std::string msg {"Corrupted or invalid data encountered."};
+        
+    public:
+        virtual const char* what() const throw() {return msg.c_str();};
+    };
 }
 
 
