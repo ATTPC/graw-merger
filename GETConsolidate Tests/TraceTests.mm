@@ -64,4 +64,49 @@
     }
 }
 
+-(void)testSubtraction
+{
+    Trace *t1, *t2;
+    
+    for (int a = 0; a < 200; a++) {
+        for (int b = 0; b < 200; b++) {
+            t1 = new Trace ();
+            t2 = new Trace ();
+            for (int i = 0; i < 512; i++) {
+                t1->AppendSample(i, a);
+                t2->AppendSample(i, b);
+            }
+            *t1 -= *t2;
+            
+            for (int i = 0; i < 512; i++) {
+                int16_t val = t1->GetSample(i);
+                XCTAssertEqual(a-b, val, "Subtraction failed.");
+            }
+            delete t1;
+            delete t2;
+        }
+    }
+}
+
+- (void)testDivisionByScalar
+{
+    Trace *t1;
+    
+    for (int a = 0; a < 200; a++) {
+        for (int b = 1; b < 200; b++) {
+            t1 = new Trace ();
+            for (int i = 0; i < 512; i++) {
+                t1->AppendSample(i, a);
+            }
+            *t1 /= b;
+            
+            for (int i = 0; i < 512; i++) {
+                int16_t val = t1->GetSample(i);
+                XCTAssertEqual(a/b, val, "Division failed.");
+            }
+            delete t1;
+        }
+    }
+}
+
 @end
