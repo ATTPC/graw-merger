@@ -15,6 +15,7 @@
 
 #include "GETFrameDataItem.h"
 #include "GETDataFile.h"
+#include "Utilities.h"
 
 class GETFrame
 {
@@ -44,11 +45,6 @@ private:
     
     // Data items
     std::vector<GETFrameDataItem> data;
-    
-    // Private functions
-    
-    template<typename outType>
-    outType ExtractByteSwappedInt(std::vector<uint8_t>::const_iterator begin,std::vector<uint8_t>::const_iterator end);
     
 public:
     GETFrame(GETDataFile& file);

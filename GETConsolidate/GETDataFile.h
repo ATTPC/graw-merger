@@ -16,6 +16,9 @@
 #include <exception>
 #include <string>
 
+#include "GETExceptions.h"
+#include "Utilities.h"
+
 class GETDataFile
 {
     /* This class represents the .GRAW file output by the DAQ. It contains a 
@@ -63,8 +66,6 @@ private:
     uint8_t coboId;                      // CoBo ID from the file name
     uint8_t asadId;                      // AsAd ID from the file name
     
-    template<typename outType>
-    outType ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin, std::vector<uint8_t>::iterator end);
     /* This function just byteswaps a provided integer. This is necessary since
      * the .GRAW files are generated on PowerPC and are big-endian, while Intel 
      * computers are little-endian.

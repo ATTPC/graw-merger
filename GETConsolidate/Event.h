@@ -17,11 +17,51 @@
 #include "PadLookupTable.h"
 #include "GETExceptions.h"
 #include <map>
+#include "Utilities.h"
 
 class Event
 {
+public:
+    
+    // Construction of Events
+    
+    Event();
+    Event(std::vector<uint8_t>& raw);
+    Event(Event& orig);    // copy constructor
+    Event(Event&& orig);   // move constructor
+    
+    Event& operator=(Event& orig);    // copy operator
+    Event& operator=(Event&& orig);   // move operator
+    
+    // Setting properties
+    
+    void SetLookupTable(PadLookupTable* table);
+    
+    void SetEventId(uint32_t eventId_in);
+    void SetEventTime(uint32_t eventTime_in);
+    
+    void AppendFrame(const GETFrame& frame);
+    uint32_t Size() const;
+    
+    // Getting properties and members
+    
+    Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
+    
+    uint32_t GetEventId() const;
+    uint32_t GetEventTime() const;
+    
+    // Manipulations of contained data
+    
+    void SubtractFPN();
+    
+    // I/O functions
+    
+    friend std::ostream& operator<<(std::ostream& stream, const Event& event);
+    
 private:
+    
     // Lookup table pointer and hash functions
+    
     PadLookupTable *lookupTable;
     int CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
@@ -29,38 +69,13 @@ private:
     
     uint32_t eventId = 0;
     uint32_t eventTime = 0;
-    
-    static const uint8_t magic; // "EVT": 4 char, null-term
+    static const uint8_t magic; // Equals 0xEE, defined in Event.cpp
     
     // Traces for each pad
+    
     std::map<int,Trace> traces;
     
     friend class EventFile;
-    
-    template<typename outType>
-    outType ExtractInt(std::vector<uint8_t>::const_iterator begin,
-                       std::vector<uint8_t>::const_iterator end);
-    
-public:
-    Event();
-    Event(std::vector<uint8_t>& raw);
-    
-    void SetLookupTable(PadLookupTable* table);
-    void AppendFrame(const GETFrame& frame);
-    uint32_t Size() const;
-    
-    Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
-    
-    uint32_t GetEventId() const;
-    uint32_t GetEventTime() const;
-    
-    void SetEventId(uint32_t eventId_in);
-    void SetEventTime(uint32_t eventTime_in);
-    
-    void SubtractFPN();
-    
-    friend std::ostream& operator<<(std::ostream& stream, const Event& event);
-//    friend std::istream& operator>>(std::istream& stream, const Event& event);
 };
 
 #endif /* defined(__GETConsolidate__Event__) */

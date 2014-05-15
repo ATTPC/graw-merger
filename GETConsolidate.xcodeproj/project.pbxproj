@@ -64,6 +64,7 @@
 		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
 		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
 		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
+		039056CC192552AE00214C6C /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GETConsolidate Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GETConsolidate Tests-Info.plist"; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		03AB40BD191D45A90021ABD4 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				039056CC192552AE00214C6C /* Utilities.h */,
 				03AB40C0191D546C0021ABD4 /* GETExceptions.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
 				03AB40B2191D0D950021ABD4 /* GETDataFile.h */,

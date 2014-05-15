@@ -10,19 +10,6 @@
 
 const uint8_t Event::magic {0xEE};
 
-template<typename outType>
-outType Event::ExtractInt(std::vector<uint8_t>::const_iterator begin,
-                          std::vector<uint8_t>::const_iterator end)
-{
-    outType result = 0;
-    int n = 0;
-    for (auto iter = begin; iter != end; iter++) {
-        result |= (*iter)<<(8*n);
-        n++;
-    }
-    return result;
-}
-
 Event::Event()
 {
 }
@@ -31,26 +18,26 @@ Event::Event(std::vector<uint8_t>& raw)
 {
     auto rawIter = raw.begin();
     
-    uint8_t magic_in = ExtractInt<decltype(magic_in)>(rawIter, rawIter+sizeof(magic_in));
+    uint8_t magic_in = Utilities::ExtractInt<decltype(magic_in)>(rawIter, rawIter+sizeof(magic_in));
     rawIter += sizeof(magic_in);
     
     if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
     
-//    uint32_t sizeOfEvent = ExtractInt<uint32_t>(rawIter, rawIter+4);
+//    uint32_t sizeOfEvent = Utilities::ExtractInt<uint32_t>(rawIter, rawIter+4);
     rawIter += 4;
     
-    eventId = ExtractInt<decltype(eventId)>(rawIter, rawIter+sizeof(eventId));
+    eventId = Utilities::ExtractInt<decltype(eventId)>(rawIter, rawIter+sizeof(eventId));
     rawIter += sizeof(eventId);
     
-    eventTime = ExtractInt<decltype(eventTime)>(rawIter, rawIter+sizeof(eventTime));
+    eventTime = Utilities::ExtractInt<decltype(eventTime)>(rawIter, rawIter+sizeof(eventTime));
     rawIter += sizeof(eventTime);
     
-    uint16_t nTraces = ExtractInt<uint16_t>(rawIter, rawIter+sizeof(uint16_t));
+    uint16_t nTraces = Utilities::ExtractInt<uint16_t>(rawIter, rawIter+sizeof(uint16_t));
     rawIter += sizeof(uint16_t);
     
     for (decltype(nTraces) n = 0; n < nTraces; n++) {
         // Find trace size
-        uint32_t traceSize = ExtractInt<decltype(traceSize)>(rawIter, rawIter+sizeof(traceSize));
+        uint32_t traceSize = Utilities::ExtractInt<decltype(traceSize)>(rawIter, rawIter+sizeof(traceSize));
         std::vector<char> rawTrace {rawIter,rawIter+traceSize};
         
         // Create and emplace the new trace

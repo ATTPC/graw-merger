@@ -7,20 +7,6 @@
 //
 
 #include "GETDataFile.h"
-#include "GETExceptions.h"
-
-
-template<typename outType>
-outType GETDataFile::ExtractByteSwappedInt(std::vector<uint8_t>::iterator begin,std::vector<uint8_t>::iterator end)
-{
-    outType result = 0;
-    int n = 0;
-    for (auto iter = end-1; iter >= begin; iter--) {
-        result |= (*iter)<<(8*n);
-        n++;
-    }
-    return result;
-}
 
 GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
 : filePath(filePath_in)
@@ -108,7 +94,7 @@ std::vector<uint8_t> GETDataFile::GetNextRawFrame()
         size_raw.push_back((uint8_t)temp);
     }
     
-    size = ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
+    size = Utilities::ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
     
     if (size == 0) throw Exceptions::Frame_Read_Error();
     
