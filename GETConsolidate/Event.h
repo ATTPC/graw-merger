@@ -30,7 +30,7 @@ private:
     uint32_t eventId = 0;
     uint32_t eventTime = 0;
     
-    static const char* magic; // "EVT": 4 char, null-term
+    static const uint8_t magic; // "EVT": 4 char, null-term
     
     // Traces for each pad
     std::map<int,Trace> traces;
@@ -38,12 +38,12 @@ private:
     friend class EventFile;
     
     template<typename outType>
-    outType ExtractInt(std::vector<char>::const_iterator begin,
-                       std::vector<char>::const_iterator end);
+    outType ExtractInt(std::vector<uint8_t>::const_iterator begin,
+                       std::vector<uint8_t>::const_iterator end);
     
 public:
     Event();
-    Event(std::vector<char>& raw);
+    Event(std::vector<uint8_t>& raw);
     
     void SetLookupTable(PadLookupTable* table);
     void AppendFrame(const GETFrame& frame);
@@ -60,7 +60,7 @@ public:
     void SubtractFPN();
     
     friend std::ostream& operator<<(std::ostream& stream, const Event& event);
-    friend std::istream& operator>>(std::istream& stream, const Event& event);
+//    friend std::istream& operator>>(std::istream& stream, const Event& event);
 };
 
 #endif /* defined(__GETConsolidate__Event__) */

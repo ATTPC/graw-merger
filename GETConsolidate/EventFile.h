@@ -28,9 +28,13 @@ private:
     
     // Magic string for file ID: EVTFILE\0
     
-    static const char* magic; // 8 char, null-term
+    static const int magic;
     
     bool isInitialized = false;
+    
+    template<typename outType>
+    outType ExtractInt(std::vector<char>::const_iterator begin,
+                                  std::vector<char>::const_iterator end);
     
 public:
     EventFile();
@@ -54,7 +58,8 @@ public:
     Event ReadEvent();
     Event GetNextEvent();
     Event GetPreviousEvent();
-    Event GetEventByNumber(const unsigned int evtNumber);
+//    Event GetEventByNumber(const unsigned int evtNumber);
+    bool eof();
 };
 
 #endif /* defined(__GETConsolidate__EventFile__) */

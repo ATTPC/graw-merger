@@ -25,13 +25,15 @@ bool g_verbose = false;
 
 std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
+    namespace fs = boost::filesystem;
+    
     if (!exists(eventRoot)) {
         throw Exceptions::Does_Not_Exist(eventRoot.string());
     }
     
-    boost::filesystem::recursive_directory_iterator dirIter(eventRoot);
-    boost::filesystem::recursive_directory_iterator endOfDir;
-    std::vector<boost::filesystem::path> filesFound;
+    fs::recursive_directory_iterator dirIter(eventRoot);
+    fs::recursive_directory_iterator endOfDir;
+    std::vector<fs::path> filesFound;
     
     for ( ; dirIter != endOfDir; dirIter++) {
         if (is_directory(dirIter->path())) {
@@ -151,8 +153,33 @@ void MergeFiles(boost::filesystem::path input_path,
 
 }
 
+void ListEventFileContents(boost::filesystem::path filepath)
+{
+    namespace fs = boost::filesystem;
+    // Test the path
+    if (!fs::is_regular_file(filepath)) throw Exceptions::Bad_File(filepath.string());
+    
+    EventFile efile {};
+    efile.OpenFileForRead(filepath.string());
+    
+    while (!efile.eof()) {
+
+        Event thisEvent = efile.GetNextEvent();
+
+        auto id = thisEvent.GetEventId();
+        auto time = thisEvent.GetEventTime();
+        
+        std::cout << "Event ID " << id << ", Event time " << time << std::endl;
+    }
+    
+    efile.CloseFile();
+}
+
 int main(int argc, const char * argv[])
 {
+    namespace po = boost::program_options;
+    namespace fs = boost::filesystem;
+    
     /* Arguments passed from command line:
      *     [command] [verb] [options] [input directory] [output file]
      */
@@ -168,21 +195,22 @@ int main(int argc, const char * argv[])
         "[command] merge [options] input_directory output_file\n"
         "The input directory must have the correct structure.";
     
-    boost::program_options::options_description opts_desc ("Allowed options.");
+    po::options_description opts_desc ("Allowed options.");
 
     
     opts_desc.add_options()
         ("help", "Output a help message")
         ("merge,m", "Merge input files")
-        ("lookup,l", boost::program_options::value<boost::filesystem::path>(), "Lookup table")
-        ("input,i", boost::program_options::value<boost::filesystem::path>(), "Input directory")
-        ("output,o", boost::program_options::value<boost::filesystem::path>(), "Output file")
+        ("ls,l", "List event file contents")
+        ("lookup,l", po::value<fs::path>(), "Lookup table")
+        ("input,i", po::value<fs::path>(), "Input directory")
+        ("output,o", po::value<fs::path>(), "Output file")
         ("verbose,v", "Print more output.")
     ;
     
-    boost::program_options::variables_map vm;
-    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, opts_desc), vm);
-    boost::program_options::notify(vm);
+    po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, opts_desc), vm);
+    po::notify(vm);
     
     if (vm.count("help")) {
         std::cout << usage << std::endl;
@@ -195,12 +223,17 @@ int main(int argc, const char * argv[])
 
     if (vm.count("merge")) {
         if (vm.count("lookup") and vm.count("input") and vm.count("output")) {
-            auto rootDir = vm["input"].as<boost::filesystem::path>();
-            auto lookupTablePath = vm["lookup"].as<boost::filesystem::path>();
-            auto outputFilePath = vm["output"].as<boost::filesystem::path>();
+            auto rootDir = vm["input"].as<fs::path>();
+            auto lookupTablePath = vm["lookup"].as<fs::path>();
+            auto outputFilePath = vm["output"].as<fs::path>();
             
             MergeFiles(rootDir, outputFilePath, lookupTablePath);
         }
+    }
+    
+    if (vm.count("ls")) {
+        auto filePath = vm["input"].as<fs::path>();
+        ListEventFileContents(filePath);
     }
     
     

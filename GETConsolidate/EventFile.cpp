@@ -8,7 +8,20 @@
 
 #include "EventFile.h"
 
-const char* EventFile::magic = "EVTFILE";
+const int EventFile::magic {0x6e7ef11e};
+
+template<typename outType>
+outType EventFile::ExtractInt(std::vector<char>::const_iterator begin,
+                          std::vector<char>::const_iterator end)
+{
+    outType result = 0;
+    int n = 0;
+    for (auto iter = begin; iter != end; iter++) {
+        result |= (*iter)<<(8*n);
+        n++;
+    }
+    return result;
+}
 
 EventFile::EventFile ()
 {
@@ -38,7 +51,7 @@ void EventFile::OpenFileForWrite(std::string path)
     }
     isInitialized = true;
     
-    file.write(EventFile::magic,sizeof(EventFile::magic));
+    file.write((char*) &(EventFile::magic), sizeof(EventFile::magic));
 }
 
 void EventFile::WriteEvent(const Event& event)
@@ -71,8 +84,8 @@ void EventFile::OpenFileForRead(const std::string path)
     
     // Check if this is the correct file format
     
-    char read_magic[8];
-    file >> read_magic;
+    int read_magic;
+    file.read((char*) &read_magic,sizeof(read_magic));
     if (read_magic != magic) throw Exceptions::Wrong_File_Type(path);
     
     // This should leave the file position at the start of the first event.
@@ -88,7 +101,7 @@ Event EventFile::ReadEvent()
         RebuildIndex();
     }
     
-    std::vector<char> event_raw {};
+    std::vector<uint8_t> event_raw {};
     
     // Check that the file pointer is at the beginning of the event
     
@@ -98,22 +111,22 @@ Event EventFile::ReadEvent()
     
     // Read in the magic number and check it
     
-    char magic_in[4] {};
+    uint8_t read_magic {};
     uint32_t eventSize;
-    file >> magic_in;
+    file.read((char*) &read_magic, sizeof(read_magic));
     
-    if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
+    if (read_magic != Event::magic) throw Exceptions::Wrong_File_Position();
     
     // Find the event size
     
-    file >> eventSize;
+    file.read((char*) &eventSize, sizeof(eventSize));
     
     // Now go back to where we started and read the whole event
     
     file.seekg(currentEvt->second);
     for (unsigned long i = 0; i < eventSize; i++) {
-        char temp {};
-        file.read(&temp, sizeof(char));
+        uint8_t temp {};
+        file.read((char*) &temp, sizeof(char));
         event_raw.push_back(temp);
     }
     
@@ -128,32 +141,61 @@ Event EventFile::ReadEvent()
     return res;
 }
 
+Event EventFile::GetNextEvent()
+{
+    if (!isInitialized) throw Exceptions::Not_Init();
+    
+    if (offsetTable.size() == 0) RebuildIndex();
+    
+    if (currentEvt != offsetTable.end()) {
+        Event nextEvent = ReadEvent();
+        return nextEvent;
+    }
+    else throw Exceptions::End_of_File();
+}
+
+Event EventFile::GetPreviousEvent()
+{
+    if (!isInitialized) throw Exceptions::Not_Init();
+    
+    if (currentEvt != offsetTable.begin()) {
+        currentEvt--;
+        Event prevEvent = ReadEvent();
+        return prevEvent;
+    }
+    else throw Exceptions::End_of_File();
+}
+
 void EventFile::RebuildIndex()
 {
     if (!isInitialized) throw Exceptions::Not_Init();
     
     std::cout << "Rebuilding file's event index." << std::endl;
     
-    Event sampleEvt {};  // dummy event just to read values. KLUDGE
-    
-    file.seekg(sizeof(this->magic));  // go to end of file magic number
+    file.seekg(sizeof(EventFile::magic));  // go to end of file magic number
     
     while (!file.eof()) {
         unsigned long long currentPos = file.tellg();
-        char magic_in[4] {};
+        uint8_t magic_in;
         uint32_t eventSize, eventId;
-        file >> magic_in;
+        file.read((char*) &magic_in, sizeof(magic_in));
         
-        if (magic_in != sampleEvt.magic) throw Exceptions::Wrong_File_Position();
+        if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
         
-        file >> eventSize;
-        file >> eventId;
+        file.read((char*) &eventSize, sizeof(eventSize));
+        file.read((char*) &eventId, sizeof(eventId));
         offsetTable.emplace(eventId,currentPos);
         // Go back by the size of the three things we read, and skip forward
         // by the size of the event.
-        file.seekg(eventSize - sizeof(magic_in) - sizeof(eventSize) - sizeof(eventId));
+        file.seekg(eventSize - sizeof(magic_in) - sizeof(eventSize) - sizeof(eventId),std::ios::cur);
     }
-    
-    file.seekg(sizeof(this->magic));
     currentEvt = offsetTable.begin();
+    file.clear();
+    file.seekg(currentEvt->second);
+}
+
+bool EventFile::eof()
+{
+    if (!isInitialized) throw Exceptions::Not_Init();
+    return file.eof();
 }

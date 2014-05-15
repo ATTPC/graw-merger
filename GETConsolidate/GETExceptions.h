@@ -107,6 +107,15 @@ namespace Exceptions {
     public:
         virtual const char* what() const throw() {return msg.c_str();};
     };
+    
+    class End_of_File : public std::exception
+    {
+    private:
+        std::string msg {"Reached end of file."};
+        
+    public:
+        virtual const char* what() const throw() {return msg.c_str();};
+    };
 }
 
 

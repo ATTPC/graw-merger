@@ -8,11 +8,11 @@
 
 #include "Event.h"
 
-const char* Event::magic = "EVT";
+const uint8_t Event::magic {0xEE};
 
 template<typename outType>
-outType Event::ExtractInt(std::vector<char>::const_iterator begin,
-                          std::vector<char>::const_iterator end)
+outType Event::ExtractInt(std::vector<uint8_t>::const_iterator begin,
+                          std::vector<uint8_t>::const_iterator end)
 {
     outType result = 0;
     int n = 0;
@@ -27,15 +27,13 @@ Event::Event()
 {
 }
 
-Event::Event(std::vector<char>& raw)
+Event::Event(std::vector<uint8_t>& raw)
 {
-    char magic_in[4] {};
     auto rawIter = raw.begin();
     
-    for (int i = 0; i < 4; i++) {
-        magic_in[i] = *rawIter;
-        rawIter++;
-    }
+    uint8_t magic_in = ExtractInt<decltype(magic_in)>(rawIter, rawIter+sizeof(magic_in));
+    rawIter += sizeof(magic_in);
+    
     if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
     
 //    uint32_t sizeOfEvent = ExtractInt<uint32_t>(rawIter, rawIter+4);
@@ -134,7 +132,7 @@ uint32_t Event::Size() const
     // Size depends on what is written to disk. This is defined by
     // the stream insertion operator.
     
-    uint32_t size = sizeof("EVT") + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime) + sizeof(uint16_t);
+    uint32_t size = sizeof(Event::magic) + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime) + sizeof(uint16_t);
     for (auto item : traces) {
         size += item.second.size();
     }
@@ -145,7 +143,7 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
 {
     uint32_t sizeOfEvent = event.Size();
     
-    stream.write(event.magic, sizeof(event.magic));
+    stream.write((char*) &(Event::magic), sizeof(Event::magic));
     
     stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
     stream.write((char*) &event.eventId, sizeof(event.eventId));
