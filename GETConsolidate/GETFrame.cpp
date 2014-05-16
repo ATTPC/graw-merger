@@ -8,25 +8,9 @@
 
 #include "GETFrame.h"
 
-uint8_t GETFrame::ExtractAgetId(const uint32_t raw)
-{
-    return (raw & 0xC0000000)>>30;
-}
-
-uint8_t GETFrame::ExtractChannel(const uint32_t raw)
-{
-    return (raw & 0x3F800000)>>23;
-}
-
-uint16_t GETFrame::ExtractTBid(const uint32_t raw)
-{
-    return (raw & 0x007FC000)>>14;
-}
-
-int16_t GETFrame::ExtractSample(const uint32_t raw)
-{
-    return (raw & 0x00000FFF);
-}
+// --------
+// Constructor
+// --------
 
 GETFrame::GETFrame(GETDataFile& file)
 {
@@ -124,13 +108,38 @@ GETFrame::GETFrame(GETDataFile& file)
     
     for (rawFrameIter = dataBegin; rawFrameIter != rawFrame.end(); rawFrameIter+=4) {
         uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
-//        std::cout << std::hex << item << std::dec << std::endl;
+        //        std::cout << std::hex << item << std::dec << std::endl;
         
         uint8_t aget    = ExtractAgetId(item);
         uint8_t channel = ExtractChannel(item);
         uint16_t tbid   = ExtractTBid(item);
         int16_t sample  = ExtractSample(item);
-    
+        
         data.push_back(GETFrameDataItem(aget,channel,tbid,sample));
     }
 }
+
+// --------
+// Private Data Extraction Functions
+// --------
+
+uint8_t GETFrame::ExtractAgetId(const uint32_t raw)
+{
+    return (raw & 0xC0000000)>>30;
+}
+
+uint8_t GETFrame::ExtractChannel(const uint32_t raw)
+{
+    return (raw & 0x3F800000)>>23;
+}
+
+uint16_t GETFrame::ExtractTBid(const uint32_t raw)
+{
+    return (raw & 0x007FC000)>>14;
+}
+
+int16_t GETFrame::ExtractSample(const uint32_t raw)
+{
+    return (raw & 0x00000FFF);
+}
+

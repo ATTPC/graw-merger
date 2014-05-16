@@ -8,20 +8,15 @@
 
 #include "EventFile.h"
 
+// --------
+// Static constants
+// --------
+
 const int EventFile::magic {0x6e7ef11e};
 
-template<typename outType>
-outType EventFile::ExtractInt(std::vector<char>::const_iterator begin,
-                          std::vector<char>::const_iterator end)
-{
-    outType result = 0;
-    int n = 0;
-    for (auto iter = begin; iter != end; iter++) {
-        result |= (*iter)<<(8*n);
-        n++;
-    }
-    return result;
-}
+// --------
+// Constructors and Destructor
+// --------
 
 EventFile::EventFile ()
 {
@@ -32,10 +27,9 @@ EventFile::~EventFile ()
     this->CloseFile();
 }
 
-void EventFile::CloseFile()
-{
-    if (file.is_open() and this->isInitialized) file.close();
-}
+// --------
+// Opening and Closing the File
+// --------
 
 void EventFile::OpenFileForWrite(std::string path)
 {
@@ -52,20 +46,6 @@ void EventFile::OpenFileForWrite(std::string path)
     isInitialized = true;
     
     file.write((char*) &(EventFile::magic), sizeof(EventFile::magic));
-}
-
-void EventFile::WriteEvent(const Event& event)
-{
-    // Make sure file is initialized
-    
-    if (!isInitialized) {
-        throw Exceptions::Not_Init();
-    }
-    
-    unsigned long long currentPos = file.tellg();
-    offsetTable.emplace(event.eventId, currentPos);
-    
-    file << event;
 }
 
 void EventFile::OpenFileForRead(const std::string path)
@@ -89,6 +69,61 @@ void EventFile::OpenFileForRead(const std::string path)
     if (read_magic != magic) throw Exceptions::Wrong_File_Type(path);
     
     // This should leave the file position at the start of the first event.
+}
+
+void EventFile::CloseFile()
+{
+    if (file.is_open() and this->isInitialized) file.close();
+}
+
+// --------
+// Functions for Writing Events to File
+// --------
+
+void EventFile::WriteEvent(const Event& event)
+{
+    // Make sure file is initialized
+    
+    if (!isInitialized) {
+        throw Exceptions::Not_Init();
+    }
+    
+    unsigned long long currentPos = file.tellg();
+    offsetTable.emplace(event.eventId, currentPos);
+    
+    file << event;
+}
+
+// --------
+// Functions for Reading Events from File
+// --------
+
+void EventFile::RebuildIndex()
+{
+    if (!isInitialized) throw Exceptions::Not_Init();
+    
+    std::cout << "Rebuilding file's event index." << std::endl;
+    
+    file.seekg(sizeof(EventFile::magic));  // go to end of file magic number
+    
+    while (!file.eof()) {
+        unsigned long long currentPos = file.tellg();
+        uint8_t magic_in;
+        uint32_t eventSize, eventId;
+        file.read((char*) &magic_in, sizeof(magic_in));
+        
+        if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
+        
+        file.read((char*) &eventSize, sizeof(eventSize));
+        file.read((char*) &eventId, sizeof(eventId));
+        offsetTable.emplace(eventId,currentPos);
+        // Go back by the size of the three things we read, and skip forward
+        // by the size of the event.
+        file.seekg(eventSize - sizeof(magic_in) - sizeof(eventSize) - sizeof(eventId),std::ios::cur);
+    }
+    currentEvt = offsetTable.begin();
+    file.clear();
+    file.seekg(currentEvt->second);
 }
 
 Event EventFile::ReadEvent()
@@ -163,34 +198,6 @@ Event EventFile::GetPreviousEvent()
         return prevEvent;
     }
     else throw Exceptions::End_of_File();
-}
-
-void EventFile::RebuildIndex()
-{
-    if (!isInitialized) throw Exceptions::Not_Init();
-    
-    std::cout << "Rebuilding file's event index." << std::endl;
-    
-    file.seekg(sizeof(EventFile::magic));  // go to end of file magic number
-    
-    while (!file.eof()) {
-        unsigned long long currentPos = file.tellg();
-        uint8_t magic_in;
-        uint32_t eventSize, eventId;
-        file.read((char*) &magic_in, sizeof(magic_in));
-        
-        if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
-        
-        file.read((char*) &eventSize, sizeof(eventSize));
-        file.read((char*) &eventId, sizeof(eventId));
-        offsetTable.emplace(eventId,currentPos);
-        // Go back by the size of the three things we read, and skip forward
-        // by the size of the event.
-        file.seekg(eventSize - sizeof(magic_in) - sizeof(eventSize) - sizeof(eventId),std::ios::cur);
-    }
-    currentEvt = offsetTable.begin();
-    file.clear();
-    file.seekg(currentEvt->second);
 }
 
 bool EventFile::eof()

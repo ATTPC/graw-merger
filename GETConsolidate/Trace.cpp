@@ -7,22 +7,16 @@
 //
 
 #include "Trace.h"
-#include <stdexcept>
+
+// --------
+// Static constants
+// --------
 
 const uint32_t Trace::sampleSize = 3;
 
-template<typename outType>
-outType Trace::ExtractInt(std::vector<char>::const_iterator begin,
-                          std::vector<char>::const_iterator end)
-{
-    outType result = 0;
-    int n = 0;
-    for (auto iter = begin; iter != end; iter++) {
-        result |= (*iter)<<(8*n);
-        n++;
-    }
-    return result;
-}
+// --------
+// Constructors, Copy, and Move
+// --------
 
 Trace::Trace()
 : coboId(0),asadId(0),agetId(0),channel(0),padId(0)
@@ -34,38 +28,80 @@ Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 {
 }
 
-Trace::Trace(std::vector<char> raw)
+Trace::Trace(std::vector<uint8_t> raw)
 {
     auto pos = raw.begin();
     
-//    uint32_t traceSize = ExtractInt<uint32_t>(pos, pos+sizeof(uint32_t));
+//    uint32_t traceSize = Utilities::ExtractInt<uint32_t>(pos, pos+sizeof(uint32_t));
     pos += sizeof(uint32_t);
     
-    coboId = ExtractInt<decltype(coboId)>(pos, pos+sizeof(coboId));
+    coboId = Utilities::ExtractInt<decltype(coboId)>(pos, pos+sizeof(coboId));
     if (coboId < 0 or coboId > 10) throw Exceptions::Bad_Data();
     pos += sizeof(coboId);
     
-    asadId = ExtractInt<decltype(asadId)>(pos, pos+sizeof(asadId));
+    asadId = Utilities::ExtractInt<decltype(asadId)>(pos, pos+sizeof(asadId));
     if (asadId < 0 or asadId > 3) throw Exceptions::Bad_Data();
     pos += sizeof(asadId);
     
-    agetId = ExtractInt<decltype(agetId)>(pos, pos+sizeof(agetId));
+    agetId = Utilities::ExtractInt<decltype(agetId)>(pos, pos+sizeof(agetId));
     if (agetId < 0 or agetId > 3) throw Exceptions::Bad_Data();
     pos += sizeof(agetId);
     
-    channel = ExtractInt<decltype(agetId)>(pos, pos+sizeof(channel));
+    channel = Utilities::ExtractInt<decltype(agetId)>(pos, pos+sizeof(channel));
     if (channel < 0 or channel > 68) throw Exceptions::Bad_Data();
     pos += sizeof(channel);
     
-    padId = ExtractInt<decltype(padId)>(pos, pos+sizeof(padId));
+    padId = Utilities::ExtractInt<decltype(padId)>(pos, pos+sizeof(padId));
     pos += sizeof(padId);
     
     while (pos != raw.end()) {
-        uint32_t item = ExtractInt<decltype(item)>(pos, pos+Trace::sampleSize);
+        uint32_t item = Utilities::ExtractInt<decltype(item)>(pos, pos+Trace::sampleSize);
         data.insert(Trace::UnpackSample(item));
         pos += Trace::sampleSize;
     }
 }
+
+Trace::Trace(const Trace& orig)
+: coboId(orig.coboId),asadId(orig.asadId),agetId(orig.agetId),channel(orig.channel),padId(orig.padId)
+{
+    //this->data = orig.data;
+}
+
+Trace::Trace(Trace&& orig)
+: coboId(orig.coboId),asadId(orig.asadId),agetId(orig.agetId),channel(orig.channel),padId(orig.padId)
+{
+    //this->data = std::move(orig.data);
+}
+
+Trace& Trace::operator=(const Trace& orig)
+{
+    coboId = orig.coboId;
+    asadId = orig.asadId;
+    agetId = orig.agetId;
+    channel = orig.channel;
+    padId = orig.padId;
+    
+    data.clear();
+    //data = orig.data;
+    return *this;
+}
+
+Trace& Trace::operator=(Trace&& orig)
+{
+    coboId = orig.coboId;
+    asadId = orig.asadId;
+    agetId = orig.agetId;
+    channel = orig.channel;
+    padId = orig.padId;
+    
+    data.clear();
+    //data = std::move(orig.data);
+    return *this;
+}
+
+// --------
+// Adding and Getting Data Items
+// --------
 
 void Trace::AppendSample(int tBucket, int sample)
 {
@@ -76,6 +112,10 @@ int16_t Trace::GetSample(int tBucket) const
 {
     return data.at(tBucket);
 }
+
+// --------
+// Functions for Getting Size Information
+// --------
 
 uint32_t Trace::size() const
 {
@@ -89,6 +129,10 @@ unsigned long Trace::GetNumberOfTimeBuckets()
 {
     return data.size();
 }
+
+// --------
+// Operations on Contained Data
+// --------
 
 Trace& Trace::operator+=(Trace& other)
 {
@@ -145,6 +189,36 @@ void Trace::RenormalizeToZero()
     }
 }
 
+// --------
+// I/O Operations
+// --------
+
+std::ostream& operator<<(std::ostream& stream, const Trace& trace)
+{
+    uint32_t size = trace.size();
+    
+    stream.write((char*) &size, sizeof(size));
+    stream.write((char*) &(trace.coboId), sizeof(trace.coboId));
+    stream.write((char*) &(trace.asadId), sizeof(trace.asadId));
+    stream.write((char*) &(trace.agetId), sizeof(trace.agetId));
+    stream.write((char*) &(trace.channel), sizeof(trace.channel));
+    stream.write((char*) &(trace.padId), sizeof(trace.padId));
+    
+    for (auto item : trace.data)
+    {
+        //        stream.write((char*) &(item.first), sizeof(item.first));
+        //        stream.write((char*) &(item.second), sizeof(item.second));
+        auto compacted_data = Trace::CompactSample(item.first, item.second);
+        stream.write((char*) &compacted_data ,3*sizeof(char));
+    }
+    
+    return stream;
+}
+
+// --------
+// Private Data Compression Functions
+// --------
+
 uint32_t Trace::CompactSample(uint16_t tb, int16_t val)
 {
     // val is 12-bits and tb is 9 bits. Fit this in 24 bits.
@@ -160,24 +234,4 @@ std::pair<uint16_t,int16_t> Trace::UnpackSample(const uint32_t packed)
     return res;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Trace& trace)
-{
-    uint32_t size = trace.size();
-    
-    stream.write((char*) &size, sizeof(size));
-    stream.write((char*) &(trace.coboId), sizeof(trace.coboId));
-    stream.write((char*) &(trace.asadId), sizeof(trace.asadId));
-    stream.write((char*) &(trace.agetId), sizeof(trace.agetId));
-    stream.write((char*) &(trace.channel), sizeof(trace.channel));
-    stream.write((char*) &(trace.padId), sizeof(trace.padId));
-    
-    for (auto item : trace.data)
-    {
-//        stream.write((char*) &(item.first), sizeof(item.first));
-//        stream.write((char*) &(item.second), sizeof(item.second));
-        auto compacted_data = Trace::CompactSample(item.first, item.second);
-        stream.write((char*) &compacted_data ,3*sizeof(char));
-    }
 
-    return stream;
-}

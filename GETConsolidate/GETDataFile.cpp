@@ -8,6 +8,10 @@
 
 #include "GETDataFile.h"
 
+// --------
+// Constructors, Destructors, and Move
+// --------
+
 GETDataFile::GETDataFile() {};
 
 GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
@@ -75,6 +79,10 @@ GETDataFile& GETDataFile::operator=(GETDataFile&& orig)
     }
     return *this;
 }
+
+// --------
+// Getters for Raw Data and Properties
+// --------
 
 std::vector<uint8_t> GETDataFile::GetNextRawFrame()
 {

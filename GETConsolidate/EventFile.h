@@ -20,6 +20,39 @@
 
 class EventFile
 {
+public:
+    
+    // Constructors, destructor, copy, and move
+    // (copy and move are deleted since they wouldn't make sense)
+    
+    EventFile();
+    ~EventFile();
+    
+    EventFile(const EventFile& orig) =delete;
+    EventFile(EventFile&& orig) =delete;
+    
+    EventFile& operator=(const EventFile& other) =delete;
+    EventFile& operator=(EventFile&& other) =delete;
+    
+    // Opening and closing the file
+    
+    void OpenFileForWrite(std::string path);
+    void OpenFileForRead(const std::string path);
+    void CloseFile();
+    
+    // Functions for writing events to file
+
+    void WriteEvent(const Event& event);
+    
+    // Functions for reading events from a file
+
+    void RebuildIndex();
+    Event ReadEvent();
+    Event GetNextEvent();
+    Event GetPreviousEvent();
+    //    Event GetEventByNumber(const unsigned int evtNumber);
+    bool eof();
+    
 private:
     std::map<unsigned int,unsigned long long> offsetTable; // evt# : offset
     std::map<unsigned int,unsigned long long>::iterator currentEvt;
@@ -32,34 +65,6 @@ private:
     
     bool isInitialized = false;
     
-    template<typename outType>
-    outType ExtractInt(std::vector<char>::const_iterator begin,
-                                  std::vector<char>::const_iterator end);
-    
-public:
-    EventFile();
-    ~EventFile();
-    
-    EventFile(EventFile& orig) =delete;
-    EventFile(EventFile&& orig) =delete;
-    
-    EventFile& operator=(EventFile& other) =delete;
-    EventFile& operator=(EventFile&& other) =delete;
-    
-    void CloseFile();
-    
-    // Functions for writing events to file
-    void OpenFileForWrite(std::string path);
-    void WriteEvent(const Event& event);
-    
-    // Functions for reading events from a file
-    void OpenFileForRead(const std::string path);
-    void RebuildIndex();
-    Event ReadEvent();
-    Event GetNextEvent();
-    Event GetPreviousEvent();
-//    Event GetEventByNumber(const unsigned int evtNumber);
-    bool eof();
 };
 
 #endif /* defined(__GETConsolidate__EventFile__) */

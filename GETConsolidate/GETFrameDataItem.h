@@ -12,12 +12,6 @@
 #include <iostream>
 
 class GETFrameDataItem {
-private:
-    uint8_t agetId;
-    uint8_t channel;
-    uint16_t timeBucketId;
-    float sample;
-
 public:
     GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
                      uint16_t timeBucketId_in, float sample_in);
@@ -26,6 +20,12 @@ public:
     uint8_t GetChannel();
     uint16_t GetTimeBucketId();
     float GetSample();
+    
+private:
+    uint8_t agetId;
+    uint8_t channel;
+    uint16_t timeBucketId;
+    float sample;
 };
 
 #endif /* defined(__GETConsolidate__GETFrameDataItem__) */

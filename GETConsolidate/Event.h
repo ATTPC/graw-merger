@@ -25,12 +25,12 @@ public:
     
     // Construction of Events
     
-    Event();
+    Event();               // This one is needed for gmock testing
     Event(std::vector<uint8_t>& raw);
-    Event(Event& orig);    // copy constructor
+    Event(const Event& orig);    // copy constructor
     Event(Event&& orig);   // move constructor
     
-    Event& operator=(Event& orig);    // copy operator
+    Event& operator=(const Event& orig);    // copy operator
     Event& operator=(Event&& orig);   // move operator
     
     // Setting properties

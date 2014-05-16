@@ -8,12 +8,20 @@
 
 #include "GETFrameDataItem.h"
 
+// --------
+// Constructor
+// --------
+
 GETFrameDataItem::GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
                                    uint16_t timeBucketId_in, float sample_in)
 : agetId(agetId_in),channel(channel_in),timeBucketId(timeBucketId_in),
     sample(sample_in)
 {
 }
+
+// --------
+// Getters
+// --------
 
 uint8_t GETFrameDataItem::GetAgetId()
 {

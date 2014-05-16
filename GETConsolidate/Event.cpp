@@ -46,7 +46,7 @@ Event::Event(std::vector<uint8_t>& raw)
     for (decltype(nTraces) n = 0; n < nTraces; n++) {
         // Find trace size
         uint32_t traceSize = Utilities::ExtractInt<decltype(traceSize)>(rawIter, rawIter+sizeof(traceSize));
-        std::vector<char> rawTrace {rawIter,rawIter+traceSize};
+        std::vector<uint8_t> rawTrace {rawIter,rawIter+traceSize};
         
         // Create and emplace the new trace
         Trace newTrace {rawTrace};
@@ -58,7 +58,7 @@ Event::Event(std::vector<uint8_t>& raw)
     }
 }
 
-Event::Event(Event& orig)
+Event::Event(const Event& orig)
 : lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime)
 {
     traces = orig.traces;
@@ -70,7 +70,7 @@ Event::Event(Event&& orig)
     traces = std::move(orig.traces);
 }
 
-Event& Event::operator=(Event& orig)
+Event& Event::operator=(const Event& orig)
 {
     this->lookupTable = orig.lookupTable;  // could leak
     this->eventId = orig.eventId;

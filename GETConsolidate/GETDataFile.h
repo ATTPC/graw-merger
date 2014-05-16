@@ -66,11 +66,6 @@ private:
     
     uint8_t coboId;                      // CoBo ID from the file name
     uint8_t asadId;                      // AsAd ID from the file name
-    
-    /* This function just byteswaps a provided integer. This is necessary since
-     * the .GRAW files are generated on PowerPC and are big-endian, while Intel 
-     * computers are little-endian.
-     */
 };
 
 #endif /* defined(__GETConsolidate__GETDataFile__) */

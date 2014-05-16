@@ -19,12 +19,12 @@
 
 class GETFrame
 {
-    // Friends
-    friend class Event;
-    friend class GETFrameTestFixture;
-
+public:
+    GETFrame(GETDataFile& file);
+    
 private:
     // Header fields
+    
     uint8_t metaType; // set to 0x6
     uint32_t frameSize; // in units of 64 bytes
     uint8_t dataSource;
@@ -45,15 +45,20 @@ private:
     std::vector<uint8_t> multiplicity;
     
     // Data items
+    
     std::vector<GETFrameDataItem> data;
     
-public:
-    GETFrame(GETDataFile& file);
+    // Private functions
     
     static uint8_t ExtractAgetId(const uint32_t raw);
     static uint8_t ExtractChannel(const uint32_t raw);
     static uint16_t ExtractTBid(const uint32_t raw);
     static int16_t ExtractSample(const uint32_t raw);
+
+    // Friends
+    
+    friend class Event;
+    friend class GETFrameTestFixture;
 };
 
 #endif /* defined(__GETConsolidate__GETFrame__) */
