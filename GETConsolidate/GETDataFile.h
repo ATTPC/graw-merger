@@ -28,6 +28,7 @@ class GETDataFile
      */
     
 public:
+    GETDataFile();
     GETDataFile(const boost::filesystem::path& filePath_in);
     /* The constructor takes as an argument the path of the directory which
      * contains the .GRAW data files. It is assumed to be in the usual structure
@@ -49,13 +50,13 @@ public:
     GETDataFile(GETDataFile&& orig);
     GETDataFile& operator=(GETDataFile&& orig);
     
-    std::vector<uint8_t> GetNextRawFrame();
+    virtual std::vector<uint8_t> GetNextRawFrame();
     /* This function returns the next raw frame from the data file as a vector
      * of integers. This can then be processed using, say, a GETFrame.
      */
     
-    uint8_t GetFileCobo() const;    // Returns the CoBo # from the filename
-    uint8_t GetFileAsad() const;    // Returns the AsAd # from the filename
+    virtual uint8_t GetFileCobo() const;    // Returns the CoBo # from the filename
+    virtual uint8_t GetFileAsad() const;    // Returns the AsAd # from the filename
     
     bool eof() const;               // Checks if the file pointer is at EOF
     

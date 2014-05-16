@@ -21,6 +21,7 @@ class GETFrame
 {
     // Friends
     friend class Event;
+    friend class GETFrameTestFixture;
 
 private:
     // Header fields

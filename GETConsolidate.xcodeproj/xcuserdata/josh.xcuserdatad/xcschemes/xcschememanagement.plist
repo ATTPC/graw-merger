@@ -7,17 +7,27 @@
 		<key>GETConsolidate run ls.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>GETConsolidate run merge.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>GetConsolidateTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>03AB4099191C269F0021ABD4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>03C2018B19267C2900264702</key>
 		<dict>
 			<key>primary</key>
 			<true/>

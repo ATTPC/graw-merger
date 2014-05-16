@@ -8,6 +8,8 @@
 
 #include "GETDataFile.h"
 
+GETDataFile::GETDataFile() {};
+
 GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
 : filePath(filePath_in)
 {
