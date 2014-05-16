@@ -8,7 +8,15 @@
 
 #include "Event.h"
 
+// --------
+// Static Variables
+// --------
+
 const uint8_t Event::magic {0xEE};
+
+// --------
+// Constructors, Move, and Copy
+// --------
 
 Event::Event()
 {
@@ -50,14 +58,59 @@ Event::Event(std::vector<uint8_t>& raw)
     }
 }
 
-int Event::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
+Event::Event(Event& orig)
+: lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime)
 {
-    return channel + aget*100 + asad*10000 + cobo*1000000;
+    traces = orig.traces;
 }
+
+Event::Event(Event&& orig)
+: lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime)
+{
+    traces = std::move(orig.traces);
+}
+
+Event& Event::operator=(Event& orig)
+{
+    this->lookupTable = orig.lookupTable;  // could leak
+    this->eventId = orig.eventId;
+    this->eventTime = orig.eventTime;
+    
+    this->traces.clear();
+    this->traces = orig.traces;
+    
+    return *this;
+}
+
+Event& Event::operator=(Event&& orig)
+{
+    this->lookupTable = orig.lookupTable;  // could leak
+    this->eventId = orig.eventId;
+    this->eventTime = orig.eventTime;
+    
+    this->traces.clear();
+    this->traces = std::move(orig.traces);
+    
+    return *this;
+}
+
+// --------
+// Setting Properties
+// --------
 
 void Event::SetLookupTable(PadLookupTable * table)
 {
     lookupTable = table;
+}
+
+void Event::SetEventId(uint32_t eventId_in)
+{
+    eventId = eventId_in;
+}
+
+void Event::SetEventTime(uint32_t eventTime_in)
+{
+    eventTime = eventTime_in;
 }
 
 void Event::AppendFrame(const GETFrame& frame)
@@ -114,6 +167,10 @@ void Event::AppendFrame(const GETFrame& frame)
     }
 }
 
+// --------
+// Getting Properties and Members
+// --------
+
 uint32_t Event::Size() const
 {
     // Size depends on what is written to disk. This is defined by
@@ -124,27 +181,6 @@ uint32_t Event::Size() const
         size += item.second.size();
     }
     return size;
-}
-
-std::ostream& operator<<(std::ostream& stream, const Event& event)
-{
-    uint32_t sizeOfEvent = event.Size();
-    
-    stream.write((char*) &(Event::magic), sizeof(Event::magic));
-    
-    stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
-    stream.write((char*) &event.eventId, sizeof(event.eventId));
-    stream.write((char*) &event.eventTime, sizeof(event.eventTime));
-    
-    uint16_t nTraces = (uint16_t) event.traces.size();
-    stream.write((char*) &nTraces, sizeof(nTraces));
-    
-    for (auto item : event.traces)
-    {
-        stream << item.second;
-    }
-
-    return stream;
 }
 
 Trace& Event::GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
@@ -163,15 +199,9 @@ uint32_t Event::GetEventTime() const
     return eventTime;
 }
 
-void Event::SetEventId(uint32_t eventId_in)
-{
-    eventId = eventId_in;
-}
-
-void Event::SetEventTime(uint32_t eventTime_in)
-{
-    eventTime = eventTime_in;
-}
+// --------
+// Manipulation of Contained Data
+// --------
 
 void Event::SubtractFPN()
 {
@@ -224,4 +254,38 @@ void Event::SubtractFPN()
             }
         }
     }
+}
+
+// --------
+// I/O Functions
+// --------
+
+std::ostream& operator<<(std::ostream& stream, const Event& event)
+{
+    uint32_t sizeOfEvent = event.Size();
+    
+    stream.write((char*) &(Event::magic), sizeof(Event::magic));
+    
+    stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
+    stream.write((char*) &event.eventId, sizeof(event.eventId));
+    stream.write((char*) &event.eventTime, sizeof(event.eventTime));
+    
+    uint16_t nTraces = (uint16_t) event.traces.size();
+    stream.write((char*) &nTraces, sizeof(nTraces));
+    
+    for (auto item : event.traces)
+    {
+        stream << item.second;
+    }
+    
+    return stream;
+}
+
+// --------
+// Private Functions
+// --------
+
+int Event::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
+{
+    return channel + aget*100 + asad*10000 + cobo*1000000;
 }
