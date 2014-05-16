@@ -95,13 +95,9 @@ Event EventFile::ReadEvent()
 {
     if (!isInitialized) throw Exceptions::Not_Init();
     
-    Event evt {};
-    
     if (offsetTable.size() == 0) {
         RebuildIndex();
     }
-    
-    std::vector<uint8_t> event_raw {};
     
     // Check that the file pointer is at the beginning of the event
     
@@ -112,16 +108,19 @@ Event EventFile::ReadEvent()
     // Read in the magic number and check it
     
     uint8_t read_magic {};
-    uint32_t eventSize;
-    file.read((char*) &read_magic, sizeof(read_magic));
     
+    file.read((char*) &read_magic, sizeof(read_magic));
     if (read_magic != Event::magic) throw Exceptions::Wrong_File_Position();
     
     // Find the event size
     
+    uint32_t eventSize;
+    
     file.read((char*) &eventSize, sizeof(eventSize));
     
     // Now go back to where we started and read the whole event
+    
+    std::vector<uint8_t> event_raw {};
     
     file.seekg(currentEvt->second);
     for (unsigned long i = 0; i < eventSize; i++) {

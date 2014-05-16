@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
@@ -162,14 +163,25 @@ void ListEventFileContents(boost::filesystem::path filepath)
     EventFile efile {};
     efile.OpenFileForRead(filepath.string());
     
+    std::cout << std::setw(4) << "ID" << std::setw(13) << "Time" << std::endl;
+    std::cout << "-----------------" << std::endl;
+    
     while (!efile.eof()) {
-
-        Event thisEvent = efile.GetNextEvent();
-
-        auto id = thisEvent.GetEventId();
-        auto time = thisEvent.GetEventTime();
+        try {
+            Event thisEvent = efile.GetNextEvent();
+            
+            auto id = thisEvent.GetEventId();
+            auto time = thisEvent.GetEventTime();
         
-        std::cout << "Event ID " << id << ", Event time " << time << std::endl;
+            std::cout << std::setw(4) << id << std::setw(13) << time << std::endl;
+            
+        }
+        catch (Exceptions::End_of_File& eof) {
+            break;
+        }
+        catch (std::exception& e) {
+            std::cout << e.what() << std::endl;
+        }
     }
     
     efile.CloseFile();

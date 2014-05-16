@@ -26,7 +26,7 @@ private:
     
     std::fstream file;
     
-    // Magic string for file ID: EVTFILE\0
+    // Magic string for file ID
     
     static const int magic;
     
