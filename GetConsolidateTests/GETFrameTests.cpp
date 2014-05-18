@@ -8,6 +8,7 @@
 
 #include "gtest/gtest.h"
 #include "GETFrame.h"
+#include "FakeRawFrame.h"
 #include "MockGETDataFile.h"
 
 #include <vector>
@@ -16,17 +17,6 @@
 class GETFrameTestFixture : public testing::Test
 {
 protected:
-    GETFrameTestFixture()
-    {
-        std::ifstream file ("./MockData/GoodFrame.graw", std::ios::binary);
-        while (file.good()) {
-            char tmp;
-            file.get(tmp);
-            fakeData.push_back(tmp);
-        }
-        fakeData.pop_back();  // kludge to take care of duplication of last byte
-        file.close();
-    }
     
     uint8_t GetMetaType(GETFrame& fr) {return fr.metaType;};
     uint32_t GetFrameSize(GETFrame& fr) {return fr.frameSize;};
@@ -40,8 +30,10 @@ protected:
     
     unsigned long GetSizeOfDataVec(GETFrame& fr) {return fr.data.size();};
     
-    std::vector<uint8_t> fakeData;
+public:
+    
     MockGetDataFile mockFile;
+    void TestConstructor(FakeRawFrame& fr);
 };
 
 TEST(GETFrameTests,ExtractAgetId)
@@ -102,22 +94,30 @@ TEST(GETFrameTests,DISABLED_DataExtractionCombined)
     }
 }
 
-TEST_F(GETFrameTestFixture, Constructor)
+void GETFrameTestFixture::TestConstructor(FakeRawFrame& fr)
 {
+    auto fakeData = fr.GenerateRawFrameVector();
+    
     EXPECT_CALL(mockFile, GetNextRawFrame()).Times(1).WillOnce(testing::Return(fakeData));
-    EXPECT_CALL(mockFile, GetFileCobo()).Times(1).WillOnce(testing::Return(0));
-    EXPECT_CALL(mockFile, GetFileAsad()).Times(1).WillOnce(testing::Return(0));
+    EXPECT_CALL(mockFile, GetFileCobo()).Times(1).WillRepeatedly(testing::Return(3));
+    EXPECT_CALL(mockFile, GetFileAsad()).Times(1).WillOnce(testing::Return(2));
     
     GETFrame frame {mockFile};
-    EXPECT_EQ(6,GetMetaType(frame));
-    EXPECT_EQ(1224,GetFrameSize(frame));
-    EXPECT_EQ(4,GetHeaderSize(frame));
-    EXPECT_EQ(4, GetItemSize(frame));
-    EXPECT_EQ(19520, GetNItems(frame));
-    EXPECT_EQ(1234567890, GetEventTime(frame));
-    EXPECT_EQ(12, GetEventId(frame));
-    EXPECT_EQ(0, GetCoboId(frame));
-    EXPECT_EQ(0, GetAsadId(frame));
-    EXPECT_EQ(19520, GetSizeOfDataVec(frame));
+    EXPECT_EQ(fr.metatype,GetMetaType(frame));
+    EXPECT_EQ(fr.frameSize,GetFrameSize(frame));
+    EXPECT_EQ(fr.headerSize,GetHeaderSize(frame));
+    EXPECT_EQ(fr.itemSize, GetItemSize(frame));
+    EXPECT_EQ(fr.nItems, GetNItems(frame));
+    EXPECT_EQ(fr.eventTime, GetEventTime(frame));
+    EXPECT_EQ(fr.eventId, GetEventId(frame));
+    EXPECT_EQ(fr.coboId, GetCoboId(frame));
+    EXPECT_EQ(fr.asadId, GetAsadId(frame));
+    EXPECT_EQ(fr.nItems, GetSizeOfDataVec(frame));
+}
+
+TEST_F(GETFrameTestFixture, Constructor)
+{
+    FakeRawFrame fr {1234567890, 12, 3, 2};
+    TestConstructor(fr);
 }
 

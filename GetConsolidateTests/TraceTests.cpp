@@ -12,7 +12,18 @@
 
 #include "gtest/gtest.h"
 
-TEST(TraceTests,CompactSample)
+class TraceTestFixture : public testing::Test
+{
+public:
+    void TestCompactSample();
+    void TestUnpackSample();
+    void TestCompactAndUnpack();
+    void TestAddition();
+    void TestSubtraction();
+    void TestScalarDivision();
+};
+
+void TraceTestFixture::TestCompactSample()
 {
     for (uint16_t tb = 0; tb < 512; tb++) {
         for (int16_t val = 0; val < 0xFFF; val++) {
@@ -25,7 +36,12 @@ TEST(TraceTests,CompactSample)
     }
 }
 
-TEST(TraceTests,UnpackSample)
+TEST_F(TraceTestFixture, TestCompactSample)
+{
+    TestCompactSample();
+}
+
+void TraceTestFixture::TestUnpackSample()
 {
     for (uint16_t tb = 0; tb < 512; tb++) {
         for (int16_t val = 0; val < 0xFFF; val++) {
@@ -37,7 +53,12 @@ TEST(TraceTests,UnpackSample)
     }
 }
 
-TEST(TraceTests,CompactAndUnpack)
+TEST_F(TraceTestFixture, TestUnpackSample)
+{
+    TestUnpackSample();
+}
+
+void TraceTestFixture::TestCompactAndUnpack()
 {
     for (uint16_t tb = 0; tb < 512; tb++) {
         for (int16_t val = 0; val < 0xFFF; val++) {
@@ -49,7 +70,13 @@ TEST(TraceTests,CompactAndUnpack)
     }
 }
 
-TEST(TraceTests,Addition) {
+TEST_F(TraceTestFixture,TestCompactAndUnpack)
+{
+    TestCompactAndUnpack();
+}
+
+void TraceTestFixture::TestAddition()
+{
     Trace *t1, *t2;
     
     for (int a = 0; a < 200; a++) {
@@ -72,7 +99,12 @@ TEST(TraceTests,Addition) {
     }
 }
 
-TEST(TraceTests,Subtraction)
+TEST_F(TraceTestFixture,TestAddition)
+{
+    TestAddition();
+}
+
+void TraceTestFixture::TestSubtraction()
 {
     Trace *t1, *t2;
     
@@ -96,7 +128,12 @@ TEST(TraceTests,Subtraction)
     }
 }
 
-TEST(TraceTests,ScalarDivision)
+TEST_F(TraceTestFixture,TestSubtraction)
+{
+    TestSubtraction();
+}
+
+void TraceTestFixture::TestScalarDivision()
 {
     Trace *t1;
     
@@ -115,4 +152,9 @@ TEST(TraceTests,ScalarDivision)
             delete t1;
         }
     }
+}
+
+TEST_F(TraceTestFixture, TestScalarDivision)
+{
+    TestScalarDivision();
 }

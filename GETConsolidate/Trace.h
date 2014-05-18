@@ -77,6 +77,7 @@ private:
     // Friends
     
     friend class Event;
+    friend class TraceTestFixture;
 };
 
 #endif /* defined(__GETConsolidate__Trace__) */

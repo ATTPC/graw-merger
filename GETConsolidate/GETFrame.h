@@ -22,6 +22,13 @@ class GETFrame
 public:
     GETFrame(GETDataFile& file);
     
+    // Data extraction functions
+    
+    static uint8_t ExtractAgetId(const uint32_t raw);
+    static uint8_t ExtractChannel(const uint32_t raw);
+    static uint16_t ExtractTBid(const uint32_t raw);
+    static int16_t ExtractSample(const uint32_t raw);
+    
 private:
     // Header fields
     
@@ -47,13 +54,6 @@ private:
     // Data items
     
     std::vector<GETFrameDataItem> data;
-    
-    // Private functions
-    
-    static uint8_t ExtractAgetId(const uint32_t raw);
-    static uint8_t ExtractChannel(const uint32_t raw);
-    static uint16_t ExtractTBid(const uint32_t raw);
-    static int16_t ExtractSample(const uint32_t raw);
 
     // Friends
     

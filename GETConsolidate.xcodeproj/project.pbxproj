@@ -14,6 +14,7 @@
 		03517E10192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
 		03517E11192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
 		03517E12192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
+		038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */; };
 		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
 		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
 		03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
@@ -89,6 +90,8 @@
 		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
 		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
 		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
+		038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeRawFrame.cpp; sourceTree = "<group>"; };
+		038AB1041927F08B009C1C38 /* FakeRawFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeRawFrame.h; sourceTree = "<group>"; };
 		039056CC192552AE00214C6C /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GETConsolidate Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -226,8 +229,10 @@
 			children = (
 				03C201B11926942F00264702 /* MockData */,
 				03C201B019268E7E00264702 /* MockGETDataFile.h */,
-				03C2019F19267D8A00264702 /* TraceTests.cpp */,
+				038AB1041927F08B009C1C38 /* FakeRawFrame.h */,
+				038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */,
 				03C201A41926835C00264702 /* GETFrameTests.cpp */,
+				03C2019F19267D8A00264702 /* TraceTests.cpp */,
 				03C2018E19267C2900264702 /* main.cpp */,
 				03C2019019267C2900264702 /* GetConsolidateTests.1 */,
 				03C201B41926A6E700264702 /* libgmock.a */,
@@ -397,6 +402,7 @@
 				03C201AB1926896700264702 /* Event.cpp in Sources */,
 				03C201A31926804000264702 /* Trace.cpp in Sources */,
 				03C2018F19267C2900264702 /* main.cpp in Sources */,
+				038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */,
 				03C201A91926896700264702 /* GETFrame.cpp in Sources */,
 				03C201A71926896700264702 /* PadLookupTable.cpp in Sources */,
 				03C201A119267D8A00264702 /* TraceTests.cpp in Sources */,
@@ -637,6 +643,7 @@
 				03C2019419267C2900264702 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		03DDF3911917FD0F00306788 /* Build configuration list for PBXProject "GETConsolidate" */ = {
 			isa = XCConfigurationList;
