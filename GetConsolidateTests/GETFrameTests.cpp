@@ -98,11 +98,10 @@ void GETFrameTestFixture::TestConstructor(FakeRawFrame& fr)
 {
     auto fakeData = fr.GenerateRawFrameVector();
     
-    EXPECT_CALL(mockFile, GetNextRawFrame()).Times(1).WillOnce(testing::Return(fakeData));
     EXPECT_CALL(mockFile, GetFileCobo()).Times(1).WillRepeatedly(testing::Return(3));
     EXPECT_CALL(mockFile, GetFileAsad()).Times(1).WillOnce(testing::Return(2));
     
-    GETFrame frame {mockFile};
+    GETFrame frame {fakeData, mockFile.GetFileCobo(), mockFile.GetFileAsad()};
     EXPECT_EQ(fr.metatype,GetMetaType(frame));
     EXPECT_EQ(fr.frameSize,GetFrameSize(frame));
     EXPECT_EQ(fr.headerSize,GetHeaderSize(frame));
