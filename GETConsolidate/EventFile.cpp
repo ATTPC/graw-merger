@@ -15,65 +15,37 @@
 const int EventFile::magic {0x6e7ef11e};
 
 // --------
-// Constructors and Destructor
-// --------
-
-EventFile::EventFile ()
-{
-}
-
-EventFile::~EventFile ()
-{
-    this->CloseFile();
-}
-
-// --------
 // Opening and Closing the File
 // --------
 
-void EventFile::OpenFileForWrite(std::string path)
+void EventFile::OpenFileForWrite(boost::filesystem::path path)
 {
-    // Make sure the object isn't already initialized
+    DataFile::OpenFileForWrite(path);
     
-    if (isInitialized) {
-        throw Exceptions::Already_Init();
-    }
-    
-    file.open(path, std::ios::out|std::ios::binary|std::ios::trunc);
-    if (!file.good()) {
-        throw Exceptions::Bad_File(path);
-    }
-    isInitialized = true;
-    
-    file.write((char*) &(EventFile::magic), sizeof(EventFile::magic));
+    filestream.write((char*) &(EventFile::magic), sizeof(EventFile::magic));
 }
 
-void EventFile::OpenFileForRead(const std::string path)
+void EventFile::OpenFileForWrite(std::string path)
 {
-    // Make sure the object isn't already initialized
-    
-    if (isInitialized) {
-        throw Exceptions::Already_Init();
-    }
-    
-    file.open(path, std::ios::in|std::ios::binary);
-    if (!file.good()) {
-        throw Exceptions::Bad_File(path);
-    }
-    isInitialized = true;
-    
-    // Check if this is the correct file format
+    boost::filesystem::path fp {path};
+    OpenFileForWrite(fp);
+}
+
+void EventFile::OpenFileForRead(const boost::filesystem::path path)
+{
+    DataFile::OpenFileForRead(path);
     
     int read_magic;
-    file.read((char*) &read_magic,sizeof(read_magic));
-    if (read_magic != magic) throw Exceptions::Wrong_File_Type(path);
+    filestream.read((char*) &read_magic,sizeof(read_magic));
+    if (read_magic != magic) throw Exceptions::Wrong_File_Type(path.string());
     
     // This should leave the file position at the start of the first event.
 }
 
-void EventFile::CloseFile()
+void EventFile::OpenFileForRead(const std::string path)
 {
-    if (file.is_open() and this->isInitialized) file.close();
+    boost::filesystem::path fp {path};
+    OpenFileForRead(fp);
 }
 
 // --------
@@ -88,10 +60,10 @@ void EventFile::WriteEvent(const Event& event)
         throw Exceptions::Not_Init();
     }
     
-    unsigned long long currentPos = file.tellg();
+    unsigned long long currentPos = filestream.tellg();
     offsetTable.emplace(event.eventId, currentPos);
     
-    file << event;
+    filestream << event;
 }
 
 // --------
@@ -104,29 +76,29 @@ void EventFile::RebuildIndex()
     
     std::cout << "Rebuilding file's event index." << std::endl;
     
-    file.seekg(sizeof(EventFile::magic));  // go to end of file magic number
+    filestream.seekg(sizeof(EventFile::magic));  // go to end of file magic number
     
-    while (!file.eof()) {
-        unsigned long long currentPos = file.tellg();
+    while (!filestream.eof()) {
+        unsigned long long currentPos = filestream.tellg();
         uint8_t magic_in;
         uint32_t eventSize, eventId;
-        file.read((char*) &magic_in, sizeof(magic_in));
+        filestream.read((char*) &magic_in, sizeof(magic_in));
         
         if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();
         
-        file.read((char*) &eventSize, sizeof(eventSize));
-        file.read((char*) &eventId, sizeof(eventId));
+        filestream.read((char*) &eventSize, sizeof(eventSize));
+        filestream.read((char*) &eventId, sizeof(eventId));
         offsetTable.emplace(eventId,currentPos);
         // Go back by the size of the three things we read, and skip forward
         // by the size of the event.
-        file.seekg(eventSize - sizeof(magic_in) - sizeof(eventSize) - sizeof(eventId),std::ios::cur);
+        filestream.seekg(eventSize - sizeof(magic_in) - sizeof(eventSize) - sizeof(eventId),std::ios::cur);
     }
     currentEvt = offsetTable.begin();
-    file.clear();
-    file.seekg(currentEvt->second);
+    filestream.clear();
+    filestream.seekg(currentEvt->second);
 }
 
-Event EventFile::ReadEvent()
+std::vector<uint8_t> EventFile::ReadRawFrame()
 {
     if (!isInitialized) throw Exceptions::Not_Init();
     
@@ -136,7 +108,7 @@ Event EventFile::ReadEvent()
     
     // Check that the file pointer is at the beginning of the event
     
-    if (file.tellg() != currentEvt->second) {
+    if (filestream.tellg() != currentEvt->second) {
         throw Exceptions::Wrong_File_Position();
     }
     
@@ -144,23 +116,23 @@ Event EventFile::ReadEvent()
     
     uint8_t read_magic {};
     
-    file.read((char*) &read_magic, sizeof(read_magic));
+    filestream.read((char*) &read_magic, sizeof(read_magic));
     if (read_magic != Event::magic) throw Exceptions::Wrong_File_Position();
     
     // Find the event size
     
     uint32_t eventSize;
     
-    file.read((char*) &eventSize, sizeof(eventSize));
+    filestream.read((char*) &eventSize, sizeof(eventSize));
     
     // Now go back to where we started and read the whole event
     
     std::vector<uint8_t> event_raw {};
     
-    file.seekg(currentEvt->second);
+    filestream.seekg(currentEvt->second);
     for (unsigned long i = 0; i < eventSize; i++) {
         uint8_t temp {};
-        file.read((char*) &temp, sizeof(char));
+        filestream.read((char*) &temp, sizeof(char));
         event_raw.push_back(temp);
     }
     
@@ -168,11 +140,7 @@ Event EventFile::ReadEvent()
     
     currentEvt++;
     
-    // Create the event
-    
-    Event res {event_raw};
-    
-    return res;
+    return event_raw;
 }
 
 Event EventFile::GetNextEvent()
@@ -182,7 +150,8 @@ Event EventFile::GetNextEvent()
     if (offsetTable.size() == 0) RebuildIndex();
     
     if (currentEvt != offsetTable.end()) {
-        Event nextEvent = ReadEvent();
+        std::vector<uint8_t> raw_event = ReadRawFrame();
+        Event nextEvent {raw_event};
         return nextEvent;
     }
     else throw Exceptions::End_of_File();
@@ -194,14 +163,9 @@ Event EventFile::GetPreviousEvent()
     
     if (currentEvt != offsetTable.begin()) {
         currentEvt--;
-        Event prevEvent = ReadEvent();
+        std::vector<uint8_t> raw_event = ReadRawFrame();
+        Event prevEvent {raw_event};
         return prevEvent;
     }
     else throw Exceptions::End_of_File();
-}
-
-bool EventFile::eof()
-{
-    if (!isInitialized) throw Exceptions::Not_Init();
-    return file.eof();
 }

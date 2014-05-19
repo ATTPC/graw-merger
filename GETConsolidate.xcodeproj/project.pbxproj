@@ -14,6 +14,8 @@
 		03517E10192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
 		03517E11192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
 		03517E12192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
+		037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
+		037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */; };
 		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
 		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
@@ -90,6 +92,8 @@
 		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
 		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
 		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
+		037A338D192A5E8E006E2E84 /* DataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataFile.cpp; sourceTree = "<group>"; };
+		037A338E192A5E8E006E2E84 /* DataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFile.h; sourceTree = "<group>"; };
 		038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeRawFrame.cpp; sourceTree = "<group>"; };
 		038AB1041927F08B009C1C38 /* FakeRawFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeRawFrame.h; sourceTree = "<group>"; };
 		039056CC192552AE00214C6C /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 			children = (
 				039056CC192552AE00214C6C /* Utilities.h */,
 				03AB40C0191D546C0021ABD4 /* GETExceptions.h */,
+				037A338E192A5E8E006E2E84 /* DataFile.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
 				03AB40B2191D0D950021ABD4 /* GETDataFile.h */,
 				03DDF3A31917FD9100306788 /* GETFrame.h */,
@@ -214,6 +219,7 @@
 			children = (
 				03DDF3B21919621A00306788 /* PadLookupTable.cpp */,
 				03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */,
+				037A338D192A5E8E006E2E84 /* DataFile.cpp */,
 				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
 				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
 				03DDF3AC19195A5E00306788 /* Event.cpp */,
@@ -398,6 +404,7 @@
 				03C201A81926896700264702 /* GETDataFile.cpp in Sources */,
 				03C201AA1926896700264702 /* GETFrameDataItem.cpp in Sources */,
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
+				037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03C201A61926835C00264702 /* GETFrameTests.cpp in Sources */,
 				03C201AB1926896700264702 /* Event.cpp in Sources */,
 				03C201A31926804000264702 /* Trace.cpp in Sources */,
@@ -419,6 +426,7 @@
 				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
 				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
 				03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */,
+				037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,
 				03DDF3B119195B6100306788 /* Trace.cpp in Sources */,
 			);

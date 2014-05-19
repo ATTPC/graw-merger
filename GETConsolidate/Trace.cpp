@@ -64,13 +64,13 @@ Trace::Trace(std::vector<uint8_t> raw)
 Trace::Trace(const Trace& orig)
 : coboId(orig.coboId),asadId(orig.asadId),agetId(orig.agetId),channel(orig.channel),padId(orig.padId)
 {
-    //this->data = orig.data;
+    this->data = orig.data;
 }
 
 Trace::Trace(Trace&& orig)
 : coboId(orig.coboId),asadId(orig.asadId),agetId(orig.agetId),channel(orig.channel),padId(orig.padId)
 {
-    //this->data = std::move(orig.data);
+    this->data = std::move(orig.data);
 }
 
 Trace& Trace::operator=(const Trace& orig)

@@ -82,7 +82,7 @@ void MergeFiles(boost::filesystem::path input_path,
     
     for (auto filename : filePaths) {
         try {
-            dataFiles.push_back( GETDataFile(filename.string()) );
+            dataFiles.push_back(GETDataFile{filename, std::ios::in});
         }
         catch (std::exception& e) {
             std::cout << e.what() << std::endl;
@@ -117,7 +117,8 @@ void MergeFiles(boost::filesystem::path input_path,
         
         for (auto &file : dataFiles) {
             try {
-                frames.push(GETFrame(file));
+                std::vector<uint8_t> raw_frame = file.ReadRawFrame();
+                frames.push(GETFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
             }
             catch (std::exception& e) {
                 std::cout << e.what() << std::endl;

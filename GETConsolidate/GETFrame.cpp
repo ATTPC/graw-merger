@@ -12,9 +12,8 @@
 // Constructor
 // --------
 
-GETFrame::GETFrame(GETDataFile& file)
+GETFrame::GETFrame(std::vector<uint8_t> rawFrame, uint8_t fileCobo, uint8_t fileAsad)
 {
-    auto rawFrame = file.GetNextRawFrame();
     auto rawFrameIter = rawFrame.begin();
     
     std::cout << "Parsing raw frame." << std::endl;
@@ -67,9 +66,9 @@ GETFrame::GETFrame(GETDataFile& file)
     coboId = *rawFrameIter;
     rawFrameIter++;
     
-    if (coboId != file.GetFileCobo()) {
+    if (coboId != fileCobo) {
         std::cout << "    CoBo ID in file does not match CoBo ID in path. Using path value." << std::endl;
-        coboId = file.GetFileCobo();
+        coboId = fileCobo;
     }
     
     asadId = *rawFrameIter;
@@ -77,9 +76,9 @@ GETFrame::GETFrame(GETDataFile& file)
     
     std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
     
-    if (asadId != file.GetFileAsad()) {
+    if (asadId != fileAsad) {
         std::cout << "    AsAd ID in file does not match AsAd ID in path. Using path value." << std::endl;
-        asadId = file.GetFileAsad();
+        asadId = fileAsad;
     }
     
     readOffset = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);

@@ -9,18 +9,39 @@
 #include "GETDataFile.h"
 
 // --------
-// Constructors, Destructors, and Move
+// Constructors
 // --------
 
 GETDataFile::GETDataFile() {};
 
-GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
-: filePath(filePath_in)
+GETDataFile::GETDataFile(const boost::filesystem::path path, const std::ios::openmode mode)
 {
-    // Check validity of file path
-    if (not (exists(filePath) and is_regular_file(filePath))) {
-        throw Exceptions::Bad_File(filePath.string());
+    if (mode & std::ios::in) {
+        OpenFileForRead(path);
     }
+    else if (mode & std::ios::out) {
+        OpenFileForWrite(path);
+    }
+    else throw Exceptions::File_Open_Failed(path.string());
+}
+
+GETDataFile::GETDataFile(const std::string path, const std::ios::openmode mode)
+{
+    boost::filesystem::path fp {path};
+    
+    if (mode & std::ios::in) {
+        OpenFileForRead(fp);
+    }
+    else if (mode & std::ios::out) {
+        OpenFileForWrite(fp);
+    }
+    else throw Exceptions::File_Open_Failed(fp.string());
+}
+
+void GETDataFile::OpenFileForRead(const boost::filesystem::path filePath_in)
+{
+    DataFile::OpenFileForRead(filePath_in);
+    
     if (filePath.extension() != ".graw") {
         throw Exceptions::Wrong_File_Type(filePath.filename().string());
     }
@@ -34,57 +55,30 @@ GETDataFile::GETDataFile(const boost::filesystem::path& filePath_in)
     
     std::string filename = filePath.filename().string();
     asadId = filename.at(filename.find("AsAd") + 4) - '0'; // this is kludgy
-    
-    // Open file stream
-    
-    filestream.open(filePath.string(), std::ios::in|std::ios::binary);
-    if (filestream.bad()) {
-        throw Exceptions::Bad_File(filename);
-    }
 }
 
-GETDataFile::~GETDataFile()
+void GETDataFile::OpenFileForRead(const std::string path)
 {
-    filestream.close();
+    boost::filesystem::path fp {path};
+    OpenFileForRead(fp);
 }
 
-GETDataFile::GETDataFile(GETDataFile&& orig)
-: filePath(orig.filePath), coboId(orig.coboId), asadId(orig.asadId)
+void GETDataFile::OpenFileForWrite(boost::filesystem::path path)
 {
-    auto origPos = orig.filestream.tellg();
-    orig.filestream.close();
     
-    this->filestream.open(filePath.string(), std::ios::in|std::ios::binary);
-    if (this->filestream.good()) {
-        filestream.seekg(origPos);
-    }
 }
 
-GETDataFile& GETDataFile::operator=(GETDataFile&& orig)
+void GETDataFile::OpenFileForWrite(std::string path)
 {
-    if (this->filestream.is_open()) {
-        this->filestream.close();
-    }
-    
-    this->filePath = orig.filePath;
-    this->coboId = orig.coboId;
-    this->asadId = orig.asadId;
-    
-    auto origPos = orig.filestream.tellg();
-    orig.filestream.close();
-    
-    this->filestream.open(filePath.string(), std::ios::in|std::ios::binary);
-    if (this->filestream.good()) {
-        filestream.seekg(origPos);
-    }
-    return *this;
+    boost::filesystem::path fp {path};
+    OpenFileForWrite(fp);
 }
 
 // --------
 // Getters for Raw Data and Properties
 // --------
 
-std::vector<uint8_t> GETDataFile::GetNextRawFrame()
+std::vector<uint8_t> GETDataFile::ReadRawFrame()
 {
     std::vector<uint8_t> size_raw;
     uint16_t size;
@@ -130,9 +124,4 @@ uint8_t GETDataFile::GetFileCobo() const
 uint8_t GETDataFile::GetFileAsad() const
 {
     return asadId;
-}
-
-bool GETDataFile::eof() const
-{
-    return filestream.eof();
 }

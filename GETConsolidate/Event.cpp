@@ -273,7 +273,7 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
     uint16_t nTraces = (uint16_t) event.traces.size();
     stream.write((char*) &nTraces, sizeof(nTraces));
     
-    for (auto item : event.traces)
+    for (auto& item : event.traces)
     {
         stream << item.second;
     }

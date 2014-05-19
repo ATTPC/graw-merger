@@ -18,8 +18,9 @@
 
 #include "GETExceptions.h"
 #include "Utilities.h"
+#include "DataFile.h"
 
-class GETDataFile
+class GETDataFile : public DataFile
 {
     /* This class represents the .GRAW file output by the DAQ. It contains a 
      * C++ filestream to read in the file from disk, and it can then read
@@ -28,29 +29,18 @@ class GETDataFile
      */
     
 public:
+    
     GETDataFile();
-    GETDataFile(const boost::filesystem::path& filePath_in);
-    /* The constructor takes as an argument the path of the directory which
-     * contains the .GRAW data files. It is assumed to be in the usual structure
-     * where there is a folder called "mm[n]" for each CoBo, where the [n] is 
-     * the CoBo number.
-     */
+    GETDataFile(const std::string path, const std::ios::openmode mode);
+    GETDataFile(const boost::filesystem::path path, const std::ios::openmode mode);
     
-    ~GETDataFile();
+    void OpenFileForRead(const std::string path) override;
+    void OpenFileForRead(const boost::filesystem::path path) override;
     
-    /* Copy operators:
-     * These are disabled since copying a filestream is a bad idea.
-     */
+    void OpenFileForWrite(const std::string path) override;
+    void OpenFileForWrite(const boost::filesystem::path path) override;
     
-    GETDataFile(const GETDataFile& orig) =delete;
-    GETDataFile& operator=(const GETDataFile& other) =delete;
-    
-    // Move operators
-    
-    GETDataFile(GETDataFile&& orig);
-    GETDataFile& operator=(GETDataFile&& orig);
-    
-    virtual std::vector<uint8_t> GetNextRawFrame();
+    std::vector<uint8_t> ReadRawFrame() override;
     /* This function returns the next raw frame from the data file as a vector
      * of integers. This can then be processed using, say, a GETFrame.
      */
@@ -58,11 +48,7 @@ public:
     virtual uint8_t GetFileCobo() const;    // Returns the CoBo # from the filename
     virtual uint8_t GetFileAsad() const;    // Returns the AsAd # from the filename
     
-    bool eof() const;               // Checks if the file pointer is at EOF
-    
 private:
-    boost::filesystem::path filePath;    // The location of the file
-    std::ifstream filestream;            // A filestream pointing to the file
     
     uint8_t coboId;                      // CoBo ID from the file name
     uint8_t asadId;                      // AsAd ID from the file name
