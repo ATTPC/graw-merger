@@ -23,7 +23,7 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
 {
     auto rawFrameIter = rawFrame.begin();
     
-    std::cout << "Parsing raw frame." << std::endl;
+//    std::cout << "Parsing raw frame." << std::endl;
     
     metaType = *rawFrameIter;
     rawFrameIter++;
@@ -74,14 +74,14 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     rawFrameIter++;
     
     if (coboId != fileCobo) {
-        std::cout << "    CoBo ID in file does not match CoBo ID in path. Using path value." << std::endl;
+//        std::cout << "    CoBo ID in file does not match CoBo ID in path. Using path value." << std::endl;
         coboId = fileCobo;
     }
     
     asadId = *rawFrameIter;
     rawFrameIter++;
     
-    std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
+//    std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
     
     if (asadId != fileAsad) {
         std::cout << "    AsAd ID in file does not match AsAd ID in path. Using path value." << std::endl;
@@ -89,16 +89,17 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     }
     
     readOffset = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
-    rawFrameIter+2;
+    rawFrameIter+=2;
     
     status = *rawFrameIter;
     rawFrameIter++;
     
     for (int aget = 0; aget<4; aget++) {
         std::bitset<9*8> bs {};   // init to 0
-        for (int byte = 0; byte<9; byte++) {
+        for (int byte = 8; byte>=0; byte--) {
             //hitPattern[aget][byte] = *rawFrameIter;
             bs &= (*rawFrameIter) << byte*8;
+//            std::cout << int(*rawFrameIter) << std::endl;
             rawFrameIter++;
         }
         hitPatterns.push_back(bs);
@@ -114,7 +115,6 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     
     for (rawFrameIter = dataBegin; rawFrameIter != rawFrame.end(); rawFrameIter+=4) {
         uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
-        //        std::cout << std::hex << item << std::dec << std::endl;
         
         uint8_t aget    = ExtractAgetId(item);
         uint8_t channel = ExtractChannel(item);
@@ -122,6 +122,10 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
         int16_t sample  = ExtractSample(item);
         
         data.push_back(GETFrameDataItem(aget,channel,tbid,sample));
+        
+//        if (!(hitPatterns.at(aget).test(channel))) {
+//            std::cout << "Channel " << int(channel) << " on CoBo " << int(coboId) << " AsAd " << int(asadId) << " AGET " << int(aget) << " not on in hitpattern." << std::endl;
+//        }
     }
 }
 

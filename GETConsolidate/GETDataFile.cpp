@@ -102,7 +102,7 @@ std::vector<uint8_t> GETDataFile::ReadRawFrame()
     
     if (size == 0) throw Exceptions::Frame_Read_Error();
     
-    std::cout << "Found frame of size " << size << std::endl;
+//    std::cout << "Found frame of size " << size << std::endl;
     
     filestream.seekg(-4,std::ios::cur); // rewind to start of frame
     

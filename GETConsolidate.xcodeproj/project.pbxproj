@@ -202,14 +202,14 @@
 			children = (
 				039056CC192552AE00214C6C /* Utilities.h */,
 				03AB40C0191D546C0021ABD4 /* GETExceptions.h */,
-				037A338E192A5E8E006E2E84 /* DataFile.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
+				037A338E192A5E8E006E2E84 /* DataFile.h */,
 				03AB40B2191D0D950021ABD4 /* GETDataFile.h */,
+				03AB40BA191D45900021ABD4 /* EventFile.h */,
 				03DDF3A31917FD9100306788 /* GETFrame.h */,
 				03DDF3A61918026900306788 /* GETFrameDataItem.h */,
 				03DDF3AD19195A5E00306788 /* Event.h */,
 				03DDF3B019195B6100306788 /* Trace.h */,
-				03AB40BA191D45900021ABD4 /* EventFile.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -218,13 +218,13 @@
 			isa = PBXGroup;
 			children = (
 				03DDF3B21919621A00306788 /* PadLookupTable.cpp */,
-				03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */,
 				037A338D192A5E8E006E2E84 /* DataFile.cpp */,
+				03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */,
+				03AB40B9191D45900021ABD4 /* EventFile.cpp */,
 				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
 				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
 				03DDF3AC19195A5E00306788 /* Event.cpp */,
 				03DDF3AF19195B6100306788 /* Trace.cpp */,
-				03AB40B9191D45900021ABD4 /* EventFile.cpp */,
 				03DDF3991917FD1000306788 /* main.cpp */,
 			);
 			name = Source;
