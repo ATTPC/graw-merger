@@ -19,6 +19,7 @@
 #include "GETExceptions.h"
 #include "Utilities.h"
 #include "DataFile.h"
+#include "GETFrame.h"
 
 class GETDataFile : public DataFile
 {
@@ -45,6 +46,8 @@ public:
      * of integers. This can then be processed using, say, a GETFrame.
      */
     
+    void WriteFrame(const GETFrame& frame);
+    
     virtual uint8_t GetFileCobo() const;    // Returns the CoBo # from the filename
     virtual uint8_t GetFileAsad() const;    // Returns the AsAd # from the filename
     
@@ -52,6 +55,9 @@ private:
     
     uint8_t coboId;                      // CoBo ID from the file name
     uint8_t asadId;                      // AsAd ID from the file name
+    
+    template<typename T>
+    static void AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes);
 };
 
 #endif /* defined(__GETConsolidate__GETDataFile__) */

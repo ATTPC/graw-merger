@@ -14,18 +14,18 @@
 class GETFrameDataItem {
 public:
     GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
-                     uint16_t timeBucketId_in, float sample_in);
+                     uint16_t timeBucketId_in, uint16_t sample_in);
     
     uint8_t GetAgetId();
     uint8_t GetChannel();
     uint16_t GetTimeBucketId();
-    float GetSample();
+    uint16_t GetSample();
     
 private:
     uint8_t agetId;
     uint8_t channel;
     uint16_t timeBucketId;
-    float sample;
+    uint16_t sample;
 };
 
 #endif /* defined(__GETConsolidate__GETFrameDataItem__) */

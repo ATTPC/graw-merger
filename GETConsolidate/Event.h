@@ -39,7 +39,7 @@ public:
     void SetLookupTable(PadLookupTable* table);
     
     void SetEventId(uint32_t eventId_in);
-    void SetEventTime(uint32_t eventTime_in);
+    void SetEventTime(uint64_t eventTime_in);
     
     void AppendFrame(const GETFrame& frame);
     std::vector<GETFrame> ExtractAllFrames();
@@ -51,7 +51,7 @@ public:
     Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
     uint32_t GetEventId() const;
-    uint32_t GetEventTime() const;
+    uint64_t GetEventTime() const;
     
     // Manipulations of contained data
     
@@ -71,7 +71,7 @@ private:
     // Event Header fields
     
     uint32_t eventId = 0;
-    uint32_t eventTime = 0;
+    uint64_t eventTime = 0;
     static const uint8_t magic; // Equals 0xEE, defined in Event.cpp
     
     // Traces for each pad

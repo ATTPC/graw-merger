@@ -23,7 +23,7 @@ protected:
     uint16_t GetHeaderSize(GETFrame& fr) {return fr.headerSize;};
     uint16_t GetItemSize(GETFrame& fr) {return fr.itemSize;};
     uint32_t GetNItems(GETFrame& fr) {return fr.nItems;};
-    uint32_t GetEventTime(GETFrame& fr) {return fr.eventTime;};
+    uint64_t GetEventTime(GETFrame& fr) {return fr.eventTime;};
     uint32_t GetEventId(GETFrame& fr) {return fr.eventId;};
     uint8_t  GetCoboId(GETFrame& fr) {return fr.coboId;};
     uint8_t  GetAsadId(GETFrame& fr) {return fr.asadId;};

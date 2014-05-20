@@ -13,7 +13,7 @@
 // --------
 
 GETFrame::GETFrame()
-: metaType(6),frameSize(0),dataSource(0),frameType(1),revision(4),headerSize(4),itemSize(4),nItems(0),eventTime(0),eventId(0),coboId(0),asadId(0),readOffset(0),status(0)
+: metaType(6),frameSize(0),dataSource(0),frameType(1),revision(4),headerSize(2),itemSize(4),nItems(0),eventTime(0),eventId(0),coboId(0),asadId(0),readOffset(0),status(0)
 {
     hitPatterns = {0,0,0,0};
     multiplicity = {0,0,0,0};
@@ -64,7 +64,7 @@ GETFrame::GETFrame(std::vector<uint8_t> rawFrame, uint8_t fileCobo, uint8_t file
         nItems = (frameSize*64 - headerSize*64)/4;
     }
     
-    eventTime = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+6);
+    eventTime = Utilities::ExtractByteSwappedInt<uint64_t>(rawFrameIter, rawFrameIter+6);
     rawFrameIter += 6;
     
     eventId = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);

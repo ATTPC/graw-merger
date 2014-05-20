@@ -65,7 +65,7 @@ void GETDataFile::OpenFileForRead(const std::string path)
 
 void GETDataFile::OpenFileForWrite(boost::filesystem::path path)
 {
-    
+    DataFile::OpenFileForWrite(path);
 }
 
 void GETDataFile::OpenFileForWrite(std::string path)
@@ -114,6 +114,71 @@ std::vector<uint8_t> GETDataFile::ReadRawFrame()
     
     return frame_raw;
     // Leaves file pointer at end of frame. This assumes the frame size is correct.
+}
+
+void GETDataFile::WriteFrame(const GETFrame& frame)
+{
+    // Serialize the frame. **Big-endian**
+    std::vector<uint8_t> ser;
+    
+    ser.push_back(frame.metaType);
+    AppendBytes(ser, frame.frameSize, 3);
+    ser.push_back(frame.dataSource);
+    AppendBytes(ser, frame.frameType, 2);
+    ser.push_back(frame.revision);
+    AppendBytes(ser, frame.headerSize, 2);
+    AppendBytes(ser, frame.itemSize, 2);
+    AppendBytes(ser, frame.nItems, 4);
+    AppendBytes(ser, frame.eventTime, 6);
+    AppendBytes(ser, frame.eventId, 4);
+    ser.push_back(frame.coboId);
+    ser.push_back(frame.asadId);
+    AppendBytes(ser, frame.readOffset, 2);
+    ser.push_back(frame.status);
+    
+//    for (auto item : frame.hitPatterns) {
+//        AppendBytes(ser, item.to_ullong(), 9);
+//    }
+    
+    for (int i = 0; i < 9*4; i++) {
+        ser.push_back(0xFF);
+    }
+    
+    for (auto item : frame.multiplicity) {
+        AppendBytes(ser, item, 2);
+    }
+    
+    // Pad it out
+    
+    while (ser.size() < frame.headerSize * 64) {
+        ser.push_back(0x00);
+    }
+    
+    for (auto item : frame.data) {
+        uint32_t ser_item {0};
+        ser_item |= item.GetSample();
+        ser_item |= (item.GetTimeBucketId() << 14);
+        ser_item |= (item.GetChannel() << 23);
+        ser_item |= (item.GetAgetId() << 30);
+        AppendBytes(ser, ser_item, 4);
+    }
+    
+    while (ser.size() < frame.frameSize * 64) {
+        ser.push_back(0x00);
+    }
+    
+    // Write to file
+    for (auto item : ser) {
+        filestream.write((char*) &item,sizeof(item));
+    }
+}
+
+template<typename T>
+void GETDataFile::AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes)
+{
+    for (int i = nBytes-1; i >= 0; i--) {
+        vec.push_back((val & (0xFF << i*8)) >> i*8);
+    }
 }
 
 uint8_t GETDataFile::GetFileCobo() const

@@ -13,7 +13,7 @@
 // --------
 
 GETFrameDataItem::GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
-                                   uint16_t timeBucketId_in, float sample_in)
+                                   uint16_t timeBucketId_in, uint16_t sample_in)
 : agetId(agetId_in),channel(channel_in),timeBucketId(timeBucketId_in),
     sample(sample_in)
 {
@@ -38,7 +38,7 @@ uint16_t GETFrameDataItem::GetTimeBucketId()
     return this->timeBucketId;
 }
 
-float GETFrameDataItem::GetSample()
+uint16_t GETFrameDataItem::GetSample()
 {
     return this->sample;
 }

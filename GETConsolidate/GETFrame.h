@@ -14,7 +14,6 @@
 #include <bitset>
 
 #include "GETFrameDataItem.h"
-#include "GETDataFile.h"
 #include "Utilities.h"
 
 class GETFrame
@@ -41,7 +40,7 @@ private:
     uint16_t headerSize;
     uint16_t itemSize;
     uint32_t nItems;
-    uint32_t eventTime;
+    uint64_t eventTime;
     uint32_t eventId;
     uint8_t coboId;
     uint8_t asadId;
@@ -60,6 +59,7 @@ private:
     
     friend class Event;
     friend class GETFrameTestFixture;
+    friend class GETDataFile;
 };
 
 #endif /* defined(__GETConsolidate__GETFrame__) */

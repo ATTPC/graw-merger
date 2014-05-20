@@ -108,7 +108,7 @@ void Event::SetEventId(uint32_t eventId_in)
     eventId = eventId_in;
 }
 
-void Event::SetEventTime(uint32_t eventTime_in)
+void Event::SetEventTime(uint64_t eventTime_in)
 {
     eventTime = eventTime_in;
 }
@@ -199,8 +199,12 @@ std::vector<GETFrame> Event::ExtractAllFrames()
                 fr.hitPatterns.at(iter->second.agetId).set(iter->second.channel,1);
             }
             
-            fr.nItems = static_cast<uint8_t>(fr.data.size());
+            fr.nItems = static_cast<uint32_t>(fr.data.size());
             fr.frameSize = fr.headerSize + ceil((fr.nItems*fr.itemSize)/64);
+            
+            if (fr.nItems != 0) {
+                frames.push_back(fr);
+            }
         }
     }
     
@@ -234,7 +238,7 @@ uint32_t Event::GetEventId() const
     return eventId;
 }
 
-uint32_t Event::GetEventTime() const
+uint64_t Event::GetEventTime() const
 {
     return eventTime;
 }
