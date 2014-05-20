@@ -167,6 +167,46 @@ void Event::AppendFrame(const GETFrame& frame)
     }
 }
 
+std::vector<GETFrame> Event::ExtractAllFrames()
+{
+    std::vector<GETFrame> frames;
+    
+    for (uint8_t cobo = 0; cobo < 10; cobo++) {
+        for (uint8_t asad = 0; asad < 4; asad++) {
+            auto lbhash = CalculateHash(cobo, asad, 0, 0);
+            auto ubhash = CalculateHash(cobo, asad, 4, 68);
+            auto lb = traces.lower_bound(lbhash);
+            auto ub = traces.upper_bound(ubhash);
+            
+            if (lb == traces.end()) continue;
+            
+            GETFrame fr {};
+            fr.coboId = cobo;
+            fr.asadId = asad;
+            fr.eventTime = eventTime;
+            fr.eventId = eventId;
+            
+            for (auto iter = lb; iter != ub; iter++) {
+                // Working at channel level in this loop
+                for (auto sample : iter->second.data) {
+                    // Gets all of the tbuckets for this channel
+                    fr.data.push_back(GETFrameDataItem(iter->second.agetId,
+                                                       iter->second.channel,
+                                                       sample.first,
+                                                       sample.second));
+                }
+                // Set the hitpatterns
+                fr.hitPatterns.at(iter->second.agetId).set(iter->second.channel,1);
+            }
+            
+            fr.nItems = static_cast<uint8_t>(fr.data.size());
+            fr.frameSize = fr.headerSize + ceil((fr.nItems*fr.itemSize)/64);
+        }
+    }
+    
+    return frames;
+}
+
 // --------
 // Getting Properties and Members
 // --------

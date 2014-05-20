@@ -12,6 +12,13 @@
 // Constructor
 // --------
 
+GETFrame::GETFrame()
+: metaType(6),frameSize(0),dataSource(0),frameType(1),revision(4),headerSize(4),itemSize(4),nItems(0),eventTime(0),eventId(0),coboId(0),asadId(0),readOffset(0),status(0)
+{
+    hitPatterns = {0,0,0,0};
+    multiplicity = {0,0,0,0};
+}
+
 GETFrame::GETFrame(std::vector<uint8_t> rawFrame, uint8_t fileCobo, uint8_t fileAsad)
 {
     auto rawFrameIter = rawFrame.begin();

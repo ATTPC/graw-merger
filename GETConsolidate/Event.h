@@ -17,6 +17,7 @@
 #include "PadLookupTable.h"
 #include "GETExceptions.h"
 #include <map>
+#include <cmath>
 #include "Utilities.h"
 
 class Event
@@ -41,6 +42,7 @@ public:
     void SetEventTime(uint32_t eventTime_in);
     
     void AppendFrame(const GETFrame& frame);
+    std::vector<GETFrame> ExtractAllFrames();
     
     // Getting properties and members
     
