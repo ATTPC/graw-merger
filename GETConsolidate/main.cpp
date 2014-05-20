@@ -91,8 +91,8 @@ void MergeFiles(boost::filesystem::path input_path,
     
     // Open the output file
     
-//    EventFile output;
-    GETDataFile output;
+    EventFile output;
+//    GETDataFile output;
     
     std::string output_path_string = output_path.string();
     
@@ -149,13 +149,13 @@ void MergeFiles(boost::filesystem::path input_path,
         
         // Write the event to the output file.
         
-        //output.WriteEvent(testEvent);
+        output.WriteEvent(testEvent);
         
-        auto procFrames = testEvent.ExtractAllFrames();
-        
-        for (auto fr : procFrames) {
-            output.WriteFrame(fr);
-        }
+//        auto procFrames = testEvent.ExtractAllFrames();
+//        
+//        for (auto fr : procFrames) {
+//            output.WriteFrame(fr);
+//        }
     }
     
     output.CloseFile();

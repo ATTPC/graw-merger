@@ -10,7 +10,7 @@
 
 DataFile::DataFile() {};
 
-DataFile::DataFile(const boost::filesystem::path path, const std::ios::openmode mode)
+DataFile::DataFile(const boost::filesystem::path& path, const std::ios::openmode mode)
 {
     if (mode & std::ios::in) {
         OpenFileForRead(path);
@@ -21,7 +21,7 @@ DataFile::DataFile(const boost::filesystem::path path, const std::ios::openmode 
     else throw Exceptions::File_Open_Failed(path.string());
 }
 
-DataFile::DataFile(const std::string path, const std::ios::openmode mode)
+DataFile::DataFile(const std::string& path, const std::ios::openmode mode)
 {
     boost::filesystem::path fp {path};
 
@@ -34,7 +34,7 @@ DataFile::DataFile(const std::string path, const std::ios::openmode mode)
     else throw Exceptions::File_Open_Failed(fp.string());
 }
 
-void DataFile::OpenFileForWrite(const boost::filesystem::path path)
+void DataFile::OpenFileForWrite(const boost::filesystem::path& path)
 {
     namespace fs = boost::filesystem;
     
@@ -52,7 +52,7 @@ void DataFile::OpenFileForWrite(const boost::filesystem::path path)
     }
 }
 
-void DataFile::OpenFileForWrite(const std::string path)
+void DataFile::OpenFileForWrite(const std::string& path)
 {
     namespace fs = boost::filesystem;
     
@@ -61,7 +61,7 @@ void DataFile::OpenFileForWrite(const std::string path)
     OpenFileForWrite(fp);
 }
 
-void DataFile::OpenFileForRead(const boost::filesystem::path path)
+void DataFile::OpenFileForRead(const boost::filesystem::path& path)
 {
     namespace fs = boost::filesystem;
     
@@ -86,7 +86,7 @@ void DataFile::OpenFileForRead(const boost::filesystem::path path)
     }
 }
 
-void DataFile::OpenFileForRead(const std::string path)
+void DataFile::OpenFileForRead(const std::string& path)
 {
     namespace fs = boost::filesystem;
     

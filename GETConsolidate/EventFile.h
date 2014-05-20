@@ -25,10 +25,10 @@ class EventFile : public DataFile
 public:
     // Opening and closing the file. These override DataFile
     
-    void OpenFileForWrite(const std::string path) override;
-    void OpenFileForWrite(const boost::filesystem::path path) override;
-    void OpenFileForRead(const std::string path) override;
-    void OpenFileForRead(const boost::filesystem::path) override;
+    void OpenFileForWrite(const std::string& path) override;
+    void OpenFileForWrite(const boost::filesystem::path& path) override;
+    void OpenFileForRead(const std::string& path) override;
+    void OpenFileForRead(const boost::filesystem::path& path) override;
     
     // Functions for writing events to file
 

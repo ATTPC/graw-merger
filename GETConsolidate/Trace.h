@@ -24,7 +24,7 @@ public:
     
     Trace();
     Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
-    Trace(std::vector<uint8_t> raw);
+    Trace(const std::vector<uint8_t>& raw);
     Trace(const Trace& orig);
     Trace(Trace&& orig);
     

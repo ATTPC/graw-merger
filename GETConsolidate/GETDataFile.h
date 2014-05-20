@@ -32,14 +32,14 @@ class GETDataFile : public DataFile
 public:
     
     GETDataFile();
-    GETDataFile(const std::string path, const std::ios::openmode mode);
-    GETDataFile(const boost::filesystem::path path, const std::ios::openmode mode);
+    GETDataFile(const std::string& path, const std::ios::openmode mode);
+    GETDataFile(const boost::filesystem::path& path, const std::ios::openmode mode);
     
-    void OpenFileForRead(const std::string path) override;
-    void OpenFileForRead(const boost::filesystem::path path) override;
+    void OpenFileForRead(const std::string& path) override;
+    void OpenFileForRead(const boost::filesystem::path& path) override;
     
-    void OpenFileForWrite(const std::string path) override;
-    void OpenFileForWrite(const boost::filesystem::path path) override;
+    void OpenFileForWrite(const std::string& path) override;
+    void OpenFileForWrite(const boost::filesystem::path& path) override;
     
     std::vector<uint8_t> ReadRawFrame() override;
     /* This function returns the next raw frame from the data file as a vector

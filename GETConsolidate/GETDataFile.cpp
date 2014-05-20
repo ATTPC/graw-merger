@@ -14,7 +14,7 @@
 
 GETDataFile::GETDataFile() {};
 
-GETDataFile::GETDataFile(const boost::filesystem::path path, const std::ios::openmode mode)
+GETDataFile::GETDataFile(const boost::filesystem::path& path, const std::ios::openmode mode)
 {
     if (mode & std::ios::in) {
         OpenFileForRead(path);
@@ -25,7 +25,7 @@ GETDataFile::GETDataFile(const boost::filesystem::path path, const std::ios::ope
     else throw Exceptions::File_Open_Failed(path.string());
 }
 
-GETDataFile::GETDataFile(const std::string path, const std::ios::openmode mode)
+GETDataFile::GETDataFile(const std::string& path, const std::ios::openmode mode)
 {
     boost::filesystem::path fp {path};
     
@@ -38,7 +38,7 @@ GETDataFile::GETDataFile(const std::string path, const std::ios::openmode mode)
     else throw Exceptions::File_Open_Failed(fp.string());
 }
 
-void GETDataFile::OpenFileForRead(const boost::filesystem::path filePath_in)
+void GETDataFile::OpenFileForRead(const boost::filesystem::path& filePath_in)
 {
     DataFile::OpenFileForRead(filePath_in);
     
@@ -57,18 +57,18 @@ void GETDataFile::OpenFileForRead(const boost::filesystem::path filePath_in)
     asadId = filename.at(filename.find("AsAd") + 4) - '0'; // this is kludgy
 }
 
-void GETDataFile::OpenFileForRead(const std::string path)
+void GETDataFile::OpenFileForRead(const std::string& path)
 {
     boost::filesystem::path fp {path};
     OpenFileForRead(fp);
 }
 
-void GETDataFile::OpenFileForWrite(boost::filesystem::path path)
+void GETDataFile::OpenFileForWrite(const boost::filesystem::path& path)
 {
     DataFile::OpenFileForWrite(path);
 }
 
-void GETDataFile::OpenFileForWrite(std::string path)
+void GETDataFile::OpenFileForWrite(const std::string& path)
 {
     boost::filesystem::path fp {path};
     OpenFileForWrite(fp);

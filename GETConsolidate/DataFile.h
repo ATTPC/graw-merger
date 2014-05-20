@@ -22,8 +22,8 @@ class DataFile
 {
 public:
     DataFile();
-    DataFile(const std::string path, const std::ios::openmode mode);
-    DataFile(const boost::filesystem::path path, const std::ios::openmode mode);
+    DataFile(const std::string& path, const std::ios::openmode mode);
+    DataFile(const boost::filesystem::path& path, const std::ios::openmode mode);
     
 //    DataFile(const DataFile& orig) =delete;
 //    DataFile(DataFile&& orig) =delete;
@@ -31,11 +31,11 @@ public:
 //    DataFile& operator=(const DataFile& other) =delete;
 //    DataFile& operator=(DataFile&& other) =delete;
     
-    virtual void OpenFileForWrite(const std::string path);
-    virtual void OpenFileForWrite(const boost::filesystem::path path);
+    virtual void OpenFileForWrite(const std::string& path);
+    virtual void OpenFileForWrite(const boost::filesystem::path& path);
     
-    virtual void OpenFileForRead(const std::string path);
-    virtual void OpenFileForRead(const boost::filesystem::path path);
+    virtual void OpenFileForRead(const std::string& path);
+    virtual void OpenFileForRead(const boost::filesystem::path& path);
     
     virtual void CloseFile();
     

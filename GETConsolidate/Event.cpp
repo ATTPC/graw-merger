@@ -22,7 +22,7 @@ Event::Event()
 {
 }
 
-Event::Event(std::vector<uint8_t>& raw)
+Event::Event(const std::vector<uint8_t>& raw)
 {
     auto rawIter = raw.begin();
     
@@ -103,12 +103,12 @@ void Event::SetLookupTable(PadLookupTable * table)
     lookupTable = table;
 }
 
-void Event::SetEventId(uint32_t eventId_in)
+void Event::SetEventId(const uint32_t eventId_in)
 {
     eventId = eventId_in;
 }
 
-void Event::SetEventTime(uint64_t eventTime_in)
+void Event::SetEventTime(const uint64_t eventTime_in)
 {
     eventTime = eventTime_in;
 }
@@ -317,7 +317,7 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
     uint16_t nTraces = (uint16_t) event.traces.size();
     stream.write((char*) &nTraces, sizeof(nTraces));
     
-    for (auto& item : event.traces)
+    for (const auto& item : event.traces)
     {
         stream << item.second;
     }

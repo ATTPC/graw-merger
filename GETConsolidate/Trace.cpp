@@ -28,7 +28,7 @@ Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 {
 }
 
-Trace::Trace(std::vector<uint8_t> raw)
+Trace::Trace(const std::vector<uint8_t>& raw)
 {
     auto pos = raw.begin();
     
@@ -204,7 +204,7 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     stream.write((char*) &(trace.channel), sizeof(trace.channel));
     stream.write((char*) &(trace.padId), sizeof(trace.padId));
     
-    for (auto item : trace.data)
+    for (const auto& item : trace.data)
     {
         //        stream.write((char*) &(item.first), sizeof(item.first));
         //        stream.write((char*) &(item.second), sizeof(item.second));

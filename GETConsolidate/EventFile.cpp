@@ -18,20 +18,20 @@ const int EventFile::magic {0x6e7ef11e};
 // Opening and Closing the File
 // --------
 
-void EventFile::OpenFileForWrite(boost::filesystem::path path)
+void EventFile::OpenFileForWrite(const boost::filesystem::path& path)
 {
     DataFile::OpenFileForWrite(path);
     
     filestream.write((char*) &(EventFile::magic), sizeof(EventFile::magic));
 }
 
-void EventFile::OpenFileForWrite(std::string path)
+void EventFile::OpenFileForWrite(const std::string& path)
 {
     boost::filesystem::path fp {path};
     OpenFileForWrite(fp);
 }
 
-void EventFile::OpenFileForRead(const boost::filesystem::path path)
+void EventFile::OpenFileForRead(const boost::filesystem::path& path)
 {
     DataFile::OpenFileForRead(path);
     
@@ -42,7 +42,7 @@ void EventFile::OpenFileForRead(const boost::filesystem::path path)
     // This should leave the file position at the start of the first event.
 }
 
-void EventFile::OpenFileForRead(const std::string path)
+void EventFile::OpenFileForRead(const std::string& path)
 {
     boost::filesystem::path fp {path};
     OpenFileForRead(fp);

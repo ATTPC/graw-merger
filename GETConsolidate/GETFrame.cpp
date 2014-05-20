@@ -19,7 +19,7 @@ GETFrame::GETFrame()
     multiplicity = {0,0,0,0};
 }
 
-GETFrame::GETFrame(std::vector<uint8_t> rawFrame, uint8_t fileCobo, uint8_t fileAsad)
+GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad)
 {
     auto rawFrameIter = rawFrame.begin();
     

@@ -27,7 +27,7 @@ public:
     // Construction of Events
     
     Event();               // This one is needed for gmock testing
-    Event(std::vector<uint8_t>& raw);
+    Event(const std::vector<uint8_t>& raw);
     Event(const Event& orig);    // copy constructor
     Event(Event&& orig);   // move constructor
     
@@ -38,8 +38,8 @@ public:
     
     void SetLookupTable(PadLookupTable* table);
     
-    void SetEventId(uint32_t eventId_in);
-    void SetEventTime(uint64_t eventTime_in);
+    void SetEventId(const uint32_t eventId_in);
+    void SetEventTime(const uint64_t eventTime_in);
     
     void AppendFrame(const GETFrame& frame);
     std::vector<GETFrame> ExtractAllFrames();
