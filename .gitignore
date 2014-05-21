@@ -1,1 +1,2 @@
-docs/
+docs/build/*
+docs/doxygen_build/*

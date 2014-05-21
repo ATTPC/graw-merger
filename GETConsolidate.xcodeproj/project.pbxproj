@@ -46,7 +46,7 @@
 		03C201B3192694E000264702 /* MockData in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C201B11926942F00264702 /* MockData */; };
 		03C201B51926A6E700264702 /* libgmock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C201B41926A6E700264702 /* libgmock.a */; };
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
-		03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
+		03DDF39C1917FD1000306788 /* GETConsolidate.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
 		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
 		03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
@@ -75,20 +75,59 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		03DDF3941917FD1000306788 /* CopyFiles */ = {
+		03DDF3941917FD1000306788 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				03DDF39C1917FD1000306788 /* GETConsolidate.1 in CopyFiles */,
+				03DDF39C1917FD1000306788 /* GETConsolidate.1 in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0332FDBB1922EED00065697C /* TraceTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TraceTests.mm; sourceTree = "<group>"; };
+		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		03514B1E192CEEAB0077C431 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		03514B22192CEEAB0077C431 /* layout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = layout.html; sourceTree = "<group>"; };
+		03514B23192CEEAB0077C431 /* NEWS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS.txt; sourceTree = "<group>"; };
+		03514B24192CEEAB0077C431 /* README.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.rst; sourceTree = "<group>"; };
+		03514B26192CEEAB0077C431 /* solar.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = solar.css; sourceTree = "<group>"; };
+		03514B27192CEEAB0077C431 /* solarized-dark.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "solarized-dark.css"; sourceTree = "<group>"; };
+		03514B28192CEEAB0077C431 /* subtle_dots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subtle_dots.png; sourceTree = "<group>"; };
+		03514B29192CEEAB0077C431 /* theme.conf */ = {isa = PBXFileReference; lastKnownFileType = text; path = theme.conf; sourceTree = "<group>"; };
+		03514B2B192CEEAB0077C431 /* __init__.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		03514B2C192CEEAB0077C431 /* breadcrumbs.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = breadcrumbs.html; sourceTree = "<group>"; };
+		03514B2D192CEEAB0077C431 /* footer.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = footer.html; sourceTree = "<group>"; };
+		03514B2E192CEEAB0077C431 /* layout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = layout.html; sourceTree = "<group>"; };
+		03514B2F192CEEAB0077C431 /* layout_old.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = layout_old.html; sourceTree = "<group>"; };
+		03514B30192CEEAB0077C431 /* search.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = search.html; sourceTree = "<group>"; };
+		03514B31192CEEAB0077C431 /* searchbox.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = searchbox.html; sourceTree = "<group>"; };
+		03514B34192CEEAB0077C431 /* badge_only.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = badge_only.css; sourceTree = "<group>"; };
+		03514B35192CEEAB0077C431 /* theme.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = theme.css; sourceTree = "<group>"; };
+		03514B37192CEEAB0077C431 /* fontawesome-webfont.eot */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.eot"; sourceTree = "<group>"; };
+		03514B38192CEEAB0077C431 /* fontawesome-webfont.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "fontawesome-webfont.svg"; sourceTree = "<group>"; };
+		03514B39192CEEAB0077C431 /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
+		03514B3A192CEEAB0077C431 /* fontawesome-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.woff"; sourceTree = "<group>"; };
+		03514B3B192CEEAB0077C431 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		03514B3D192CEEAB0077C431 /* theme.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = theme.js; sourceTree = "<group>"; };
+		03514B3E192CEEAB0077C431 /* theme.conf */ = {isa = PBXFileReference; lastKnownFileType = text; path = theme.conf; sourceTree = "<group>"; };
+		03514B3F192CEEAB0077C431 /* versions.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = versions.html; sourceTree = "<group>"; };
+		03514B40192CEEAB0077C431 /* classes.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = classes.rst; sourceTree = "<group>"; };
+		03514B41192CEEAB0077C431 /* conf.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conf.py; sourceTree = "<group>"; };
+		03514B42192CEEAB0077C431 /* event_file.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_file.rst; sourceTree = "<group>"; };
+		03514B43192CEEAB0077C431 /* exceptions.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = exceptions.rst; sourceTree = "<group>"; };
+		03514B44192CEEAB0077C431 /* formats.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = formats.rst; sourceTree = "<group>"; };
+		03514B45192CEEAB0077C431 /* getdatafile.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = getdatafile.rst; sourceTree = "<group>"; };
+		03514B46192CEEAB0077C431 /* GETFrame.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GETFrame.rst; sourceTree = "<group>"; };
+		03514B47192CEEAB0077C431 /* GRAW.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAW.rst; sourceTree = "<group>"; };
+		03514B48192CEEAB0077C431 /* index.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = index.rst; sourceTree = "<group>"; };
+		03514B49192CEEAB0077C431 /* intro.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = intro.rst; sourceTree = "<group>"; };
+		03514B4A192CEEAB0077C431 /* trace.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = trace.rst; sourceTree = "<group>"; };
+		03514B4D192CF51B0077C431 /* padlookuptable.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = padlookuptable.rst; sourceTree = "<group>"; };
 		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
 		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
 		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
@@ -168,6 +207,123 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		035149B2192CEEAB0077C431 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				03514A06192CEEAB0077C431 /* Doxyfile */,
+				03514B1E192CEEAB0077C431 /* Makefile */,
+				03514B1F192CEEAB0077C431 /* source */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
+		03514B1F192CEEAB0077C431 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				03514B20192CEEAB0077C431 /* _themes */,
+				03514B40192CEEAB0077C431 /* classes.rst */,
+				03514B41192CEEAB0077C431 /* conf.py */,
+				03514B42192CEEAB0077C431 /* event_file.rst */,
+				03514B43192CEEAB0077C431 /* exceptions.rst */,
+				03514B44192CEEAB0077C431 /* formats.rst */,
+				03514B45192CEEAB0077C431 /* getdatafile.rst */,
+				03514B46192CEEAB0077C431 /* GETFrame.rst */,
+				03514B47192CEEAB0077C431 /* GRAW.rst */,
+				03514B48192CEEAB0077C431 /* index.rst */,
+				03514B49192CEEAB0077C431 /* intro.rst */,
+				03514B4A192CEEAB0077C431 /* trace.rst */,
+				03514B4D192CF51B0077C431 /* padlookuptable.rst */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		03514B20192CEEAB0077C431 /* _themes */ = {
+			isa = PBXGroup;
+			children = (
+				03514B21192CEEAB0077C431 /* solar */,
+				03514B2A192CEEAB0077C431 /* sphinx_rtd_theme */,
+			);
+			path = _themes;
+			sourceTree = "<group>";
+		};
+		03514B21192CEEAB0077C431 /* solar */ = {
+			isa = PBXGroup;
+			children = (
+				03514B22192CEEAB0077C431 /* layout.html */,
+				03514B23192CEEAB0077C431 /* NEWS.txt */,
+				03514B24192CEEAB0077C431 /* README.rst */,
+				03514B25192CEEAB0077C431 /* static */,
+				03514B29192CEEAB0077C431 /* theme.conf */,
+			);
+			path = solar;
+			sourceTree = "<group>";
+		};
+		03514B25192CEEAB0077C431 /* static */ = {
+			isa = PBXGroup;
+			children = (
+				03514B26192CEEAB0077C431 /* solar.css */,
+				03514B27192CEEAB0077C431 /* solarized-dark.css */,
+				03514B28192CEEAB0077C431 /* subtle_dots.png */,
+			);
+			path = static;
+			sourceTree = "<group>";
+		};
+		03514B2A192CEEAB0077C431 /* sphinx_rtd_theme */ = {
+			isa = PBXGroup;
+			children = (
+				03514B2B192CEEAB0077C431 /* __init__.py */,
+				03514B2C192CEEAB0077C431 /* breadcrumbs.html */,
+				03514B2D192CEEAB0077C431 /* footer.html */,
+				03514B2E192CEEAB0077C431 /* layout.html */,
+				03514B2F192CEEAB0077C431 /* layout_old.html */,
+				03514B30192CEEAB0077C431 /* search.html */,
+				03514B31192CEEAB0077C431 /* searchbox.html */,
+				03514B32192CEEAB0077C431 /* static */,
+				03514B3E192CEEAB0077C431 /* theme.conf */,
+				03514B3F192CEEAB0077C431 /* versions.html */,
+			);
+			path = sphinx_rtd_theme;
+			sourceTree = "<group>";
+		};
+		03514B32192CEEAB0077C431 /* static */ = {
+			isa = PBXGroup;
+			children = (
+				03514B33192CEEAB0077C431 /* css */,
+				03514B36192CEEAB0077C431 /* fonts */,
+				03514B3C192CEEAB0077C431 /* js */,
+			);
+			path = static;
+			sourceTree = "<group>";
+		};
+		03514B33192CEEAB0077C431 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				03514B34192CEEAB0077C431 /* badge_only.css */,
+				03514B35192CEEAB0077C431 /* theme.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		03514B36192CEEAB0077C431 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				03514B37192CEEAB0077C431 /* fontawesome-webfont.eot */,
+				03514B38192CEEAB0077C431 /* fontawesome-webfont.svg */,
+				03514B39192CEEAB0077C431 /* fontawesome-webfont.ttf */,
+				03514B3A192CEEAB0077C431 /* fontawesome-webfont.woff */,
+				03514B3B192CEEAB0077C431 /* FontAwesome.otf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		03514B3C192CEEAB0077C431 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				03514B3D192CEEAB0077C431 /* theme.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
 		03AB409B191C269F0021ABD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				03DDF3981917FD1000306788 /* GETConsolidate */,
+				035149B2192CEEAB0077C431 /* docs */,
 				03AB409E191C269F0021ABD4 /* GETConsolidate Tests */,
 				03C2018D19267C2900264702 /* GetConsolidateTests */,
 				03AB409B191C269F0021ABD4 /* Frameworks */,
@@ -324,7 +481,8 @@
 			buildPhases = (
 				03DDF3921917FD1000306788 /* Sources */,
 				03DDF3931917FD1000306788 /* Frameworks */,
-				03DDF3941917FD1000306788 /* CopyFiles */,
+				03DDF3941917FD1000306788 /* Copy Files */,
+				03514B4C192CF1950077C431 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -378,6 +536,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03514B4C192CF1950077C431 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cd ${SOURCE_ROOT}/docs\n/usr/local/bin/doxygen Doxyfile\nmake html";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		03AB4096191C269F0021ABD4 /* Sources */ = {
