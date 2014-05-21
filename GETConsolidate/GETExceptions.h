@@ -13,8 +13,16 @@
 #include <exception>
 #include <string>
 
+/** \brief Custom exceptions
+ 
+ This namespace contains a variety of exceptions that can be thrown by various functions within this code. All of them can return an error message that can be printed.
+ */
 namespace Exceptions {
 
+    /** \brief A nonspecific exception.
+    
+    This should be used sparingly.
+     */
     class GenericException : public std::exception
     {
     private:
@@ -22,6 +30,8 @@ namespace Exceptions {
         
     public:
         GenericException(const char* reason) : reasonString(reason) {};
+        
+        //! \returns The string provided on construction.
         virtual const char* what() const noexcept;
     };
 
