@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0332FDBC1922EED00065697C /* TraceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0332FDBB1922EED00065697C /* TraceTests.mm */; };
+		03514B5B192D16B60077C431 /* EventTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03514B59192D16B60077C431 /* EventTests.cpp */; };
 		03517E0D192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
 		03517E0E192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
 		03517E0F192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
@@ -128,6 +129,8 @@
 		03514B49192CEEAB0077C431 /* intro.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = intro.rst; sourceTree = "<group>"; };
 		03514B4A192CEEAB0077C431 /* trace.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = trace.rst; sourceTree = "<group>"; };
 		03514B4D192CF51B0077C431 /* padlookuptable.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = padlookuptable.rst; sourceTree = "<group>"; };
+		03514B58192D11240077C431 /* event.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = event.rst; sourceTree = "<group>"; };
+		03514B59192D16B60077C431 /* EventTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventTests.cpp; sourceTree = "<group>"; };
 		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
 		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
 		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
@@ -233,6 +236,7 @@
 				03514B49192CEEAB0077C431 /* intro.rst */,
 				03514B4A192CEEAB0077C431 /* trace.rst */,
 				03514B4D192CF51B0077C431 /* padlookuptable.rst */,
+				03514B58192D11240077C431 /* event.rst */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -395,6 +399,7 @@
 				038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */,
 				03C201A41926835C00264702 /* GETFrameTests.cpp */,
 				03C2019F19267D8A00264702 /* TraceTests.cpp */,
+				03514B59192D16B60077C431 /* EventTests.cpp */,
 				03C2018E19267C2900264702 /* main.cpp */,
 				03C2019019267C2900264702 /* GetConsolidateTests.1 */,
 				03C201B41926A6E700264702 /* libgmock.a */,
@@ -482,7 +487,7 @@
 				03DDF3921917FD1000306788 /* Sources */,
 				03DDF3931917FD1000306788 /* Frameworks */,
 				03DDF3941917FD1000306788 /* Copy Files */,
-				03514B4C192CF1950077C431 /* ShellScript */,
+				03514B57192D034B0077C431 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -538,7 +543,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03514B4C192CF1950077C431 /* ShellScript */ = {
+		03514B57192D034B0077C431 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -548,7 +553,7 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
+			shellPath = /bin/sh;
 			shellScript = "cd ${SOURCE_ROOT}/docs\n/usr/local/bin/doxygen Doxyfile\nmake html";
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -586,6 +591,7 @@
 				038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */,
 				03C201A91926896700264702 /* GETFrame.cpp in Sources */,
 				03C201A71926896700264702 /* PadLookupTable.cpp in Sources */,
+				03514B5B192D16B60077C431 /* EventTests.cpp in Sources */,
 				03C201A119267D8A00264702 /* TraceTests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

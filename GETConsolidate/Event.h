@@ -20,22 +20,57 @@
 #include <cmath>
 #include "Utilities.h"
 
+/** \brief Representation of an event in the detector.
+ 
+ This class represents a single event from the DAQ. It is created initially by merging together corresponding frames from the GRAW files.
+ 
+ */
 class Event
 {
 public:
     
     // Construction of Events
     
-    Event();               // This one is needed for gmock testing
-    Event(const std::vector<uint8_t>& raw);
-    Event(const Event& orig);    // copy constructor
-    Event(Event&& orig);   // move constructor
+    //! \brief Default contstructor. 
+    Event();
     
-    Event& operator=(const Event& orig);    // copy operator
-    Event& operator=(Event&& orig);   // move operator
+    /** \brief Deserialize an event.
+     
+     Constructs an Event object from its serialized form. This can be used to re-construct an Event object that was previously saved to an Event file.
+     
+     \param raw The serialized event object, as an array of bytes.
+     
+     \throws Exceptions::Wrong_File_Position Thrown if the provided bytes don't match the signature of an event.
+     
+     \rst
+     .. NOTE::
+        Unlike the :class:`GETFrame` class, the Event class expects its raw data to be *little*-endian. 
+     \endrst
+     
+     */
+    Event(const std::vector<uint8_t>& raw);
+    
+    //! \brief Copy constructor
+    Event(const Event& orig);
+    
+    //! \brief Move constructor
+    Event(Event&& orig);
+    
+    //! \brief Copy operator
+    Event& operator=(const Event& orig);
+    
+    //! \brief Move operator
+    Event& operator=(Event&& orig);
     
     // Setting properties
     
+    /** \brief Sets a pointer to the pad lookup table.
+    
+     This function must be called in order to use the AppendFrame function. It sets a pointer to a PadLookupTable object that must be initialized separately.
+     
+     \param table A pointer to an initialized PadLookupTable.
+     
+     */
     void SetLookupTable(PadLookupTable* table);
     
     void SetEventId(const uint32_t eventId_in);
@@ -72,6 +107,7 @@ private:
     
     uint32_t eventId = 0;
     uint64_t eventTime = 0;
+    
     static const uint8_t magic; // Equals 0xEE, defined in Event.cpp
     
     // Traces for each pad
@@ -79,6 +115,7 @@ private:
     std::map<int,Trace> traces;
     
     friend class EventFile;
+    friend class EventTestFixture;
 };
 
 #endif /* defined(__GETConsolidate__Event__) */

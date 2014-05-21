@@ -9,3 +9,4 @@ Class Reference
     getdatafile.rst
     trace.rst
     padlookuptable.rst
+    event.rst

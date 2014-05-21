@@ -127,6 +127,10 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
 //            std::cout << "Channel " << int(channel) << " on CoBo " << int(coboId) << " AsAd " << int(asadId) << " AGET " << int(aget) << " not on in hitpattern." << std::endl;
 //        }
     }
+    
+    if (data.size() != nItems) {
+        std::cout << "Missing data items." << std::endl;
+    }
 }
 
 // --------

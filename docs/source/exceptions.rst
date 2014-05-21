@@ -8,8 +8,7 @@ This page lists exceptions that could be thrown by functions in this program. Th
 Doxygen Version
 ---------------
 
-.. 	doxygenclass:: Exceptions::GenericException
-	:members: 
+.. 	doxygenfile:: GETExceptions.h
 
 Filesystem errors
 -----------------

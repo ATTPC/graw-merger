@@ -27,7 +27,7 @@ public:
      
      \rst
      .. WARNING::
-        Igor's output files have classic Mac OS `\r` line endings. This program assumes standard Unix `\n` line endings. This could easily be changed, but at the expense of using the standard. I've chosen to change the line endings in the Igor file manually instead.
+        Igor's output files have classic Mac OS `\\r` line endings. This program assumes standard Unix `\\n` line endings. This could easily be changed, but at the expense of using the standard. I've chosen to change the line endings in the Igor file manually instead.
      \endrst
      */
     PadLookupTable(const std::string& path);

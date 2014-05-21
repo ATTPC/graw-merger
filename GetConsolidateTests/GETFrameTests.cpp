@@ -32,8 +32,8 @@ protected:
     
 public:
     
-    MockGetDataFile mockFile;
-    void TestConstructor(FakeRawFrame& fr);
+    MockGetDataFile mockdf;
+    void TestConstructor(FakeRawFrame& fr, uint8_t cobo, uint8_t asad);
 };
 
 TEST(GETFrameTests,ExtractAgetId)
@@ -94,14 +94,11 @@ TEST(GETFrameTests,DISABLED_DataExtractionCombined)
     }
 }
 
-void GETFrameTestFixture::TestConstructor(FakeRawFrame& fr)
+void GETFrameTestFixture::TestConstructor(FakeRawFrame& fr, uint8_t cobo, uint8_t asad)
 {
     auto fakeData = fr.GenerateRawFrameVector();
     
-    EXPECT_CALL(mockFile, GetFileCobo()).Times(1).WillRepeatedly(testing::Return(3));
-    EXPECT_CALL(mockFile, GetFileAsad()).Times(1).WillOnce(testing::Return(2));
-    
-    GETFrame frame {fakeData, mockFile.GetFileCobo(), mockFile.GetFileAsad()};
+    GETFrame frame {fakeData, cobo, asad};
     EXPECT_EQ(fr.metatype,GetMetaType(frame));
     EXPECT_EQ(fr.frameSize,GetFrameSize(frame));
     EXPECT_EQ(fr.headerSize,GetHeaderSize(frame));
@@ -117,6 +114,22 @@ void GETFrameTestFixture::TestConstructor(FakeRawFrame& fr)
 TEST_F(GETFrameTestFixture, Constructor)
 {
     FakeRawFrame fr {1234567890, 12, 3, 2};
-    TestConstructor(fr);
+    TestConstructor(fr, 3, 2);
+}
+
+TEST_F(GETFrameTestFixture, Constructor_BadCobo)
+{
+    FakeRawFrame fakeData {1234567890, 12, 0, 2};
+    
+    GETFrame frame {fakeData.GenerateRawFrameVector(), 3, 2};
+    ASSERT_EQ(GetCoboId(frame), 3);
+}
+
+TEST_F(GETFrameTestFixture, Constructor_BadAsad)
+{
+    FakeRawFrame fakeData {1234567890, 12, 3, 0};
+    
+    GETFrame frame {fakeData.GenerateRawFrameVector(), 3, 2};
+    ASSERT_EQ(GetAsadId(frame), 2);
 }
 

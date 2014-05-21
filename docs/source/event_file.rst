@@ -33,7 +33,7 @@ Like a GRAW frame, an event begins with a short header.
 +---------------+--------------+---------------------------------------------------+
 | Event ID      |            4 | The index of the event, from the GRAW frame.      |
 +---------------+--------------+---------------------------------------------------+
-| Event Time    |            4 | The time stamp of the event, from the GRAW frame. |
+| Event Time    |            8 | The time stamp of the event, from the GRAW frame. |
 +---------------+--------------+---------------------------------------------------+
 | nTraces       |            2 | The number of traces in the event.                |
 +---------------+--------------+---------------------------------------------------+
