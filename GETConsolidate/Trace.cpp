@@ -20,12 +20,15 @@ const uint32_t Trace::sampleSize = 3;
 
 Trace::Trace()
 : coboId(0),asadId(0),agetId(0),channel(0),padId(0)
-{}
+{
+    data = std::vector<int16_t> (512,0);
+}
 
 
 Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 : coboId(cobo), asadId(asad), agetId(aget), channel(ch), padId(pad)
 {
+    data = std::vector<int16_t> (512,0);
 }
 
 Trace::Trace(const std::vector<uint8_t>& raw)
@@ -55,8 +58,9 @@ Trace::Trace(const std::vector<uint8_t>& raw)
     pos += sizeof(padId);
     
     for (; pos != raw.end(); pos += Trace::sampleSize) {
-        uint32_t item = Utilities::ExtractInt<decltype(item)>(pos, pos+Trace::sampleSize);
-        data.insert(Trace::UnpackSample(item));
+        uint32_t item_packed = Utilities::ExtractInt<decltype(item_packed)>(pos, pos+Trace::sampleSize);
+        auto item = Trace::UnpackSample(item_packed);
+        data.at(item.first) = item.second;
     }
 }
 
@@ -104,7 +108,7 @@ Trace& Trace::operator=(Trace&& orig)
 
 void Trace::AppendSample(int tBucket, int sample)
 {
-    data.emplace(tBucket, sample);
+    data.at(tBucket) = sample;
 }
 
 int16_t Trace::GetSample(int tBucket) const
@@ -135,44 +139,49 @@ unsigned long Trace::GetNumberOfTimeBuckets()
 
 Trace& Trace::operator+=(Trace& other)
 {
-    for (auto& other_item : other.data) {
-        if (this->data.find(other_item.first) != this->data.end()) {
-            this->data.at(other_item.first) += other_item.second;
-        }
-        else {
-            this->data.insert(other_item);
-        }
+    auto pos = data.begin();
+    auto other_pos = other.data.begin();
+    
+    while (pos != data.end()) {
+        *pos += *other_pos;
+        pos++;
+        other_pos++;
     }
     return *this;
 }
 
 Trace& Trace::operator-=(Trace& other)
 {
-    for (auto& other_item : other.data) {
-        if (this->data.find(other_item.first) != this->data.end()) {
-            this->data.at(other_item.first) -= other_item.second;
-        }
-        else {
-            this->data.emplace(other_item.first,other_item.second * -1);
-        }
+    auto pos = data.begin();
+    auto other_pos = other.data.begin();
+    
+    while (pos != data.end()) {
+        *pos -= *other_pos;
+        pos++;
+        other_pos++;
     }
     return *this;
 }
 
 Trace& Trace::operator/=(Trace& other)
 {
-    for (auto& other_item : other.data) {
-        if (this->data.find(other_item.first) != this->data.end()) {
-            this->data.at(other_item.first) /= other_item.second;
+    auto pos = data.begin();
+    auto other_pos = other.data.begin();
+    
+    while (pos != data.end()) {
+        if (*other_pos != 0) {
+            *pos /= *other_pos;
         }
+        pos++;
+        other_pos++;
     }
     return *this;
 }
 
 Trace& Trace::operator/=(int i)
 {
-    for (auto& item : data) {
-        item.second /= i;
+    for (auto& el : data) {
+        el /= i;
     }
     return *this;
 }
@@ -181,12 +190,11 @@ void Trace::RenormalizeToZero()
 {
     if (data.empty()) throw Exceptions::No_Data();
     
-    int32_t total = std::accumulate(data.begin(),data.end(),0,
-                                    [](int i, const std::pair<uint16_t,int16_t> p){return i + p.second;});
+    int64_t total = std::accumulate(data.begin(),data.end(),0);
     total /= data.size();
     
     for (auto& el : data) {
-        el.second -= total;
+        el -= total;
     }
 }
 
@@ -205,11 +213,10 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     stream.write((char*) &(trace.channel), sizeof(trace.channel));
     stream.write((char*) &(trace.padId), sizeof(trace.padId));
     
-    for (const auto& item : trace.data)
+    for (int i = 0; i < trace.data.size(); i++)
     {
-        //        stream.write((char*) &(item.first), sizeof(item.first));
-        //        stream.write((char*) &(item.second), sizeof(item.second));
-        auto compacted_data = Trace::CompactSample(item.first, item.second);
+        if (trace.data.at(i) == 0) continue;
+        auto compacted_data = Trace::CompactSample(i, trace.data.at(i));
         stream.write((char*) &compacted_data ,Trace::sampleSize);
     }
     

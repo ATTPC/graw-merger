@@ -67,7 +67,7 @@ private:
     uint8_t agetId; 
     uint8_t channel;
     uint16_t padId;
-    std::map<uint16_t,int16_t> data;   // maps timebucket:sample
+    std::vector<int16_t> data;   // maps timebucket:sample
     
     // Private functions to compress data on file write
     

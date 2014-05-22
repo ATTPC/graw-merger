@@ -188,12 +188,12 @@ std::vector<GETFrame> Event::ExtractAllFrames()
             
             for (auto iter = lb; iter != ub; iter++) {
                 // Working at channel level in this loop
-                for (auto sample : iter->second.data) {
+                for (int i = 0; i < iter->second.data.size(); i++) {
                     // Gets all of the tbuckets for this channel
                     fr.data.push_back(GETFrameDataItem(iter->second.agetId,
                                                        iter->second.channel,
-                                                       sample.first,
-                                                       sample.second));
+                                                       i,
+                                                       iter->second.data.at(i)));
                 }
                 // Set the hitpatterns
                 fr.hitPatterns.at(iter->second.agetId).set(iter->second.channel,1);
@@ -271,7 +271,7 @@ void Event::SubtractFPN()
                 
                 // Check if there's any FPN data. If not, skip the next part.
                 
-                if (mean_fpn.GetNumberOfTimeBuckets() == 0) continue;
+                if (num_fpns == 0) continue;
                 
                 mean_fpn /= num_fpns;
                 
