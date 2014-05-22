@@ -28,7 +28,7 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     metaType = *rawFrameIter;
     rawFrameIter++;
     if (metaType != 6) {
-        std::cout << "    Wrong metaType " << metaType << ", should be 6." << std::endl;
+        std::cout << "    Wrong metaType " << int(metaType) << ", should be 6." << std::endl;
     }
     
     frameSize = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter + 3);
@@ -46,14 +46,14 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     headerSize = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
     if (headerSize != 4) {
-        std::cout << "    Wrong headerSize " << headerSize << ", should be 4. Correcting." << std::endl;
+        std::cout << "    Wrong headerSize " << int(headerSize) << ", should be 4. Correcting." << std::endl;
         headerSize = 4;
     }
     
     itemSize = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
     if (itemSize != 4) {
-        std::cout << "    Wrong itemSize " << itemSize << ", should be 4. Correcting." << std::endl;
+        std::cout << "    Wrong itemSize " << int(itemSize) << ", should be 4. Correcting." << std::endl;
         itemSize = 4;
     }
     

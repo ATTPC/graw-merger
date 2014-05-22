@@ -180,6 +180,21 @@ namespace Exceptions {
     public:
         virtual const char* what() const noexcept {return msg.c_str();};
     };
+    
+    /** \brief Attempted to operate on an empty container.
+     
+     Thrown when a mathematical function is called on an empty container class, such as a Trace.
+     
+     */
+    class No_Data : public std::exception
+    {
+    private:
+        std::string msg {"No data in container."};
+        
+    public:
+        //! \return The string "No data in container."
+        virtual const char* what() const noexcept {return msg.c_str();};
+    };
 }
 
 

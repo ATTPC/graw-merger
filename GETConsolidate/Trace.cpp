@@ -32,7 +32,7 @@ Trace::Trace(const std::vector<uint8_t>& raw)
 {
     auto pos = raw.begin();
     
-//    uint32_t traceSize = Utilities::ExtractInt<uint32_t>(pos, pos+sizeof(uint32_t));
+    uint32_t traceSize = Utilities::ExtractInt<uint32_t>(pos, pos+sizeof(uint32_t));
     pos += sizeof(uint32_t);
     
     coboId = Utilities::ExtractInt<decltype(coboId)>(pos, pos+sizeof(coboId));
@@ -54,10 +54,9 @@ Trace::Trace(const std::vector<uint8_t>& raw)
     padId = Utilities::ExtractInt<decltype(padId)>(pos, pos+sizeof(padId));
     pos += sizeof(padId);
     
-    while (pos != raw.end()) {
+    for (; pos != raw.end(); pos += Trace::sampleSize) {
         uint32_t item = Utilities::ExtractInt<decltype(item)>(pos, pos+Trace::sampleSize);
         data.insert(Trace::UnpackSample(item));
-        pos += Trace::sampleSize;
     }
 }
 
@@ -82,7 +81,7 @@ Trace& Trace::operator=(const Trace& orig)
     padId = orig.padId;
     
     data.clear();
-    //data = orig.data;
+    data = orig.data;
     return *this;
 }
 
@@ -95,7 +94,7 @@ Trace& Trace::operator=(Trace&& orig)
     padId = orig.padId;
     
     data.clear();
-    //data = std::move(orig.data);
+    data = std::move(orig.data);
     return *this;
 }
 
@@ -180,6 +179,8 @@ Trace& Trace::operator/=(int i)
 
 void Trace::RenormalizeToZero()
 {
+    if (data.empty()) throw Exceptions::No_Data();
+    
     int32_t total = std::accumulate(data.begin(),data.end(),0,
                                     [](int i, const std::pair<uint16_t,int16_t> p){return i + p.second;});
     total /= data.size();
@@ -209,7 +210,7 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
         //        stream.write((char*) &(item.first), sizeof(item.first));
         //        stream.write((char*) &(item.second), sizeof(item.second));
         auto compacted_data = Trace::CompactSample(item.first, item.second);
-        stream.write((char*) &compacted_data ,3*sizeof(char));
+        stream.write((char*) &compacted_data ,Trace::sampleSize);
     }
     
     return stream;
