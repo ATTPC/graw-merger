@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <map>
+#include <unordered_map>
 
 /** \brief Used to look up pad numbers.
  
@@ -44,7 +44,7 @@ private:
     uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget,
                            uint8_t channel);
     
-    std::map<uint32_t,uint16_t> table;  // The hashtable, maps hash:pad#
+    std::unordered_map<uint32_t,uint16_t> table;  // The hashtable, maps hash:pad#
 };
 
 #endif /* defined(__GETConsolidate__PadLookupTable__) */
