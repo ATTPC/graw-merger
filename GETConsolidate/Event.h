@@ -16,7 +16,7 @@
 #include "Trace.h"
 #include "PadLookupTable.h"
 #include "GETExceptions.h"
-#include <map>
+#include <unordered_map>
 #include <cmath>
 #include "Utilities.h"
 
@@ -112,7 +112,7 @@ private:
     
     // Traces for each pad
     
-    std::map<int,Trace> traces;
+    std::unordered_map<int,Trace> traces;
     
     friend class EventFile;
     friend class EventTestFixture;

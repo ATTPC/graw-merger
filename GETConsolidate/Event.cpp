@@ -173,32 +173,30 @@ std::vector<GETFrame> Event::ExtractAllFrames()
     
     for (uint8_t cobo = 0; cobo < 10; cobo++) {
         for (uint8_t asad = 0; asad < 4; asad++) {
-            auto lbhash = CalculateHash(cobo, asad, 0, 0);
-            auto ubhash = CalculateHash(cobo, asad, 4, 68);
-            auto lb = traces.lower_bound(lbhash);
-            auto ub = traces.upper_bound(ubhash);
-            
-            if (lb == traces.end()) continue;
-            
+
             GETFrame fr {};
             fr.coboId = cobo;
             fr.asadId = asad;
             fr.eventTime = eventTime;
             fr.eventId = eventId;
             
-            for (auto iter = lb; iter != ub; iter++) {
-                // Working at channel level in this loop
-                for (int i = 0; i < iter->second.data.size(); i++) {
-                    // Gets all of the tbuckets for this channel
-                    fr.data.push_back(GETFrameDataItem(iter->second.agetId,
-                                                       iter->second.channel,
-                                                       i,
-                                                       iter->second.data.at(i)));
+            for (uint8_t aget = 0; aget < 4; aget++) {
+                for (uint8_t ch = 0; ch < 68; ch++) {
+                    auto tr = traces.find(CalculateHash(cobo, asad, aget, ch));
+                    if (tr == traces.end()) continue;
+                    
+                    for (int i = 0; i < tr->second.data.size(); i++) {
+                        // Gets all of the tbuckets for this channel
+                        fr.data.push_back(GETFrameDataItem(tr->second.agetId,
+                                                           tr->second.channel,
+                                                           i,
+                                                           tr->second.data.at(i)));
+                    }
+                    fr.hitPatterns.at(aget).set(ch,1);
                 }
-                // Set the hitpatterns
-                fr.hitPatterns.at(iter->second.agetId).set(iter->second.channel,1);
+                
             }
-            
+
             fr.nItems = static_cast<uint32_t>(fr.data.size());
             fr.frameSize = fr.headerSize + ceil((fr.nItems*fr.itemSize)/64);
             
@@ -282,11 +280,14 @@ void Event::SubtractFPN()
                 // Now subtract this mean from the other channels, binwise.
                 // This iteration includes the FPN channels.
                 
-                auto begin = traces.lower_bound(CalculateHash(cobo, asad, aget, 0));
-                auto end = traces.upper_bound(CalculateHash(cobo, asad, aget, 68));
+//                auto begin = traces.lower_bound(CalculateHash(cobo, asad, aget, 0));
+//                auto end = traces.upper_bound(CalculateHash(cobo, asad, aget, 68));
                 
-                for (auto pos = begin; pos != end; pos++) {
-                    pos->second -= mean_fpn;
+                for (auto ch = 0; ch < 68; ch++) {
+                    auto tr = traces.find(CalculateHash(cobo, asad, aget, ch));
+                    if (tr != traces.end()) {
+                        tr->second -= mean_fpn;
+                    }
                 }
                 
                 // Finally, kill the traces that represent the FPN, since
