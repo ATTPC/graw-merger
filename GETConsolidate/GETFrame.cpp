@@ -9,6 +9,15 @@
 #include "GETFrame.h"
 
 // --------
+// Static constants
+// --------
+
+const uint8_t  GETFrame::Expected_metaType = 8;
+const uint16_t GETFrame::Expected_headerSize = 1;
+const uint16_t GETFrame::Expected_itemSize = 4;
+const int      GETFrame::sizeUnit = 256;
+
+// --------
 // Constructor
 // --------
 
@@ -27,12 +36,16 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     
     metaType = *rawFrameIter;
     rawFrameIter++;
-    if (metaType != 6) {
-        std::cout << "    Wrong metaType " << int(metaType) << ", should be 6." << std::endl;
+    if (metaType != Expected_metaType) {
+        std::cout << "    Unexpected metaType " << int(metaType) << std::endl;
     }
     
     frameSize = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter + 3);
     rawFrameIter += 3;
+    if (frameSize*sizeUnit != rawFrame.size()) {
+        std::cout << "    Wrong frameSize. Using raw frame size." << std::endl;
+        frameSize = static_cast<decltype(frameSize)>(rawFrame.size()/sizeUnit);
+    }
     
     dataSource = *rawFrameIter;
     rawFrameIter++;
@@ -45,23 +58,23 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     
     headerSize = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
-    if (headerSize != 4) {
-        std::cout << "    Wrong headerSize " << int(headerSize) << ", should be 4. Correcting." << std::endl;
-        headerSize = 4;
+    if (headerSize != Expected_headerSize) {
+        std::cout << "    Wrong headerSize " << int(headerSize) << ". Correcting." << std::endl;
+        headerSize = Expected_headerSize;
     }
     
     itemSize = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
-    if (itemSize != 4) {
-        std::cout << "    Wrong itemSize " << int(itemSize) << ", should be 4. Correcting." << std::endl;
-        itemSize = 4;
+    if (itemSize != Expected_itemSize) {
+        std::cout << "    Wrong itemSize " << int(itemSize) << ". Correcting." << std::endl;
+        itemSize = Expected_itemSize;
     }
     
     nItems = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
     rawFrameIter += 4;
-    if (frameSize*64 != nItems*itemSize + headerSize*64) {
-        std::cout << "    Mismatched frameSize. Correcting nItems." << std::endl;
-        nItems = (frameSize*64 - headerSize*64)/4;
+    if (frameSize != ceil(double(nItems*itemSize + headerSize*sizeUnit)/sizeUnit)) {
+        std::cout << "    Mismatched nItems. Correcting." << std::endl;
+        nItems = (frameSize*sizeUnit - headerSize*sizeUnit)/itemSize;
     }
     
     eventTime = Utilities::ExtractByteSwappedInt<uint64_t>(rawFrameIter, rawFrameIter+6);
@@ -112,9 +125,10 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     
     // Extract data items
     auto dataBegin = rawFrame.begin() + headerSize*64;
+    auto dataEnd   = dataBegin + nItems*itemSize;
     
-    for (rawFrameIter = dataBegin; rawFrameIter != rawFrame.end(); rawFrameIter+=4) {
-        uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
+    for (rawFrameIter = dataBegin; rawFrameIter != dataEnd; rawFrameIter+=itemSize) {
+        uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+itemSize);
         
         uint8_t aget    = ExtractAgetId(item);
         uint8_t channel = ExtractChannel(item);

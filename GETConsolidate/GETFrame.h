@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <bitset>
+#include <cmath>
 
 #include "GETFrameDataItem.h"
 #include "Utilities.h"
@@ -28,6 +29,11 @@ public:
     static uint8_t ExtractChannel(const uint32_t raw);
     static uint16_t ExtractTBid(const uint32_t raw);
     static int16_t ExtractSample(const uint32_t raw);
+    
+    static const uint8_t  Expected_metaType;
+    static const uint16_t Expected_headerSize;
+    static const uint16_t Expected_itemSize;
+    static const int      sizeUnit;
     
 private:
     // Header fields

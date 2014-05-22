@@ -15,6 +15,7 @@
 #include <boost/filesystem.hpp>
 #include <exception>
 #include <string>
+#include <cmath>
 
 #include "GETExceptions.h"
 #include "Utilities.h"

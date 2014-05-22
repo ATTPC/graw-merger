@@ -23,22 +23,22 @@ GETFrameDataItem::GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
 // Getters
 // --------
 
-uint8_t GETFrameDataItem::GetAgetId()
+uint8_t GETFrameDataItem::GetAgetId() const
 {
     return this->agetId;
 }
 
-uint8_t GETFrameDataItem::GetChannel()
+uint8_t GETFrameDataItem::GetChannel() const
 {
     return this->channel;
 }
 
-uint16_t GETFrameDataItem::GetTimeBucketId()
+uint16_t GETFrameDataItem::GetTimeBucketId() const
 {
     return this->timeBucketId;
 }
 
-uint16_t GETFrameDataItem::GetSample()
+uint16_t GETFrameDataItem::GetSample() const
 {
     return this->sample;
 }

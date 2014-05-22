@@ -16,10 +16,10 @@ public:
     GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
                      uint16_t timeBucketId_in, uint16_t sample_in);
     
-    uint8_t GetAgetId();
-    uint8_t GetChannel();
-    uint16_t GetTimeBucketId();
-    uint16_t GetSample();
+    uint8_t GetAgetId() const;
+    uint8_t GetChannel() const;
+    uint16_t GetTimeBucketId() const;
+    uint16_t GetSample() const;
     
 private:
     uint8_t agetId;

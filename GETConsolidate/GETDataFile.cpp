@@ -90,7 +90,9 @@ std::vector<uint8_t> GETDataFile::ReadRawFrame()
         throw Exceptions::Bad_File(filePath.filename().string());
     }
     
-    filestream.seekg(1,std::ios::cur); // Skip the metaType char
+    unsigned long storedPos = filestream.tellg();
+    
+    uint8_t metaType = filestream.get();
     
     for (int i = 0; i < 3; i++) {
         char temp;
@@ -102,11 +104,35 @@ std::vector<uint8_t> GETDataFile::ReadRawFrame()
     
     if (size == 0) throw Exceptions::Frame_Read_Error();
     
-//    std::cout << "Found frame of size " << size << std::endl;
+    // See if this size is right by checking if we get to the next frame
     
-    filestream.seekg(-4,std::ios::cur); // rewind to start of frame
+    filestream.seekg(storedPos + size*GETFrame::sizeUnit);
     
-    for (unsigned long i = 0; i < size*64; i++) {
+    if (filestream.peek() != metaType) {
+        filestream.seekg(12);
+        
+        std::vector<uint8_t> nItems_raw;
+        for (int i = 0; i < 4; i++) {
+            char temp;
+            filestream.read(&temp, sizeof(uint8_t));
+            nItems_raw.push_back((uint8_t)temp);
+        }
+        
+        uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
+        
+        size = ceil(double(GETFrame::Expected_headerSize*GETFrame::sizeUnit + GETFrame::Expected_itemSize * nItems)/GETFrame::sizeUnit);
+        
+        filestream.seekg(storedPos + size*GETFrame::sizeUnit);
+        
+        if (filestream.peek() != metaType) {
+            // Give up
+            throw Exceptions::Frame_Read_Error();
+        }
+    }
+    
+    filestream.seekg(storedPos); // rewind to start of frame
+    
+    for (unsigned long i = 0; i < size*GETFrame::sizeUnit; i++) {
         char temp;
         filestream.read(&temp, sizeof(uint8_t));
         frame_raw.push_back((uint8_t)temp);
@@ -150,7 +176,7 @@ void GETDataFile::WriteFrame(const GETFrame& frame)
     
     // Pad it out
     
-    while (ser.size() < frame.headerSize * 64) {
+    while (ser.size() < frame.headerSize * GETFrame::sizeUnit) {
         ser.push_back(0x00);
     }
     
@@ -163,7 +189,7 @@ void GETDataFile::WriteFrame(const GETFrame& frame)
         AppendBytes(ser, ser_item, 4);
     }
     
-    while (ser.size() < frame.frameSize * 64) {
+    while (ser.size() < frame.frameSize * GETFrame::sizeUnit) {
         ser.push_back(0x00);
     }
     

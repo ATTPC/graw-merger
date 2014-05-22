@@ -142,7 +142,7 @@ void Event::AppendFrame(const GETFrame& frame)
     
     // Extract data items and create traces for them
     
-    for (auto dataItem : frame.data) {
+    for (const auto& dataItem : frame.data) {
         // Extract information
         auto aget = dataItem.GetAgetId();
         auto channel = dataItem.GetChannel();
@@ -221,7 +221,7 @@ uint32_t Event::Size() const
     // the stream insertion operator.
     
     uint32_t size = sizeof(Event::magic) + sizeof(uint32_t) + sizeof(eventId) + sizeof(eventTime) + sizeof(uint16_t);
-    for (auto item : traces) {
+    for (const auto& item : traces) {
         size += item.second.size();
     }
     return size;
