@@ -81,7 +81,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--input &quot;/Users/josh/Documents/Data/20140521171117&quot;"
+            argument = "--input &quot;/Users/josh/Documents/Data/20140522170747&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

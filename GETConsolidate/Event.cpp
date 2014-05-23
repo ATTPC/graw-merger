@@ -19,10 +19,12 @@ const uint8_t Event::magic {0xEE};
 // --------
 
 Event::Event()
+: eventId(0),eventTime(0),lookupTable(nullptr),nFramesAppended(0)
 {
 }
 
 Event::Event(const std::vector<uint8_t>& raw)
+: eventId(0),eventTime(0),lookupTable(nullptr),nFramesAppended(0)
 {
     auto rawIter = raw.begin();
     
@@ -49,9 +51,14 @@ Event::Event(const std::vector<uint8_t>& raw)
         std::vector<uint8_t> rawTrace {rawIter,rawIter+traceSize};
         
         // Create and emplace the new trace
-        Trace newTrace {rawTrace};
-        auto newHash = CalculateHash(newTrace.coboId, newTrace.asadId, newTrace.agetId, newTrace.channel);
-        traces.emplace(newHash,newTrace);
+        try {
+            Trace newTrace {rawTrace};
+            auto newHash = CalculateHash(newTrace.coboId, newTrace.asadId, newTrace.agetId, newTrace.channel);
+            traces.emplace(newHash,newTrace);
+        }
+        catch (std::exception& e) {
+            std::cout << "Failed to read trace. Error:" << e.what() << std::endl;
+        }
         
         // Increment the iterator
         rawIter += traceSize;
@@ -59,13 +66,13 @@ Event::Event(const std::vector<uint8_t>& raw)
 }
 
 Event::Event(const Event& orig)
-: lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime)
+: lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime),nFramesAppended(orig.nFramesAppended)
 {
     traces = orig.traces;
 }
 
 Event::Event(Event&& orig)
-: lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime)
+: lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime),nFramesAppended(orig.nFramesAppended)
 {
     traces = std::move(orig.traces);
 }
@@ -75,6 +82,7 @@ Event& Event::operator=(const Event& orig)
     this->lookupTable = orig.lookupTable;  // could leak
     this->eventId = orig.eventId;
     this->eventTime = orig.eventTime;
+    this->nFramesAppended = orig.nFramesAppended;
     
     this->traces.clear();
     this->traces = orig.traces;
@@ -87,6 +95,7 @@ Event& Event::operator=(Event&& orig)
     this->lookupTable = orig.lookupTable;  // could leak
     this->eventId = orig.eventId;
     this->eventTime = orig.eventTime;
+    this->nFramesAppended = orig.nFramesAppended;
     
     this->traces.clear();
     this->traces = std::move(orig.traces);
@@ -126,19 +135,21 @@ void Event::AppendFrame(const GETFrame& frame)
     uint8_t cobo = frame.coboId;
     uint8_t asad = frame.asadId;
     
-    if (this->eventId == 0) {
+    if (nFramesAppended == 0) {
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
         std::cout << "Appended frame's event ID doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
     
-    if (this->eventTime == 0) {
+    if (nFramesAppended == 0) {
         this->eventTime = frame.eventTime;
     }
     else if (this->eventTime != frame.eventTime) {
         std::cout << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
+    
+    nFramesAppended++;
     
     // Extract data items and create traces for them
     

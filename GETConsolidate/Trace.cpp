@@ -33,25 +33,35 @@ Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 
 Trace::Trace(const std::vector<uint8_t>& raw)
 {
+    data = std::vector<int16_t> (512,0);
+    
     auto pos = raw.begin();
     
     uint32_t traceSize = Utilities::ExtractInt<uint32_t>(pos, pos+sizeof(uint32_t));
     pos += sizeof(uint32_t);
     
     coboId = Utilities::ExtractInt<decltype(coboId)>(pos, pos+sizeof(coboId));
-    if (coboId < 0 or coboId > 10) throw Exceptions::Bad_Data();
+    if (coboId < 0 or coboId > 10) {
+        throw Exceptions::Bad_Data();
+    }
     pos += sizeof(coboId);
     
     asadId = Utilities::ExtractInt<decltype(asadId)>(pos, pos+sizeof(asadId));
-    if (asadId < 0 or asadId > 3) throw Exceptions::Bad_Data();
+    if (asadId < 0 or asadId > 3) {
+        throw Exceptions::Bad_Data();
+    }
     pos += sizeof(asadId);
     
     agetId = Utilities::ExtractInt<decltype(agetId)>(pos, pos+sizeof(agetId));
-    if (agetId < 0 or agetId > 3) throw Exceptions::Bad_Data();
+    if (agetId < 0 or agetId > 3) {
+        throw Exceptions::Bad_Data();
+    }
     pos += sizeof(agetId);
     
     channel = Utilities::ExtractInt<decltype(agetId)>(pos, pos+sizeof(channel));
-    if (channel < 0 or channel > 68) throw Exceptions::Bad_Data();
+    if (channel < 0 or channel > 68) {
+        throw Exceptions::Bad_Data();
+    }
     pos += sizeof(channel);
     
     padId = Utilities::ExtractInt<decltype(padId)>(pos, pos+sizeof(padId));
@@ -124,7 +134,17 @@ uint32_t Trace::size() const
 {
     // Size depends on what is recorded. This is set in the
     // stream insertion operator for the trace.
-    uint32_t size = sizeof(Trace::sampleSize) + sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId) + uint32_t(data.size())*(Trace::sampleSize);
+    
+    // The size should not include the zeros that are not written to disk.
+    
+    uint32_t size = sizeof(uint32_t) + sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId);
+    
+    for (auto item : data) {
+        if (item != 0) {
+            size += Trace::sampleSize;
+        }
+    }
+    
     return size;
 }
 

@@ -103,10 +103,12 @@ private:
     PadLookupTable *lookupTable;
     int CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
+    int nFramesAppended;  // The number of frames appended to this event
+    
     // Event Header fields
     
-    uint32_t eventId = 0;
-    uint64_t eventTime = 0;
+    uint32_t eventId;
+    uint64_t eventTime;
     
     static const uint8_t magic; // Equals 0xEE, defined in Event.cpp
     
