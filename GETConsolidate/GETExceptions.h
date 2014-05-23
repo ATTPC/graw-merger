@@ -23,14 +23,14 @@ namespace Exceptions {
     
     This should be used sparingly.
      */
-    class GenericException : public std::exception
+    class Generic_Exception : public std::exception
     {
     private:
         const char* reasonString;
         
     public:
         //! \param reason The reason for the exception.
-        GenericException(const char* reason) : reasonString(reason) {};
+        Generic_Exception(const char* reason) : reasonString(reason) {};
         
         //! \returns The string provided on construction.
         virtual const char* what() const noexcept;
@@ -123,61 +123,93 @@ namespace Exceptions {
         virtual const char* what() const noexcept {return msg.c_str();};
     };
 
+    //! \brief The file or directory provided does not exist.
     class Does_Not_Exist : public std::exception
     {
     private:
         std::string msg {"File/Directory does not exist: "};
         
     public:
+        //! \param filename_in The filename or path.
         Does_Not_Exist(const char* filename_in) {msg.append(filename_in);};
+        
+        //! \overload
         Does_Not_Exist(const std::string& filename_in) {msg.append(filename_in);};
+        
+        //! \return The string "File/Directory does not exist: [filename]"
         virtual const char* what() const noexcept {return msg.c_str();};
     };
 
+    //! \brief The provided directory had no files in it.
     class Dir_is_Empty : public std::exception
     {
     private:
         std::string msg {"This directory is empty: "};
         
     public:
+        //! \param filename_in The name of the directory.
         Dir_is_Empty(const char* filename_in) {msg.append(filename_in);};
+        
+        //! \overload
         Dir_is_Empty(const std::string& filename_in) {msg.append(filename_in);};
+        
+        //! \return The string "This directory is empty: [directory]"
         virtual const char* what() const noexcept {return msg.c_str();};
     };
 
+    /** \brief The program failed to read a frame from a file.
+     
+     This could be thrown by any of the file interface classes. Most often, it is thrown when an attempt to read a raw frame from a file yields a vector of size 0. This might indicate that the file pointer is at the end of the file, though Exceptions::End_of_File should be thrown instead.
+     
+     */
     class Frame_Read_Error : public std::exception
     {
     private:
         std::string msg {"Frame read failed."};
         
     public:
+        //! \return The string "Frame read failed."
         virtual const char* what() const noexcept {return msg.c_str();};
     };
     
+    /** \brief Could not find the required item at that file position.
+     
+     This exception is thrown when the program attempts to read an item like a GETFrame or an Event from a file, but it doesn't seem like such an item exists at the current file location. This could mean that the file cursor has gotten out-of-position in the binary file (i.e. it isn't aligned to the beginning of an event or frame), and unfortunately, there's not much of a way to recover from this.
+     
+     */
     class Wrong_File_Position : public std::exception
     {
     private:
         std::string msg {"Item not found at this file position."};
         
     public:
+        //! \return The string "Item not found at this file position."
         virtual const char* what() const noexcept {return msg.c_str();};
     };
     
+    /** \brief Invalid data was read from the file.
+     
+     This is thrown if the input cannot be interpreted. This might indicate that the CoBo, AsAd, AGET, or channel number is outside its expected range of acceptable values.
+     
+     */
     class Bad_Data : public std::exception
     {
     private:
         std::string msg {"Corrupted or invalid data encountered."};
         
     public:
+        //! \return The string "Corrupted or invalid data encountered."
         virtual const char* what() const noexcept {return msg.c_str();};
     };
     
+    //! \brief The end of the file was encountered.
     class End_of_File : public std::exception
     {
     private:
         std::string msg {"Reached end of file."};
         
     public:
+        //! \return "Reached end of file."
         virtual const char* what() const noexcept {return msg.c_str();};
     };
     

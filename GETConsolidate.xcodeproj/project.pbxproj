@@ -90,6 +90,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03250BC5192FED5F00FBA1FB /* datafile.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = datafile.rst; sourceTree = "<group>"; };
 		0332FDBB1922EED00065697C /* TraceTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TraceTests.mm; sourceTree = "<group>"; };
 		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		03514B1E192CEEAB0077C431 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -237,6 +238,7 @@
 				03514B4A192CEEAB0077C431 /* trace.rst */,
 				03514B4D192CF51B0077C431 /* padlookuptable.rst */,
 				03514B58192D11240077C431 /* event.rst */,
+				03250BC5192FED5F00FBA1FB /* datafile.rst */,
 			);
 			path = source;
 			sourceTree = "<group>";
