@@ -103,5 +103,5 @@ void DataFile::CloseFile()
 bool DataFile::eof() const
 {
     if (!isInitialized) throw Exceptions::Not_Init();
-    return filestream.eof();
+    return (filestream.eof() or isEOF);
 }

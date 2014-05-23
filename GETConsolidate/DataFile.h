@@ -48,6 +48,7 @@ protected:
     std::fstream filestream;
     
     bool isInitialized = false;
+    bool isEOF = false;
 };
 
 #endif /* defined(__GETConsolidate__DataFile__) */

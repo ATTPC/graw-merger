@@ -102,31 +102,46 @@ std::vector<uint8_t> GETDataFile::ReadRawFrame()
     
     size = Utilities::ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
     
-    if (size == 0) throw Exceptions::Frame_Read_Error();
+    if (size == 0) {
+        if (filestream.eof()) {
+            isEOF = true;
+            throw Exceptions::End_of_File();
+        }
+        else {
+            throw Exceptions::Frame_Read_Error();
+        }
+    }
     
     // See if this size is right by checking if we get to the next frame
     
     filestream.seekg(storedPos + size*GETFrame::sizeUnit);
     
     if (filestream.peek() != metaType) {
-        filestream.seekg(12);
-        
-        std::vector<uint8_t> nItems_raw;
-        for (int i = 0; i < 4; i++) {
-            char temp;
-            filestream.read(&temp, sizeof(uint8_t));
-            nItems_raw.push_back((uint8_t)temp);
+        if (filestream.eof()) {
+            // This is the last frame in the file.
+            isEOF = true;
         }
-        
-        uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
-        
-        size = ceil(double(GETFrame::Expected_headerSize*GETFrame::sizeUnit + GETFrame::Expected_itemSize * nItems)/GETFrame::sizeUnit);
-        
-        filestream.seekg(storedPos + size*GETFrame::sizeUnit);
-        
-        if (filestream.peek() != metaType) {
-            // Give up
-            throw Exceptions::Frame_Read_Error();
+        else {
+            // This isn't the last frame. The size must be wrong.
+            filestream.seekg(12, std::ios::cur);
+            
+            std::vector<uint8_t> nItems_raw;
+            for (int i = 0; i < 4; i++) {
+                char temp;
+                filestream.read(&temp, sizeof(uint8_t));
+                nItems_raw.push_back((uint8_t)temp);
+            }
+            
+            uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
+            
+            size = ceil(double(GETFrame::Expected_headerSize*GETFrame::sizeUnit + GETFrame::Expected_itemSize * nItems)/GETFrame::sizeUnit);
+            
+            filestream.seekg(storedPos + size*GETFrame::sizeUnit);
+            
+            if (filestream.peek() != metaType) {
+                // Give up
+                throw Exceptions::Frame_Read_Error();
+            }
         }
     }
     
