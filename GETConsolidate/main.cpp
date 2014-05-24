@@ -65,14 +65,12 @@ void MergeFiles(boost::filesystem::path input_path,
     
     std::vector<boost::filesystem::path> filePaths;
     
-    try {
-        filePaths = FindGRAWFilesInDir(input_path);
-    }
-    catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
-    }
+    // This could throw if the dir is empty, but I can't do anything about it
+    // here, so let the caller catch it.
+    
+    filePaths = FindGRAWFilesInDir(input_path);
+
     if (filePaths.size() == 0) {
-        std::cout << "No files found in that directory." << std::endl;
         throw Exceptions::Dir_is_Empty(input_path.string());
     }
     
@@ -217,6 +215,7 @@ int main(int argc, const char * argv[])
     
     po::options_description opts_desc ("Allowed options.");
 
+    po::variables_map vm;
     
     opts_desc.add_options()
         ("help", "Output a help message")
@@ -229,8 +228,14 @@ int main(int argc, const char * argv[])
         ("verbose,v", "Print more output.")
     ;
     
-    po::variables_map vm;
+    po::positional_options_description pos_opts;
+    pos_opts.add("input", 1);
+    pos_opts.add("output", 1);
+    
     po::store(po::parse_command_line(argc, argv, opts_desc), vm);
+    
+    po::store(po::command_line_parser(argc, argv).options(opts_desc).positional(pos_opts).run(), vm);
+
     po::notify(vm);
     
     if (vm.count("help")) {
@@ -248,7 +253,13 @@ int main(int argc, const char * argv[])
             auto lookupTablePath = vm["lookup"].as<fs::path>();
             auto outputFilePath = vm["output"].as<fs::path>();
             
-            MergeFiles(rootDir, outputFilePath, lookupTablePath);
+            try {
+                MergeFiles(rootDir, outputFilePath, lookupTablePath);
+            }
+            catch (std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+                return 1;
+            }
         }
     }
     
