@@ -21,6 +21,7 @@
 #include <queue>
 #include <vector>
 #include <algorithm>
+#include "UserInterface.h"
 
 bool g_verbose = false;
 
@@ -35,6 +36,8 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
     fs::recursive_directory_iterator dirIter(eventRoot);
     fs::recursive_directory_iterator endOfDir;
     std::vector<fs::path> filesFound;
+    
+    std::cout << "Looking for files." << std::endl;
     
     for ( ; dirIter != endOfDir; dirIter++) {
         if (is_directory(dirIter->path())) {
@@ -83,7 +86,7 @@ void MergeFiles(boost::filesystem::path input_path,
             dataFiles.push_back(GETDataFile{filename, std::ios::in});
         }
         catch (std::exception& e) {
-            std::cout << e.what() << std::endl;
+            UI::Log(UI::LogLevel::Error, e.what());
         }
     }
     
@@ -108,7 +111,25 @@ void MergeFiles(boost::filesystem::path input_path,
     
     // Main loop
     
+    UI::ProgressBar prog {};
+    
+    long unsigned total_size = 0;
+    
+    for (auto item : filePaths) {
+        total_size += boost::filesystem::file_size(item);
+    }
+    
     while (!dataFiles.empty()) {
+        // Find progress
+        
+        long unsigned total_pos = 0;
+        
+        for (auto &file : dataFiles) {
+            total_pos += file.GetPosition();
+        }
+        
+        prog.SetPercent(static_cast<int>(100*total_pos / total_size));
+        prog.Write();
         
         std::queue<GETFrame> frames;
         
@@ -120,7 +141,7 @@ void MergeFiles(boost::filesystem::path input_path,
                 frames.push(GETFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
             }
             catch (std::exception& e) {
-                std::cout << e.what() << std::endl;
+                UI::Log(UI::LogLevel::Error, e.what());
             }
         }
         
@@ -140,7 +161,7 @@ void MergeFiles(boost::filesystem::path input_path,
         while (!frames.empty()) {
             testEvent.AppendFrame(frames.front());
             frames.pop();
-            //std::cout << "Appended frame." << std::endl;
+            UI::Log(UI::LogLevel::Debug, "Appended frame.");
         }
         
         testEvent.SubtractFPN();

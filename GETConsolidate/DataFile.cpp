@@ -100,6 +100,12 @@ void DataFile::CloseFile()
     if (filestream.is_open() and this->isInitialized) filestream.close();
 }
 
+const long unsigned int DataFile::GetPosition()
+{
+    if (!isInitialized) throw Exceptions::Not_Init();
+    return filestream.tellg();
+}
+
 bool DataFile::eof() const
 {
     if (!isInitialized) throw Exceptions::Not_Init();

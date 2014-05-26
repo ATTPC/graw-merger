@@ -109,6 +109,9 @@ public:
     //! \brief Check if the end of the file has been reached.
     virtual bool eof() const;
     
+    //! \brief Returns the current file position.
+    virtual const long unsigned int GetPosition();
+    
 protected:
     /** \brief The path to the file.
      

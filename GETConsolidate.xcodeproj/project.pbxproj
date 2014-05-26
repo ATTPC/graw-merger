@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
+		0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
 		0332FDBC1922EED00065697C /* TraceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0332FDBB1922EED00065697C /* TraceTests.mm */; };
 		03514B5B192D16B60077C431 /* EventTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03514B59192D16B60077C431 /* EventTests.cpp */; };
 		03517E0D192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
@@ -90,6 +92,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0302EAF61932C1F6007F898D /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserInterface.cpp; sourceTree = "<group>"; };
+		0302EAF71932C1F6007F898D /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInterface.h; sourceTree = "<group>"; };
 		03250BC5192FED5F00FBA1FB /* datafile.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = datafile.rst; sourceTree = "<group>"; };
 		0332FDBB1922EED00065697C /* TraceTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TraceTests.mm; sourceTree = "<group>"; };
 		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
@@ -362,6 +366,7 @@
 		03AB40BD191D45A90021ABD4 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				0302EAF71932C1F6007F898D /* UserInterface.h */,
 				039056CC192552AE00214C6C /* Utilities.h */,
 				03AB40C0191D546C0021ABD4 /* GETExceptions.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
@@ -379,6 +384,7 @@
 		03AB40BE191D45C10021ABD4 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0302EAF61932C1F6007F898D /* UserInterface.cpp */,
 				03DDF3B21919621A00306788 /* PadLookupTable.cpp */,
 				037A338D192A5E8E006E2E84 /* DataFile.cpp */,
 				03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */,
@@ -586,6 +592,7 @@
 				03C201AA1926896700264702 /* GETFrameDataItem.cpp in Sources */,
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
 				037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */,
+				0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */,
 				03C201A61926835C00264702 /* GETFrameTests.cpp in Sources */,
 				03C201AB1926896700264702 /* Event.cpp in Sources */,
 				03C201A31926804000264702 /* Trace.cpp in Sources */,
@@ -608,6 +615,7 @@
 				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
 				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
 				03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */,
+				0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */,
 				037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,
 				03DDF3B119195B6100306788 /* Trace.cpp in Sources */,
