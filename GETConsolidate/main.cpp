@@ -114,22 +114,13 @@ void MergeFiles(boost::filesystem::path input_path,
     UI::ProgressBar prog {};
     
     long unsigned total_size = 0;
+    long unsigned total_pos = 0;
     
     for (auto item : filePaths) {
         total_size += boost::filesystem::file_size(item);
     }
     
     while (!dataFiles.empty()) {
-        // Find progress
-        
-        long unsigned total_pos = 0;
-        
-        for (auto &file : dataFiles) {
-            total_pos += file.GetPosition();
-        }
-        
-        prog.SetPercent(static_cast<int>(100*total_pos / total_size));
-        prog.Write();
         
         std::queue<GETFrame> frames;
         
@@ -138,6 +129,7 @@ void MergeFiles(boost::filesystem::path input_path,
         for (auto &file : dataFiles) {
             try {
                 std::vector<uint8_t> raw_frame = file.ReadRawFrame();
+                total_pos += raw_frame.size();
                 frames.push(GETFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
             }
             catch (std::exception& e) {
@@ -175,6 +167,11 @@ void MergeFiles(boost::filesystem::path input_path,
 //        for (auto fr : procFrames) {
 //            output.WriteFrame(fr);
 //        }
+        
+        // Find progress
+        
+        prog.SetPercent(static_cast<int>(100*total_pos / total_size));
+        prog.Write();
     }
     
     output.CloseFile();
