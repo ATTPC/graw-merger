@@ -24,10 +24,7 @@ namespace UI {
         Debug = 3
     };
     
-    void Log(LogLevel lvl, const char* msg);
-    void SetLogLevel(LogLevel lvl);
-    
-    static LogLevel currentLogLevel = LogLevel::Warning;
+    class Logger;
 }
 
 class UI::ProgressBar
@@ -47,6 +44,16 @@ private:
 	int pct;
 };
 
+class UI::Logger
+{
+public:
+    void SetLogLevel(LogLevel lvl);
+    
+    friend std::ostream& operator<<(UI::Logger& log, const char* msg);
+    
+private:
+    static LogLevel currentLogLevel;
+};
 
 
 

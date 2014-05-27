@@ -28,6 +28,12 @@ Trace::Trace()
 Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
 : coboId(cobo), asadId(asad), agetId(aget), channel(ch), padId(pad)
 {
+    assert(cobo < 10 && cobo >= 0);
+    assert(asad < 4 && asad >= 0);
+    assert(aget < 4 && aget >= 0);
+    assert(ch < 68 && ch >= 0);
+    assert(pad <= 10240 && pad >= 0);
+    
     data = std::vector<int16_t> (512,0);
 }
 

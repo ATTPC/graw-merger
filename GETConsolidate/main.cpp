@@ -86,7 +86,7 @@ void MergeFiles(boost::filesystem::path input_path,
             dataFiles.push_back(GETDataFile{filename, std::ios::in});
         }
         catch (std::exception& e) {
-            UI::Log(UI::LogLevel::Error, e.what());
+            std::cout << e.what() << std::endl;
         }
     }
     
@@ -141,7 +141,7 @@ void MergeFiles(boost::filesystem::path input_path,
                 frames.push(GETFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
             }
             catch (std::exception& e) {
-                UI::Log(UI::LogLevel::Error, e.what());
+                std::cout << e.what() << std::endl;
             }
         }
         
@@ -161,7 +161,7 @@ void MergeFiles(boost::filesystem::path input_path,
         while (!frames.empty()) {
             testEvent.AppendFrame(frames.front());
             frames.pop();
-            UI::Log(UI::LogLevel::Debug, "Appended frame.");
+            //std::cout << "Appended frame." << std::endl;
         }
         
         testEvent.SubtractFPN();

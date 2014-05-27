@@ -119,12 +119,13 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     }
     
     for (int aget = 0; aget<4; aget++) {
-        multiplicity.push_back(*rawFrameIter);
-        rawFrameIter++;
+        uint16_t mult_in = Utilities::ExtractByteSwappedInt<decltype(mult_in)>(rawFrameIter, rawFrameIter + sizeof(mult_in));
+        rawFrameIter += sizeof(mult_in);
+        multiplicity.push_back(mult_in);
     }
     
     // Extract data items
-    auto dataBegin = rawFrame.begin() + headerSize*64;
+    auto dataBegin = rawFrame.begin() + headerSize*GETFrame::sizeUnit;
     auto dataEnd   = dataBegin + nItems*itemSize;
     
     for (rawFrameIter = dataBegin; rawFrameIter != dataEnd; rawFrameIter+=itemSize) {

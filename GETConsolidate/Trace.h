@@ -13,6 +13,7 @@
 #include <map>
 #include <vector>
 #include <numeric>
+#include <assert.h>
 #include "GETExceptions.h"
 #include "Utilities.h"
 
