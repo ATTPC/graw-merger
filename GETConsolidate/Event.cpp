@@ -147,7 +147,7 @@ void Event::AppendFrame(const GETFrame& frame)
     }
     else if (this->eventTime != frame.eventTime) {
         std::cout << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
-        std::cout << "Event time delta: " << long(this->eventTime) - long(frame.eventTime) << std::endl;
+        std::cout << "CoBo " << int(cobo) << " Event " << eventId << " time delta: " << long(this->eventTime) - long(frame.eventTime) << std::endl;
     }
     
     nFramesAppended++;
