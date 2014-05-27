@@ -80,6 +80,8 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     eventTime = Utilities::ExtractByteSwappedInt<uint64_t>(rawFrameIter, rawFrameIter+6);
     rawFrameIter += 6;
     
+    assert((eventTime & 0xff00000000000000) == 0);
+    
     eventId = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
     rawFrameIter += 4;
     

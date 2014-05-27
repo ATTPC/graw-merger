@@ -13,6 +13,7 @@
 #include <vector>
 #include <bitset>
 #include <cmath>
+#include <assert.h>
 
 #include "GETFrameDataItem.h"
 #include "Utilities.h"

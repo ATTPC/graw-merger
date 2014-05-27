@@ -18,9 +18,16 @@ namespace Utilities {
                        std::vector<uint8_t>::const_iterator end)
     {
         outType result = 0;
-        int n = 0;
+        outType n = 0;
         for (auto iter = begin; iter != end; iter++) {
-            result |= (*iter)<<(8*n);
+            
+            // WARNING: This needs to be this explicit and step-by-step
+            // in order to prevent the computer from assuming the values are
+            // signed and filling in the more-significant bits with 1's.
+            
+            outType val = (*iter);
+            val <<= (8*n);
+            result |= val;
             n++;
         }
         return result;
@@ -31,9 +38,16 @@ namespace Utilities {
                                   std::vector<uint8_t>::const_iterator end)
     {
         outType result = 0;
-        int n = 0;
+        outType n = 0;
         for (auto iter = end-1; iter >= begin; iter--) {
-            result |= (*iter)<<(8*n);
+            
+            // WARNING: This needs to be this explicit and step-by-step
+            // in order to prevent the computer from assuming the values are
+            // signed and filling in the more-significant bits with 1's.
+            
+            outType val = (*iter);
+            val <<= (8*n);
+            result |= val;
             n++;
         }
         return result;
