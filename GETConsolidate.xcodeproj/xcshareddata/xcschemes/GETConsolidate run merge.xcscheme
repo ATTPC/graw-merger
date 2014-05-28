@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "03DDF3951917FD1000306788"
-               BuildableName = "GETConsolidate"
+               BuildableName = "get-manip"
                BlueprintName = "get-manip"
                ReferencedContainer = "container:GETConsolidate.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "03DDF3951917FD1000306788"
-            BuildableName = "GETConsolidate"
+            BuildableName = "get-manip"
             BlueprintName = "get-manip"
             ReferencedContainer = "container:GETConsolidate.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "03DDF3951917FD1000306788"
-            BuildableName = "GETConsolidate"
+            BuildableName = "get-manip"
             BlueprintName = "get-manip"
             ReferencedContainer = "container:GETConsolidate.xcodeproj">
          </BuildableReference>
@@ -98,7 +98,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "03DDF3951917FD1000306788"
-            BuildableName = "GETConsolidate"
+            BuildableName = "get-manip"
             BlueprintName = "get-manip"
             ReferencedContainer = "container:GETConsolidate.xcodeproj">
          </BuildableReference>

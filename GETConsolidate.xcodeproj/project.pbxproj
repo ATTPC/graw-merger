@@ -9,36 +9,21 @@
 /* Begin PBXBuildFile section */
 		0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
 		0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
-		0332FDBC1922EED00065697C /* TraceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0332FDBB1922EED00065697C /* TraceTests.mm */; };
 		03514B5B192D16B60077C431 /* EventTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03514B59192D16B60077C431 /* EventTests.cpp */; };
 		03517E0D192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
-		03517E0E192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
 		03517E0F192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
-		03517E10192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
 		03517E11192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
-		03517E12192307A700F2C732 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
 		036F43341933F44C00D1F146 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 036F43311933F44C00D1F146 /* libboost_date_time.a */; };
 		036F43351933F44C00D1F146 /* libboost_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 036F43321933F44C00D1F146 /* libboost_log.a */; };
 		037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */; };
-		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
-		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
-		03AB40AC191C26C10021ABD4 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
-		03AB40AD191C26C10021ABD4 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
-		03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
-		03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
-		03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03AB40B3191D0D950021ABD4 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
-		03AB40B4191D0D950021ABD4 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
-		03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */; };
 		03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
-		03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
-		03B0AF8819224FAB0027E9F2 /* GETFrameTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */; };
 		03C2018F19267C2900264702 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C2018E19267C2900264702 /* main.cpp */; };
 		03C201A119267D8A00264702 /* TraceTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C2019F19267D8A00264702 /* TraceTests.cpp */; };
 		03C201A31926804000264702 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
-		03C201A61926835C00264702 /* GETFrameTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C201A41926835C00264702 /* GETFrameTests.cpp */; };
+		03C201A61926835C00264702 /* GRAWFrameTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C201A41926835C00264702 /* GRAWFrameTests.cpp */; };
 		03C201A71926896700264702 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 		03C201A81926896700264702 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
 		03C201A91926896700264702 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
@@ -58,16 +43,6 @@
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		03AB40A7191C269F0021ABD4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03DDF38E1917FD0F00306788 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 03DDF3951917FD1000306788;
-			remoteInfo = GETConsolidate;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		03C2018A19267C2900264702 /* CopyFiles */ = {
@@ -97,7 +72,6 @@
 		0302EAF61932C1F6007F898D /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserInterface.cpp; sourceTree = "<group>"; };
 		0302EAF71932C1F6007F898D /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInterface.h; sourceTree = "<group>"; };
 		03250BC5192FED5F00FBA1FB /* datafile.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = datafile.rst; sourceTree = "<group>"; };
-		0332FDBB1922EED00065697C /* TraceTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TraceTests.mm; sourceTree = "<group>"; };
 		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		03514B1E192CEEAB0077C431 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		03514B22192CEEAB0077C431 /* layout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = layout.html; sourceTree = "<group>"; };
@@ -138,9 +112,9 @@
 		03514B4D192CF51B0077C431 /* padlookuptable.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = padlookuptable.rst; sourceTree = "<group>"; };
 		03514B58192D11240077C431 /* event.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = event.rst; sourceTree = "<group>"; };
 		03514B59192D16B60077C431 /* EventTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventTests.cpp; sourceTree = "<group>"; };
-		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../../../../../usr/local/lib/libboost_filesystem.a; sourceTree = "<group>"; };
-		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../../../../../usr/local/lib/libboost_program_options.a; sourceTree = "<group>"; };
-		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../../../../../usr/local/lib/libboost_system.a; sourceTree = "<group>"; };
+		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = /usr/local/lib/libboost_filesystem.a; sourceTree = "<absolute>"; };
+		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = /usr/local/lib/libboost_program_options.a; sourceTree = "<absolute>"; };
+		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = /usr/local/lib/libboost_system.a; sourceTree = "<absolute>"; };
 		036F43301933F18200D1F146 /* event_file_class.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_file_class.rst; sourceTree = "<group>"; };
 		036F43311933F44C00D1F146 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = /usr/local/lib/libboost_date_time.a; sourceTree = "<absolute>"; };
 		036F43321933F44C00D1F146 /* libboost_log.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_log.a; path = /usr/local/lib/libboost_log.a; sourceTree = "<absolute>"; };
@@ -149,23 +123,17 @@
 		038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeRawFrame.cpp; sourceTree = "<group>"; };
 		038AB1041927F08B009C1C38 /* FakeRawFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeRawFrame.h; sourceTree = "<group>"; };
 		039056CC192552AE00214C6C /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GETConsolidate Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GETConsolidate Tests-Info.plist"; sourceTree = "<group>"; };
-		03AB40A2191C269F0021ABD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		03AB40A6191C269F0021ABD4 /* GETConsolidate Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GETConsolidate Tests-Prefix.pch"; sourceTree = "<group>"; };
 		03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFile.cpp; sourceTree = "<group>"; };
 		03AB40B2191D0D950021ABD4 /* GRAWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWFile.h; sourceTree = "<group>"; };
-		03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETDataFileTests.mm; sourceTree = "<group>"; };
 		03AB40B9191D45900021ABD4 /* EventFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventFile.cpp; sourceTree = "<group>"; };
 		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFile.h; sourceTree = "<group>"; };
 		03AB40C0191D546C0021ABD4 /* GMExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMExceptions.h; sourceTree = "<group>"; };
-		03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETFrameTests.mm; sourceTree = "<group>"; };
 		03C2018C19267C2900264702 /* GetConsolidateTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GetConsolidateTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2018E19267C2900264702 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03C2019019267C2900264702 /* GetConsolidateTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GetConsolidateTests.1; sourceTree = "<group>"; };
 		03C2019F19267D8A00264702 /* TraceTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TraceTests.cpp; sourceTree = "<group>"; };
-		03C201A41926835C00264702 /* GETFrameTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrameTests.cpp; sourceTree = "<group>"; };
+		03C201A41926835C00264702 /* GRAWFrameTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFrameTests.cpp; sourceTree = "<group>"; };
 		03C201B019268E7E00264702 /* MockGRAWFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGRAWFile.h; sourceTree = "<group>"; };
 		03C201B11926942F00264702 /* MockData */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MockData; sourceTree = "<group>"; };
 		03C201B41926A6E700264702 /* libgmock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgmock.a; path = /usr/local/lib/libgmock.a; sourceTree = "<absolute>"; };
@@ -185,17 +153,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		03AB4097191C269F0021ABD4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				03517E12192307A700F2C732 /* libboost_system.a in Frameworks */,
-				03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */,
-				03517E0E192307A700F2C732 /* libboost_filesystem.a in Frameworks */,
-				03517E10192307A700F2C732 /* libboost_program_options.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		03C2018919267C2900264702 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,30 +302,14 @@
 		03AB409B191C269F0021ABD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03517E0A192307A700F2C732 /* libboost_filesystem.a */,
+				036F43311933F44C00D1F146 /* libboost_date_time.a */,
+				036F43321933F44C00D1F146 /* libboost_log.a */,
+				03517E0B192307A700F2C732 /* libboost_program_options.a */,
+				03517E0C192307A700F2C732 /* libboost_system.a */,
 				03AB409C191C269F0021ABD4 /* XCTest.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		03AB409E191C269F0021ABD4 /* GETConsolidate Tests */ = {
-			isa = PBXGroup;
-			children = (
-				0332FDBB1922EED00065697C /* TraceTests.mm */,
-				03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */,
-				03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */,
-				03AB409F191C269F0021ABD4 /* Supporting Files */,
-			);
-			path = "GETConsolidate Tests";
-			sourceTree = "<group>";
-		};
-		03AB409F191C269F0021ABD4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */,
-				03AB40A1191C269F0021ABD4 /* InfoPlist.strings */,
-				03AB40A6191C269F0021ABD4 /* GETConsolidate Tests-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		03AB40BD191D45A90021ABD4 /* Headers */ = {
@@ -406,30 +347,30 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
-		03C2018D19267C2900264702 /* GetConsolidateTests */ = {
+		03C2018D19267C2900264702 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
 				03C201B11926942F00264702 /* MockData */,
 				03C201B019268E7E00264702 /* MockGRAWFile.h */,
 				038AB1041927F08B009C1C38 /* FakeRawFrame.h */,
 				038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */,
-				03C201A41926835C00264702 /* GETFrameTests.cpp */,
+				03C201A41926835C00264702 /* GRAWFrameTests.cpp */,
 				03C2019F19267D8A00264702 /* TraceTests.cpp */,
 				03514B59192D16B60077C431 /* EventTests.cpp */,
 				03C2018E19267C2900264702 /* main.cpp */,
 				03C2019019267C2900264702 /* GetConsolidateTests.1 */,
 				03C201B41926A6E700264702 /* libgmock.a */,
 			);
+			name = "Unit Tests";
 			path = GetConsolidateTests;
 			sourceTree = "<group>";
 		};
 		03DDF38D1917FD0F00306788 = {
 			isa = PBXGroup;
 			children = (
-				03DDF3981917FD1000306788 /* GETConsolidate */,
+				03DDF3981917FD1000306788 /* get-manip */,
 				035149B2192CEEAB0077C431 /* docs */,
-				03AB409E191C269F0021ABD4 /* GETConsolidate Tests */,
-				03C2018D19267C2900264702 /* GetConsolidateTests */,
+				03C2018D19267C2900264702 /* Unit Tests */,
 				03AB409B191C269F0021ABD4 /* Frameworks */,
 				03DDF3971917FD1000306788 /* Products */,
 			);
@@ -439,48 +380,25 @@
 			isa = PBXGroup;
 			children = (
 				03DDF3961917FD1000306788 /* GETConsolidate */,
-				03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */,
 				03C2018C19267C2900264702 /* GetConsolidateTests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		03DDF3981917FD1000306788 /* GETConsolidate */ = {
+		03DDF3981917FD1000306788 /* get-manip */ = {
 			isa = PBXGroup;
 			children = (
 				03AB40BD191D45A90021ABD4 /* Headers */,
 				03AB40BE191D45C10021ABD4 /* Source */,
 				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
-				03517E0A192307A700F2C732 /* libboost_filesystem.a */,
-				036F43311933F44C00D1F146 /* libboost_date_time.a */,
-				036F43321933F44C00D1F146 /* libboost_log.a */,
-				03517E0B192307A700F2C732 /* libboost_program_options.a */,
-				03517E0C192307A700F2C732 /* libboost_system.a */,
 			);
+			name = "get-manip";
 			path = GETConsolidate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		03AB4099191C269F0021ABD4 /* GETConsolidate Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 03AB40A9191C269F0021ABD4 /* Build configuration list for PBXNativeTarget "GETConsolidate Tests" */;
-			buildPhases = (
-				03AB4096191C269F0021ABD4 /* Sources */,
-				03AB4097191C269F0021ABD4 /* Frameworks */,
-				03AB4098191C269F0021ABD4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				03AB40A8191C269F0021ABD4 /* PBXTargetDependency */,
-			);
-			name = "GETConsolidate Tests";
-			productName = "GETConsolidate Tests";
-			productReference = 03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		03C2018B19267C2900264702 /* get-manip-tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */;
@@ -524,11 +442,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = NSCL;
-				TargetAttributes = {
-					03AB4099191C269F0021ABD4 = {
-						TestTargetID = 03DDF3951917FD1000306788;
-					};
-				};
 			};
 			buildConfigurationList = 03DDF3911917FD0F00306788 /* Build configuration list for PBXProject "GETConsolidate" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -543,22 +456,10 @@
 			projectRoot = "";
 			targets = (
 				03DDF3951917FD1000306788 /* get-manip */,
-				03AB4099191C269F0021ABD4 /* GETConsolidate Tests */,
 				03C2018B19267C2900264702 /* get-manip-tests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		03AB4098191C269F0021ABD4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		03514B57192D034B0077C431 /* ShellScript */ = {
@@ -577,23 +478,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		03AB4096191C269F0021ABD4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				03B0AF8819224FAB0027E9F2 /* GETFrameTests.mm in Sources */,
-				03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */,
-				03AB40B4191D0D950021ABD4 /* GRAWFile.cpp in Sources */,
-				03AB40AD191C26C10021ABD4 /* GRAWFrame.cpp in Sources */,
-				03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */,
-				0332FDBC1922EED00065697C /* TraceTests.mm in Sources */,
-				03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */,
-				03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */,
-				03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */,
-				03AB40AC191C26C10021ABD4 /* GRAWDataItem.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		03C2018819267C2900264702 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -603,7 +487,7 @@
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
 				037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */,
-				03C201A61926835C00264702 /* GETFrameTests.cpp in Sources */,
+				03C201A61926835C00264702 /* GRAWFrameTests.cpp in Sources */,
 				03C201AB1926896700264702 /* Event.cpp in Sources */,
 				03C201A31926804000264702 /* Trace.cpp in Sources */,
 				03C2018F19267C2900264702 /* main.cpp in Sources */,
@@ -634,72 +518,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		03AB40A8191C269F0021ABD4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 03DDF3951917FD1000306788 /* get-manip */;
-			targetProxy = 03AB40A7191C269F0021ABD4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		03AB40A1191C269F0021ABD4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				03AB40A2191C269F0021ABD4 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		03AB40AA191C269F0021ABD4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GETConsolidate Tests/GETConsolidate Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					/usr/local/include,
-				);
-				INFOPLIST_FILE = "GETConsolidate Tests/GETConsolidate Tests-Info.plist";
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		03AB40AB191C269F0021ABD4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GETConsolidate Tests/GETConsolidate Tests-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					/usr/local/include,
-				);
-				INFOPLIST_FILE = "GETConsolidate Tests/GETConsolidate Tests-Info.plist";
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 		03C2019319267C2900264702 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -835,15 +654,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		03AB40A9191C269F0021ABD4 /* Build configuration list for PBXNativeTarget "GETConsolidate Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				03AB40AA191C269F0021ABD4 /* Debug */,
-				03AB40AB191C269F0021ABD4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
