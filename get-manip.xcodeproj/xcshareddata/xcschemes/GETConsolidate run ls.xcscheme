@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03C2018B19267C2900264702"
-               BuildableName = "get-manip-tests"
-               BlueprintName = "get-manip-tests"
-               ReferencedContainer = "container:GETConsolidate.xcodeproj">
+               BlueprintIdentifier = "03DDF3951917FD1000306788"
+               BuildableName = "get-manip"
+               BlueprintName = "get-manip"
+               ReferencedContainer = "container:get-manip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03C2018B19267C2900264702"
-            BuildableName = "get-manip-tests"
-            BlueprintName = "get-manip-tests"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            BlueprintIdentifier = "03DDF3951917FD1000306788"
+            BuildableName = "get-manip"
+            BlueprintName = "get-manip"
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,12 +51,22 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03C2018B19267C2900264702"
-            BuildableName = "get-manip-tests"
-            BlueprintName = "get-manip-tests"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            BlueprintIdentifier = "03DDF3951917FD1000306788"
+            BuildableName = "get-manip"
+            BlueprintName = "get-manip"
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--ls"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-i &quot;/Users/josh/Desktop/output.bin&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -69,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03C2018B19267C2900264702"
-            BuildableName = "get-manip-tests"
-            BlueprintName = "get-manip-tests"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            BlueprintIdentifier = "03DDF3951917FD1000306788"
+            BuildableName = "get-manip"
+            BlueprintName = "get-manip"
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

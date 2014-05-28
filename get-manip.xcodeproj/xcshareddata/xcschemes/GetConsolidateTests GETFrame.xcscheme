@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03DDF3951917FD1000306788"
-               BuildableName = "get-manip"
-               BlueprintName = "get-manip"
-               ReferencedContainer = "container:GETConsolidate.xcodeproj">
+               BlueprintIdentifier = "03C2018B19267C2900264702"
+               BuildableName = "get-manip-tests"
+               BlueprintName = "get-manip-tests"
+               ReferencedContainer = "container:get-manip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,24 +28,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03AB4099191C269F0021ABD4"
-               BuildableName = "GETConsolidate Tests.xctest"
-               BlueprintName = "GETConsolidate Tests"
-               ReferencedContainer = "container:GETConsolidate.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03DDF3951917FD1000306788"
-            BuildableName = "get-manip"
-            BlueprintName = "get-manip"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            BlueprintIdentifier = "03C2018B19267C2900264702"
+            BuildableName = "get-manip-tests"
+            BlueprintName = "get-manip-tests"
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,30 +51,19 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03DDF3951917FD1000306788"
-            BuildableName = "get-manip"
-            BlueprintName = "get-manip"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            BlueprintIdentifier = "03C2018B19267C2900264702"
+            BuildableName = "get-manip-tests"
+            BlueprintName = "get-manip-tests"
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "--merge"
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "GTEST_FILTER"
+            value = "GETFrame*.*"
             isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--lookup &quot;/Users/josh/Documents/Data/new_lookup.csv&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/mutant&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/output.evt&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -97,10 +76,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03DDF3951917FD1000306788"
-            BuildableName = "get-manip"
-            BlueprintName = "get-manip"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            BlueprintIdentifier = "03C2018B19267C2900264702"
+            BuildableName = "get-manip-tests"
+            BlueprintName = "get-manip-tests"
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

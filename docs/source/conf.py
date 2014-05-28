@@ -31,8 +31,8 @@ import os
 extensions = ['sphinx.ext.todo','breathe']
 
 todo_include_todos = 'true'
-breathe_projects = { "getconsolidate": "./doxygen_build/xml" }
-breathe_default_project = 'getconsolidate'
+breathe_projects = { "get-manip": "./doxygen_build/xml" }
+breathe_default_project = 'get-manip'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "03C2018B19267C2900264702"
                BuildableName = "get-manip-tests"
                BlueprintName = "get-manip-tests"
-               ReferencedContainer = "container:GETConsolidate.xcodeproj">
+               ReferencedContainer = "container:get-manip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "03C2018B19267C2900264702"
             BuildableName = "get-manip-tests"
             BlueprintName = "get-manip-tests"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -54,13 +54,13 @@
             BlueprintIdentifier = "03C2018B19267C2900264702"
             BuildableName = "get-manip-tests"
             BlueprintName = "get-manip-tests"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "GTEST_FILTER"
-            value = "GETFrame*.*"
+            value = "Trace*.*"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
@@ -79,7 +79,7 @@
             BlueprintIdentifier = "03C2018B19267C2900264702"
             BuildableName = "get-manip-tests"
             BlueprintName = "get-manip-tests"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

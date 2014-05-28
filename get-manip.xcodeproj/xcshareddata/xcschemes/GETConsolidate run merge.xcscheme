@@ -17,7 +17,7 @@
                BlueprintIdentifier = "03DDF3951917FD1000306788"
                BuildableName = "get-manip"
                BlueprintName = "get-manip"
-               ReferencedContainer = "container:GETConsolidate.xcodeproj">
+               ReferencedContainer = "container:get-manip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "03AB4099191C269F0021ABD4"
+               BuildableName = "GETConsolidate Tests.xctest"
+               BlueprintName = "GETConsolidate Tests"
+               ReferencedContainer = "container:get-manip.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
@@ -35,7 +45,7 @@
             BlueprintIdentifier = "03DDF3951917FD1000306788"
             BuildableName = "get-manip"
             BlueprintName = "get-manip"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -54,16 +64,24 @@
             BlueprintIdentifier = "03DDF3951917FD1000306788"
             BuildableName = "get-manip"
             BlueprintName = "get-manip"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--ls"
+            argument = "--merge"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-i &quot;/Users/josh/Desktop/output.bin&quot;"
+            argument = "--lookup &quot;/Users/josh/Documents/Data/new_lookup.csv&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/josh/Documents/Data/mutant&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "&quot;/Users/josh/Documents/Data/output.evt&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -82,7 +100,7 @@
             BlueprintIdentifier = "03DDF3951917FD1000306788"
             BuildableName = "get-manip"
             BlueprintName = "get-manip"
-            ReferencedContainer = "container:GETConsolidate.xcodeproj">
+            ReferencedContainer = "container:get-manip.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
