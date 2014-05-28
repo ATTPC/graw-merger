@@ -481,9 +481,9 @@
 			productReference = 03AB409A191C269F0021ABD4 /* GETConsolidate Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		03C2018B19267C2900264702 /* GetConsolidateTests */ = {
+		03C2018B19267C2900264702 /* get-manip-tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "GetConsolidateTests" */;
+			buildConfigurationList = 03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */;
 			buildPhases = (
 				03C2018819267C2900264702 /* Sources */,
 				03C2018919267C2900264702 /* Frameworks */,
@@ -493,14 +493,14 @@
 			);
 			dependencies = (
 			);
-			name = GetConsolidateTests;
+			name = "get-manip-tests";
 			productName = GetConsolidateTests;
 			productReference = 03C2018C19267C2900264702 /* GetConsolidateTests */;
 			productType = "com.apple.product-type.tool";
 		};
-		03DDF3951917FD1000306788 /* GETConsolidate */ = {
+		03DDF3951917FD1000306788 /* get-manip */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03DDF39F1917FD1000306788 /* Build configuration list for PBXNativeTarget "GETConsolidate" */;
+			buildConfigurationList = 03DDF39F1917FD1000306788 /* Build configuration list for PBXNativeTarget "get-manip" */;
 			buildPhases = (
 				03DDF3921917FD1000306788 /* Sources */,
 				03DDF3931917FD1000306788 /* Frameworks */,
@@ -511,7 +511,7 @@
 			);
 			dependencies = (
 			);
-			name = GETConsolidate;
+			name = "get-manip";
 			productName = GETConsolidate;
 			productReference = 03DDF3961917FD1000306788 /* GETConsolidate */;
 			productType = "com.apple.product-type.tool";
@@ -542,9 +542,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				03DDF3951917FD1000306788 /* GETConsolidate */,
+				03DDF3951917FD1000306788 /* get-manip */,
 				03AB4099191C269F0021ABD4 /* GETConsolidate Tests */,
-				03C2018B19267C2900264702 /* GetConsolidateTests */,
+				03C2018B19267C2900264702 /* get-manip-tests */,
 			);
 		};
 /* End PBXProject section */
@@ -637,7 +637,7 @@
 /* Begin PBXTargetDependency section */
 		03AB40A8191C269F0021ABD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 03DDF3951917FD1000306788 /* GETConsolidate */;
+			target = 03DDF3951917FD1000306788 /* get-manip */;
 			targetProxy = 03AB40A7191C269F0021ABD4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -844,7 +844,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "GetConsolidateTests" */ = {
+		03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03C2019319267C2900264702 /* Debug */,
@@ -862,7 +862,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		03DDF39F1917FD1000306788 /* Build configuration list for PBXNativeTarget "GETConsolidate" */ = {
+		03DDF39F1917FD1000306788 /* Build configuration list for PBXNativeTarget "get-manip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03DDF3A01917FD1000306788 /* Debug */,

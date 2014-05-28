@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "03C2018B19267C2900264702"
                BuildableName = "GetConsolidateTests"
-               BlueprintName = "GetConsolidateTests"
+               BlueprintName = "get-manip-tests"
                ReferencedContainer = "container:GETConsolidate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "03C2018B19267C2900264702"
             BuildableName = "GetConsolidateTests"
-            BlueprintName = "GetConsolidateTests"
+            BlueprintName = "get-manip-tests"
             ReferencedContainer = "container:GETConsolidate.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -53,7 +53,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "03C2018B19267C2900264702"
             BuildableName = "GetConsolidateTests"
-            BlueprintName = "GetConsolidateTests"
+            BlueprintName = "get-manip-tests"
             ReferencedContainer = "container:GETConsolidate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,7 +71,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "03C2018B19267C2900264702"
             BuildableName = "GetConsolidateTests"
-            BlueprintName = "GetConsolidateTests"
+            BlueprintName = "get-manip-tests"
             ReferencedContainer = "container:GETConsolidate.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
