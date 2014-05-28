@@ -1,19 +1,19 @@
 //
-//  GETFrameDataItem.h
+//  GRAWDataItem.h
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/5/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__GETFrameDataItem__
-#define __GETConsolidate__GETFrameDataItem__
+#ifndef __GETConsolidate__GRAWDataItem__
+#define __GETConsolidate__GRAWDataItem__
 
 #include <iostream>
 
-class GETFrameDataItem {
+class GRAWDataItem {
 public:
-    GETFrameDataItem(uint8_t agetId_in, uint8_t channel_in,
+    GRAWDataItem(uint8_t agetId_in, uint8_t channel_in,
                      uint16_t timeBucketId_in, uint16_t sample_in);
     
     uint8_t GetAgetId() const;
@@ -28,4 +28,4 @@ private:
     uint16_t sample;
 };
 
-#endif /* defined(__GETConsolidate__GETFrameDataItem__) */
+#endif /* defined(__GETConsolidate__GRAWDataItem__) */

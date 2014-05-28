@@ -122,7 +122,7 @@ void Event::SetEventTime(const uint64_t eventTime_in)
     eventTime = eventTime_in;
 }
 
-void Event::AppendFrame(const GETFrame& frame)
+void Event::AppendFrame(const GRAWFrame& frame)
 {
     // Make sure pointers to required objects are valid
 
@@ -179,14 +179,14 @@ void Event::AppendFrame(const GETFrame& frame)
     }
 }
 
-std::vector<GETFrame> Event::ExtractAllFrames()
+std::vector<GRAWFrame> Event::ExtractAllFrames()
 {
-    std::vector<GETFrame> frames;
+    std::vector<GRAWFrame> frames;
     
     for (uint8_t cobo = 0; cobo < 10; cobo++) {
         for (uint8_t asad = 0; asad < 4; asad++) {
 
-            GETFrame fr {};
+            GRAWFrame fr {};
             fr.coboId = cobo;
             fr.asadId = asad;
             fr.eventTime = eventTime;
@@ -199,7 +199,7 @@ std::vector<GETFrame> Event::ExtractAllFrames()
                     
                     for (int i = 0; i < tr->second.data.size(); i++) {
                         // Gets all of the tbuckets for this channel
-                        fr.data.push_back(GETFrameDataItem(tr->second.agetId,
+                        fr.data.push_back(GRAWDataItem(tr->second.agetId,
                                                            tr->second.channel,
                                                            i,
                                                            tr->second.data.at(i)));

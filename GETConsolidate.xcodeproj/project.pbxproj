@@ -24,8 +24,8 @@
 		038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */; };
 		03AB409D191C269F0021ABD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AB409C191C269F0021ABD4 /* XCTest.framework */; };
 		03AB40A3191C269F0021ABD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03AB40A1191C269F0021ABD4 /* InfoPlist.strings */; };
-		03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
-		03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
+		03AB40AC191C26C10021ABD4 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
+		03AB40AD191C26C10021ABD4 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
 		03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 		03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
@@ -41,8 +41,8 @@
 		03C201A61926835C00264702 /* GETFrameTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C201A41926835C00264702 /* GETFrameTests.cpp */; };
 		03C201A71926896700264702 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 		03C201A81926896700264702 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
-		03C201A91926896700264702 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
-		03C201AA1926896700264702 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
+		03C201A91926896700264702 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
+		03C201AA1926896700264702 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
 		03C201AB1926896700264702 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03C201AC1926896700264702 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
 		03C201AD19268A0500264702 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
@@ -52,8 +52,8 @@
 		03C201B51926A6E700264702 /* libgmock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C201B41926A6E700264702 /* libgmock.a */; };
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
 		03DDF39C1917FD1000306788 /* GETConsolidate.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
-		03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
-		03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
+		03DDF3A41917FD9100306788 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
+		03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
@@ -130,7 +130,7 @@
 		03514B43192CEEAB0077C431 /* exceptions.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = exceptions.rst; sourceTree = "<group>"; };
 		03514B44192CEEAB0077C431 /* formats.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = formats.rst; sourceTree = "<group>"; };
 		03514B45192CEEAB0077C431 /* GRAWFile.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAWFile.rst; sourceTree = "<group>"; };
-		03514B46192CEEAB0077C431 /* GETFrame.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GETFrame.rst; sourceTree = "<group>"; };
+		03514B46192CEEAB0077C431 /* GRAWFrame.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAWFrame.rst; sourceTree = "<group>"; };
 		03514B47192CEEAB0077C431 /* GRAW.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAW.rst; sourceTree = "<group>"; };
 		03514B48192CEEAB0077C431 /* index.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = index.rst; sourceTree = "<group>"; };
 		03514B49192CEEAB0077C431 /* intro.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = intro.rst; sourceTree = "<group>"; };
@@ -172,10 +172,10 @@
 		03DDF3961917FD1000306788 /* GETConsolidate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GETConsolidate; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
-		03DDF3A21917FD9100306788 /* GETFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrame.cpp; sourceTree = "<group>"; };
-		03DDF3A31917FD9100306788 /* GETFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrame.h; sourceTree = "<group>"; };
-		03DDF3A51918026900306788 /* GETFrameDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrameDataItem.cpp; sourceTree = "<group>"; };
-		03DDF3A61918026900306788 /* GETFrameDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETFrameDataItem.h; sourceTree = "<group>"; };
+		03DDF3A21917FD9100306788 /* GRAWFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFrame.cpp; sourceTree = "<group>"; };
+		03DDF3A31917FD9100306788 /* GRAWFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWFrame.h; sourceTree = "<group>"; };
+		03DDF3A51918026900306788 /* GRAWDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWDataItem.cpp; sourceTree = "<group>"; };
+		03DDF3A61918026900306788 /* GRAWDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWDataItem.h; sourceTree = "<group>"; };
 		03DDF3AC19195A5E00306788 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
 		03DDF3AD19195A5E00306788 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		03DDF3AF19195B6100306788 /* Trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trace.cpp; sourceTree = "<group>"; };
@@ -242,7 +242,7 @@
 				03514B43192CEEAB0077C431 /* exceptions.rst */,
 				03514B44192CEEAB0077C431 /* formats.rst */,
 				03514B45192CEEAB0077C431 /* GRAWFile.rst */,
-				03514B46192CEEAB0077C431 /* GETFrame.rst */,
+				03514B46192CEEAB0077C431 /* GRAWFrame.rst */,
 				03514B47192CEEAB0077C431 /* GRAW.rst */,
 				03514B48192CEEAB0077C431 /* index.rst */,
 				03514B49192CEEAB0077C431 /* intro.rst */,
@@ -381,8 +381,8 @@
 				037A338E192A5E8E006E2E84 /* DataFile.h */,
 				03AB40B2191D0D950021ABD4 /* GRAWFile.h */,
 				03AB40BA191D45900021ABD4 /* EventFile.h */,
-				03DDF3A31917FD9100306788 /* GETFrame.h */,
-				03DDF3A61918026900306788 /* GETFrameDataItem.h */,
+				03DDF3A31917FD9100306788 /* GRAWFrame.h */,
+				03DDF3A61918026900306788 /* GRAWDataItem.h */,
 				03DDF3AD19195A5E00306788 /* Event.h */,
 				03DDF3B019195B6100306788 /* Trace.h */,
 			);
@@ -397,8 +397,8 @@
 				037A338D192A5E8E006E2E84 /* DataFile.cpp */,
 				03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */,
 				03AB40B9191D45900021ABD4 /* EventFile.cpp */,
-				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
-				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
+				03DDF3A21917FD9100306788 /* GRAWFrame.cpp */,
+				03DDF3A51918026900306788 /* GRAWDataItem.cpp */,
 				03DDF3AC19195A5E00306788 /* Event.cpp */,
 				03DDF3AF19195B6100306788 /* Trace.cpp */,
 				03DDF3991917FD1000306788 /* main.cpp */,
@@ -584,13 +584,13 @@
 				03B0AF8819224FAB0027E9F2 /* GETFrameTests.mm in Sources */,
 				03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */,
 				03AB40B4191D0D950021ABD4 /* GRAWFile.cpp in Sources */,
-				03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */,
+				03AB40AD191C26C10021ABD4 /* GRAWFrame.cpp in Sources */,
 				03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */,
 				0332FDBC1922EED00065697C /* TraceTests.mm in Sources */,
 				03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */,
 				03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */,
 				03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */,
-				03AB40AC191C26C10021ABD4 /* GETFrameDataItem.cpp in Sources */,
+				03AB40AC191C26C10021ABD4 /* GRAWDataItem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,7 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03C201A81926896700264702 /* GRAWFile.cpp in Sources */,
-				03C201AA1926896700264702 /* GETFrameDataItem.cpp in Sources */,
+				03C201AA1926896700264702 /* GRAWDataItem.cpp in Sources */,
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
 				037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */,
@@ -608,7 +608,7 @@
 				03C201A31926804000264702 /* Trace.cpp in Sources */,
 				03C2018F19267C2900264702 /* main.cpp in Sources */,
 				038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */,
-				03C201A91926896700264702 /* GETFrame.cpp in Sources */,
+				03C201A91926896700264702 /* GRAWFrame.cpp in Sources */,
 				03C201A71926896700264702 /* PadLookupTable.cpp in Sources */,
 				03514B5B192D16B60077C431 /* EventTests.cpp in Sources */,
 				03C201A119267D8A00264702 /* TraceTests.cpp in Sources */,
@@ -622,9 +622,9 @@
 				03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */,
 				03AB40B3191D0D950021ABD4 /* GRAWFile.cpp in Sources */,
 				03DDF3AE19195A5E00306788 /* Event.cpp in Sources */,
-				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
+				03DDF3A41917FD9100306788 /* GRAWFrame.cpp in Sources */,
 				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
-				03DDF3A71918026900306788 /* GETFrameDataItem.cpp in Sources */,
+				03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */,
 				0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */,
 				037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,

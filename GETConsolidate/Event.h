@@ -11,8 +11,8 @@
 
 #include <iostream>
 #include <vector>
-#include "GETFrame.h"
-#include "GETFrameDataItem.h"
+#include "GRAWFrame.h"
+#include "GRAWDataItem.h"
 #include "Trace.h"
 #include "PadLookupTable.h"
 #include "GETExceptions.h"
@@ -44,7 +44,7 @@ public:
      
      \rst
      .. NOTE::
-        Unlike the :class:`GETFrame` class, the Event class expects its raw data to be *little*-endian. 
+        Unlike the :class:`GRAWFrame` class, the Event class expects its raw data to be *little*-endian. 
      \endrst
      
      */
@@ -76,8 +76,8 @@ public:
     void SetEventId(const uint32_t eventId_in);
     void SetEventTime(const uint64_t eventTime_in);
     
-    void AppendFrame(const GETFrame& frame);
-    std::vector<GETFrame> ExtractAllFrames();
+    void AppendFrame(const GRAWFrame& frame);
+    std::vector<GRAWFrame> ExtractAllFrames();
     
     // Getting properties and members
     

@@ -1,34 +1,34 @@
 //
-//  GETFrame.cpp
+//  GRAWFrame.cpp
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/5/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#include "GETFrame.h"
+#include "GRAWFrame.h"
 
 // --------
 // Static constants
 // --------
 
-const uint8_t  GETFrame::Expected_metaType = 8;
-const uint16_t GETFrame::Expected_headerSize = 1;
-const uint16_t GETFrame::Expected_itemSize = 4;
-const int      GETFrame::sizeUnit = 256;
+const uint8_t  GRAWFrame::Expected_metaType = 8;
+const uint16_t GRAWFrame::Expected_headerSize = 1;
+const uint16_t GRAWFrame::Expected_itemSize = 4;
+const int      GRAWFrame::sizeUnit = 256;
 
 // --------
 // Constructor
 // --------
 
-GETFrame::GETFrame()
+GRAWFrame::GRAWFrame()
 : metaType(6),frameSize(0),dataSource(0),frameType(1),revision(4),headerSize(2),itemSize(4),nItems(0),eventTime(0),eventId(0),coboId(0),asadId(0),readOffset(0),status(0)
 {
     hitPatterns = {0,0,0,0};
     multiplicity = {0,0,0,0};
 }
 
-GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad)
+GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad)
 {
     auto rawFrameIter = rawFrame.begin();
     
@@ -127,7 +127,7 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
     }
     
     // Extract data items
-    auto dataBegin = rawFrame.begin() + headerSize*GETFrame::sizeUnit;
+    auto dataBegin = rawFrame.begin() + headerSize*GRAWFrame::sizeUnit;
     auto dataEnd   = dataBegin + nItems*itemSize;
     
     for (rawFrameIter = dataBegin; rawFrameIter != dataEnd; rawFrameIter+=itemSize) {
@@ -138,7 +138,7 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
         uint16_t tbid   = ExtractTBid(item);
         int16_t sample  = ExtractSample(item);
         
-        data.push_back(GETFrameDataItem(aget,channel,tbid,sample));
+        data.push_back(GRAWDataItem(aget,channel,tbid,sample));
         
 //        if (!(hitPatterns.at(aget).test(channel))) {
 //            std::cout << "Channel " << int(channel) << " on CoBo " << int(coboId) << " AsAd " << int(asadId) << " AGET " << int(aget) << " not on in hitpattern." << std::endl;
@@ -154,22 +154,22 @@ GETFrame::GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo,
 // Private Data Extraction Functions
 // --------
 
-uint8_t GETFrame::ExtractAgetId(const uint32_t raw)
+uint8_t GRAWFrame::ExtractAgetId(const uint32_t raw)
 {
     return (raw & 0xC0000000)>>30;
 }
 
-uint8_t GETFrame::ExtractChannel(const uint32_t raw)
+uint8_t GRAWFrame::ExtractChannel(const uint32_t raw)
 {
     return (raw & 0x3F800000)>>23;
 }
 
-uint16_t GETFrame::ExtractTBid(const uint32_t raw)
+uint16_t GRAWFrame::ExtractTBid(const uint32_t raw)
 {
     return (raw & 0x007FC000)>>14;
 }
 
-int16_t GETFrame::ExtractSample(const uint32_t raw)
+int16_t GRAWFrame::ExtractSample(const uint32_t raw)
 {
     return (raw & 0x00000FFF);
 }

@@ -1,16 +1,16 @@
-:class:`GETFrame` --- Frames from GRAW files
-============================================
+:class:`GRAWFrame` --- Frames from GRAW files
+=============================================
 
-The class :class:`GETFrame` is used to represent the raw data frames produced by the GET electronics. It is constructed using a vector of raw data bytes extracted from a file. 
+The class :class:`GRAWFrame` is used to represent the raw data frames produced by the GET electronics. It is constructed using a vector of raw data bytes extracted from a file. 
 
 Expected input data format
 --------------------------
 
-The :class:`GETFrame` object expects the input data to be in the format of a GRAW file frame. This format is described at :doc:`GRAW`.
+The :class:`GRAWFrame` object expects the input data to be in the format of a GRAW file frame. This format is described at :doc:`GRAW`.
 
-..	class:: GETFrame 
+..	class:: GRAWFrame 
 
-	..	function:: GETFrame(GRAWFile& file)
+	..	function:: GRAWFrame(GRAWFile& file)
 
 		Constructs a frame by pulling in the next raw frame from *file*, which must already be initialized. This automatically byte-swaps the raw integer values by calling a function in Utilities.h.
 
@@ -79,7 +79,7 @@ The :class:`GETFrame` object expects the input data to be in the format of a GRA
 
 	..	member:: private std::vector<uint8_t> multiplicity
 
-	..	member:: private std::vector<GETFrameDataItem> data
+	..	member:: private std::vector<GRAWDataItem> data
 
-		Each data item is stored in a :class:`GETFrameDataItem` object.
+		Each data item is stored in a :class:`GRAWDataItem` object.
 

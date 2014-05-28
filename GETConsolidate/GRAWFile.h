@@ -20,14 +20,14 @@
 #include "GETExceptions.h"
 #include "Utilities.h"
 #include "DataFile.h"
-#include "GETFrame.h"
+#include "GRAWFrame.h"
 
 /** \brief Interface to a .GRAW file.
  
      This class represents the .GRAW file output by the DAQ. It contains a
      C++ filestream to read in the file from disk, and it can then read
      individual frames from the file and provide them to another object, such
-     as an instance of the GETFrame class.
+     as an instance of the GRAWFrame class.
  */
 class GRAWFile : public DataFile
 {
@@ -75,7 +75,7 @@ public:
     
     /** \brief Get the next raw frame from the file
      
-     This function returns the next raw frame from the data file as a vector of integers. This can then be processed using, say, a GETFrame. This data is big-endian by default.
+     This function returns the next raw frame from the data file as a vector of integers. This can then be processed using, say, a GRAWFrame. This data is big-endian by default.
      
      \return A vector of unprocessed, big-endian bytes.
      
@@ -92,7 +92,7 @@ public:
      \param frame The frame to write.
      
      */
-    void WriteFrame(const GETFrame& frame);
+    void WriteFrame(const GRAWFrame& frame);
     
     //! \brief Returns the CoBo number from the file path
     virtual uint8_t GetFileCobo() const;

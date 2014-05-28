@@ -11,7 +11,7 @@
 #include "gtest/gtest.h"
 #include "Event.h"
 #include "FakeRawFrame.h"
-#include "GETFrame.h"
+#include "GRAWFrame.h"
 
 class EventTestFixture : public testing::Test
 {
@@ -19,10 +19,10 @@ public:
     EventTestFixture()
     {
         FakeRawFrame fake_raw {1234567890, 12, 2, 3};
-        fr = GETFrame {fake_raw.GenerateRawFrameVector(), 2, 3};
+        fr = GRAWFrame {fake_raw.GenerateRawFrameVector(), 2, 3};
     }
     
-    GETFrame fr;
+    GRAWFrame fr;
     Event ev {};
 };
 

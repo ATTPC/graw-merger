@@ -174,7 +174,7 @@ namespace Exceptions {
     
     /** \brief Could not find the required item at that file position.
      
-     This exception is thrown when the program attempts to read an item like a GETFrame or an Event from a file, but it doesn't seem like such an item exists at the current file location. This could mean that the file cursor has gotten out-of-position in the binary file (i.e. it isn't aligned to the beginning of an event or frame), and unfortunately, there's not much of a way to recover from this.
+     This exception is thrown when the program attempts to read an item like a GRAWFrame or an Event from a file, but it doesn't seem like such an item exists at the current file location. This could mean that the file cursor has gotten out-of-position in the binary file (i.e. it isn't aligned to the beginning of an event or frame), and unfortunately, there's not much of a way to recover from this.
      
      */
     class Wrong_File_Position : public std::exception

@@ -11,7 +11,7 @@
 #include <fstream>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include "GETFrame.h"
+#include "GRAWFrame.h"
 #include "PadLookupTable.h"
 #include "Event.h"
 #include "GRAWFile.h"
@@ -122,7 +122,7 @@ void MergeFiles(boost::filesystem::path input_path,
     
     while (!dataFiles.empty()) {
         
-        std::queue<GETFrame> frames;
+        std::queue<GRAWFrame> frames;
         
         // Read in a frame from each file
         
@@ -130,7 +130,7 @@ void MergeFiles(boost::filesystem::path input_path,
             try {
                 std::vector<uint8_t> raw_frame = file.ReadRawFrame();
                 total_pos += raw_frame.size();
-                frames.push(GETFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
+                frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
             }
             catch (std::exception& e) {
                 std::cout << e.what() << std::endl;

@@ -1,5 +1,5 @@
 //
-//  GETFrameTests.m
+//  GRAWFrameTests.m
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/13/14.
@@ -7,13 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "GETFrame.h"
+#import "GRAWFrame.h"
 
-@interface GETFrameTests : XCTestCase
+@interface GRAWFrameTests : XCTestCase
 
 @end
 
-@implementation GETFrameTests
+@implementation GRAWFrameTests
 
 - (void)setUp
 {
@@ -32,7 +32,7 @@
     uint32_t testData;
     for (int i = 0; i < 4; i++) {
         testData = i << 30;
-        XCTAssert(GETFrame::ExtractAgetId(testData) == i, @"Extracting AGET failed for value %d",i);
+        XCTAssert(GRAWFrame::ExtractAgetId(testData) == i, @"Extracting AGET failed for value %d",i);
     }
 }
 
@@ -41,7 +41,7 @@
     uint32_t testData;
     for (int i = 0; i < 68; i++) {
         testData = i << 23;
-        XCTAssert(GETFrame::ExtractChannel(testData) == i, @"Extracting Channel failed for value %d",i);
+        XCTAssert(GRAWFrame::ExtractChannel(testData) == i, @"Extracting Channel failed for value %d",i);
     }
 }
 
@@ -50,7 +50,7 @@
     uint32_t testData;
     for (int i = 0; i < 512; i++) {
         testData = i << 14;
-        XCTAssert(GETFrame::ExtractTBid(testData) == i, @"Extracting TBid failed for value %d",i);
+        XCTAssert(GRAWFrame::ExtractTBid(testData) == i, @"Extracting TBid failed for value %d",i);
     }
 }
 
@@ -59,7 +59,7 @@
     uint32_t testData;
     for (int i = 0; i < 4095; i++) {
         testData = i;
-        XCTAssert(GETFrame::ExtractSample(testData) == i, @"Extracting Sample failed for value %d",i);
+        XCTAssert(GRAWFrame::ExtractSample(testData) == i, @"Extracting Sample failed for value %d",i);
     }
 }
 
@@ -71,10 +71,10 @@
             for (uint16_t tb = 0; tb < 512; tb++) {
                 for (int16_t sample = 0; sample < 4095; sample++) {
                     testData = (aget << 30) | (ch << 23) | (tb << 14) | sample;
-                    uint8_t aget_res = GETFrame::ExtractAgetId(testData);
-                    uint8_t ch_res = GETFrame::ExtractChannel(testData);
-                    uint16_t tb_res = GETFrame::ExtractTBid(testData);
-                    int16_t sample_res = GETFrame::ExtractSample(testData);
+                    uint8_t aget_res = GRAWFrame::ExtractAgetId(testData);
+                    uint8_t ch_res = GRAWFrame::ExtractChannel(testData);
+                    uint16_t tb_res = GRAWFrame::ExtractTBid(testData);
+                    int16_t sample_res = GRAWFrame::ExtractSample(testData);
                     XCTAssertEqual(aget, aget_res, @"AGET failed for %d", aget);
                     XCTAssertEqual(ch, ch_res, @"Channel failed for %d", ch);
                     XCTAssertEqual(tb, tb_res, @"TB failed for %d", tb);

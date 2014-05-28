@@ -114,7 +114,7 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
     
     // See if this size is right by checking if we get to the next frame
     
-    filestream.seekg(storedPos + size*GETFrame::sizeUnit);
+    filestream.seekg(storedPos + size*GRAWFrame::sizeUnit);
     
     if (filestream.peek() != metaType) {
         if (filestream.eof()) {
@@ -134,9 +134,9 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
             
             uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
             
-            size = ceil(double(GETFrame::Expected_headerSize*GETFrame::sizeUnit + GETFrame::Expected_itemSize * nItems)/GETFrame::sizeUnit);
+            size = ceil(double(GRAWFrame::Expected_headerSize*GRAWFrame::sizeUnit + GRAWFrame::Expected_itemSize * nItems)/GRAWFrame::sizeUnit);
             
-            filestream.seekg(storedPos + size*GETFrame::sizeUnit);
+            filestream.seekg(storedPos + size*GRAWFrame::sizeUnit);
             
             if (filestream.peek() != metaType) {
                 // Give up
@@ -147,7 +147,7 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
     
     filestream.seekg(storedPos); // rewind to start of frame
     
-    for (unsigned long i = 0; i < size*GETFrame::sizeUnit; i++) {
+    for (unsigned long i = 0; i < size*GRAWFrame::sizeUnit; i++) {
         char temp;
         filestream.read(&temp, sizeof(uint8_t));
         frame_raw.push_back((uint8_t)temp);
@@ -157,7 +157,7 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
     // Leaves file pointer at end of frame. This assumes the frame size is correct.
 }
 
-void GRAWFile::WriteFrame(const GETFrame& frame)
+void GRAWFile::WriteFrame(const GRAWFrame& frame)
 {
     // Serialize the frame. **Big-endian**
     std::vector<uint8_t> ser;
@@ -191,7 +191,7 @@ void GRAWFile::WriteFrame(const GETFrame& frame)
     
     // Pad it out
     
-    while (ser.size() < frame.headerSize * GETFrame::sizeUnit) {
+    while (ser.size() < frame.headerSize * GRAWFrame::sizeUnit) {
         ser.push_back(0x00);
     }
     
@@ -204,7 +204,7 @@ void GRAWFile::WriteFrame(const GETFrame& frame)
         AppendBytes(ser, ser_item, 4);
     }
     
-    while (ser.size() < frame.frameSize * GETFrame::sizeUnit) {
+    while (ser.size() < frame.frameSize * GRAWFrame::sizeUnit) {
         ser.push_back(0x00);
     }
     

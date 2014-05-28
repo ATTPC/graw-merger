@@ -1,13 +1,13 @@
 //
-//  GETFrame.h
+//  GRAWFrame.h
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/5/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__GETFrame__
-#define __GETConsolidate__GETFrame__
+#ifndef __GETConsolidate__GRAWFrame__
+#define __GETConsolidate__GRAWFrame__
 
 #include <iostream>
 #include <vector>
@@ -15,14 +15,14 @@
 #include <cmath>
 #include <assert.h>
 
-#include "GETFrameDataItem.h"
+#include "GRAWDataItem.h"
 #include "Utilities.h"
 
-class GETFrame
+class GRAWFrame
 {
 public:
-    GETFrame();
-    GETFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad);
+    GRAWFrame();
+    GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad);
     
     // Data extraction functions
     
@@ -60,13 +60,13 @@ private:
     
     // Data items
     
-    std::vector<GETFrameDataItem> data;
+    std::vector<GRAWDataItem> data;
 
     // Friends
     
     friend class Event;
-    friend class GETFrameTestFixture;
+    friend class GRAWFrameTestFixture;
     friend class GRAWFile;
 };
 
-#endif /* defined(__GETConsolidate__GETFrame__) */
+#endif /* defined(__GETConsolidate__GRAWFrame__) */

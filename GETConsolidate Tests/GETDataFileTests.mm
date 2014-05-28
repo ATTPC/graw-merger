@@ -8,13 +8,13 @@
 
 #import <XCTest/XCTest.h>
 #include "GRAWFile.h"
-#include "GETFrame.h"
+#include "GRAWFrame.h"
 #include <boost/filesystem.hpp>
 
 @interface GRAWFileTests : XCTestCase {
     @private
     GRAWFile* dataFile;
-    GETFrame* frame;
+    GRAWFrame* frame;
     boost::filesystem::path* validPath;
     boost::filesystem::path* invalidPath;
 }
@@ -43,7 +43,7 @@
 //- (void)testConstructorWithValidPath
 //{
 //    dataFile = new GRAWFile(*validPath);
-//    //XCTAssertNoThrow(frame = new GETFrame(dataFile->GetNextRawFrame()));
+//    //XCTAssertNoThrow(frame = new GRAWFrame(dataFile->GetNextRawFrame()));
 //}
 
 @end

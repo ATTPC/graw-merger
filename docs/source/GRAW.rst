@@ -29,7 +29,7 @@ Format of a raw frame
 Each frame consists of a header (with information about the CoBo, AsAd, and event) followed by a series of data items (which contain the actual samples for each channel).
 
 ..	NOTE::
-	The CoBo boards use a PowerPC-based architecture. This means that the raw data is encoded in a *big-endian* format, and will therefore need to be byte-swapped before it can be used on an Intel platform. This is done automatically during the construction of a GETFrame object.
+	The CoBo boards use a PowerPC-based architecture. This means that the raw data is encoded in a *big-endian* format, and will therefore need to be byte-swapped before it can be used on an Intel platform. This is done automatically during the construction of a GRAWFrame object.
 
 Header
 ^^^^^^
