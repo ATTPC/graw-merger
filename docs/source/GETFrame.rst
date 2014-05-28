@@ -10,7 +10,7 @@ The :class:`GETFrame` object expects the input data to be in the format of a GRA
 
 ..	class:: GETFrame 
 
-	..	function:: GETFrame(GETDataFile& file)
+	..	function:: GETFrame(GRAWFile& file)
 
 		Constructs a frame by pulling in the next raw frame from *file*, which must already be initialized. This automatically byte-swaps the raw integer values by calling a function in Utilities.h.
 

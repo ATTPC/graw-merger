@@ -14,7 +14,7 @@
 #include "GETFrame.h"
 #include "PadLookupTable.h"
 #include "Event.h"
-#include "GETDataFile.h"
+#include "GRAWFile.h"
 #include "EventFile.h"
 #include "GETExceptions.h"
 #include <exception>
@@ -77,13 +77,13 @@ void MergeFiles(boost::filesystem::path input_path,
         throw Exceptions::Dir_is_Empty(input_path.string());
     }
     
-    std::vector<GETDataFile> dataFiles;
+    std::vector<GRAWFile> dataFiles;
     
     // Open all of the files
     
     for (auto filename : filePaths) {
         try {
-            dataFiles.push_back(GETDataFile{filename, std::ios::in});
+            dataFiles.push_back(GRAWFile{filename, std::ios::in});
         }
         catch (std::exception& e) {
             std::cout << e.what() << std::endl;
@@ -93,7 +93,7 @@ void MergeFiles(boost::filesystem::path input_path,
     // Open the output file
     
     EventFile output;
-//    GETDataFile output;
+//    GRAWFile output;
     
     std::string output_path_string = output_path.string();
     
@@ -140,7 +140,7 @@ void MergeFiles(boost::filesystem::path input_path,
         // Go through the files and get rid of eofs
         
         dataFiles.erase(std::remove_if(dataFiles.begin(), dataFiles.end(),
-                                       [] (const GETDataFile & x) {return x.eof();}),
+                                       [] (const GRAWFile & x) {return x.eof();}),
                         dataFiles.end());
         
         // Create an event from this set of frames, if there are any.

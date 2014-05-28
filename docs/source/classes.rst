@@ -7,7 +7,7 @@ Class Reference
 
     GETFrame.rst
     datafile.rst
-    getdatafile.rst
+    GRAWFile.rst
     event_file_class.rst
     trace.rst
     padlookuptable.rst

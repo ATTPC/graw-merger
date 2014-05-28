@@ -66,7 +66,7 @@ private:
     
     friend class Event;
     friend class GETFrameTestFixture;
-    friend class GETDataFile;
+    friend class GRAWFile;
 };
 
 #endif /* defined(__GETConsolidate__GETFrame__) */

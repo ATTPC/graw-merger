@@ -1,5 +1,5 @@
 //
-//  GETDataFileTests.m
+//  GRAWFileTests.m
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/9/14.
@@ -7,13 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
-#include "GETDataFile.h"
+#include "GRAWFile.h"
 #include "GETFrame.h"
 #include <boost/filesystem.hpp>
 
-@interface GETDataFileTests : XCTestCase {
+@interface GRAWFileTests : XCTestCase {
     @private
-    GETDataFile* dataFile;
+    GRAWFile* dataFile;
     GETFrame* frame;
     boost::filesystem::path* validPath;
     boost::filesystem::path* invalidPath;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation GETDataFileTests
+@implementation GRAWFileTests
 
 - (void)setUp
 {
@@ -42,7 +42,7 @@
 
 //- (void)testConstructorWithValidPath
 //{
-//    dataFile = new GETDataFile(*validPath);
+//    dataFile = new GRAWFile(*validPath);
 //    //XCTAssertNoThrow(frame = new GETFrame(dataFile->GetNextRawFrame()));
 //}
 

@@ -1,20 +1,20 @@
 //
-//  GETDataFile.cpp
+//  GRAWFile.cpp
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/9/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#include "GETDataFile.h"
+#include "GRAWFile.h"
 
 // --------
 // Constructors
 // --------
 
-GETDataFile::GETDataFile() {};
+GRAWFile::GRAWFile() {};
 
-GETDataFile::GETDataFile(const boost::filesystem::path& path, const std::ios::openmode mode)
+GRAWFile::GRAWFile(const boost::filesystem::path& path, const std::ios::openmode mode)
 {
     if (mode & std::ios::in) {
         OpenFileForRead(path);
@@ -25,7 +25,7 @@ GETDataFile::GETDataFile(const boost::filesystem::path& path, const std::ios::op
     else throw Exceptions::File_Open_Failed(path.string());
 }
 
-GETDataFile::GETDataFile(const std::string& path, const std::ios::openmode mode)
+GRAWFile::GRAWFile(const std::string& path, const std::ios::openmode mode)
 {
     boost::filesystem::path fp {path};
     
@@ -38,7 +38,7 @@ GETDataFile::GETDataFile(const std::string& path, const std::ios::openmode mode)
     else throw Exceptions::File_Open_Failed(fp.string());
 }
 
-void GETDataFile::OpenFileForRead(const boost::filesystem::path& filePath_in)
+void GRAWFile::OpenFileForRead(const boost::filesystem::path& filePath_in)
 {
     DataFile::OpenFileForRead(filePath_in);
     
@@ -57,18 +57,18 @@ void GETDataFile::OpenFileForRead(const boost::filesystem::path& filePath_in)
     asadId = filename.at(filename.find("AsAd") + 4) - '0'; // this is kludgy
 }
 
-void GETDataFile::OpenFileForRead(const std::string& path)
+void GRAWFile::OpenFileForRead(const std::string& path)
 {
     boost::filesystem::path fp {path};
     OpenFileForRead(fp);
 }
 
-void GETDataFile::OpenFileForWrite(const boost::filesystem::path& path)
+void GRAWFile::OpenFileForWrite(const boost::filesystem::path& path)
 {
     DataFile::OpenFileForWrite(path);
 }
 
-void GETDataFile::OpenFileForWrite(const std::string& path)
+void GRAWFile::OpenFileForWrite(const std::string& path)
 {
     boost::filesystem::path fp {path};
     OpenFileForWrite(fp);
@@ -78,7 +78,7 @@ void GETDataFile::OpenFileForWrite(const std::string& path)
 // Getters for Raw Data and Properties
 // --------
 
-std::vector<uint8_t> GETDataFile::ReadRawFrame()
+std::vector<uint8_t> GRAWFile::ReadRawFrame()
 {
     std::vector<uint8_t> size_raw;
     uint16_t size;
@@ -157,7 +157,7 @@ std::vector<uint8_t> GETDataFile::ReadRawFrame()
     // Leaves file pointer at end of frame. This assumes the frame size is correct.
 }
 
-void GETDataFile::WriteFrame(const GETFrame& frame)
+void GRAWFile::WriteFrame(const GETFrame& frame)
 {
     // Serialize the frame. **Big-endian**
     std::vector<uint8_t> ser;
@@ -215,19 +215,19 @@ void GETDataFile::WriteFrame(const GETFrame& frame)
 }
 
 template<typename T>
-void GETDataFile::AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes)
+void GRAWFile::AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes)
 {
     for (int i = nBytes-1; i >= 0; i--) {
         vec.push_back((val & (0xFF << i*8)) >> i*8);
     }
 }
 
-uint8_t GETDataFile::GetFileCobo() const
+uint8_t GRAWFile::GetFileCobo() const
 {
     return coboId;
 }
 
-uint8_t GETDataFile::GetFileAsad() const
+uint8_t GRAWFile::GetFileAsad() const
 {
     return asadId;
 }

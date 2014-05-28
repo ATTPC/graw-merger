@@ -1,13 +1,13 @@
 //
-//  GETDataFile.h
+//  GRAWFile.h
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/9/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__GETDataFile__
-#define __GETConsolidate__GETDataFile__
+#ifndef __GETConsolidate__GRAWFile__
+#define __GETConsolidate__GRAWFile__
 
 #include <iostream>
 #include <fstream>
@@ -29,7 +29,7 @@
      individual frames from the file and provide them to another object, such
      as an instance of the GETFrame class.
  */
-class GETDataFile : public DataFile
+class GRAWFile : public DataFile
 {
     
 public:
@@ -37,7 +37,7 @@ public:
      
      Performs no initialization. If you use this, you must call one of the other file-opening functions afterwards to initialize the file object.
      */
-    GETDataFile();
+    GRAWFile();
     
     /** \brief String constructor
      
@@ -46,10 +46,10 @@ public:
      \param path The path to the file.
      \param mode A standard open mode for the file, either std::ios::in or std::ios::out.
      */
-    GETDataFile(const std::string& path, const std::ios::openmode mode);
+    GRAWFile(const std::string& path, const std::ios::openmode mode);
     
     /**  \overload */
-    GETDataFile(const boost::filesystem::path& path, const std::ios::openmode mode);
+    GRAWFile(const boost::filesystem::path& path, const std::ios::openmode mode);
     
     /** \brief Opens a file for input
         
@@ -109,4 +109,4 @@ private:
     static void AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes);
 };
 
-#endif /* defined(__GETConsolidate__GETDataFile__) */
+#endif /* defined(__GETConsolidate__GRAWFile__) */

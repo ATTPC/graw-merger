@@ -9,7 +9,7 @@
 #include "gtest/gtest.h"
 #include "GETFrame.h"
 #include "FakeRawFrame.h"
-#include "MockGETDataFile.h"
+#include "MockGRAWFile.h"
 
 #include <vector>
 #include <iostream>
@@ -32,7 +32,7 @@ protected:
     
 public:
     
-    MockGetDataFile mockdf;
+    MockGRAWFile mockdf;
     void TestConstructor(FakeRawFrame& fr, uint8_t cobo, uint8_t asad);
 };
 

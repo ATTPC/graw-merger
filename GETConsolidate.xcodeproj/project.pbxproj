@@ -29,8 +29,8 @@
 		03AB40AE191C26C10021ABD4 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 		03AB40AF191C26C10021ABD4 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03AB40B0191C26C10021ABD4 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
-		03AB40B3191D0D950021ABD4 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
-		03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
+		03AB40B3191D0D950021ABD4 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
+		03AB40B4191D0D950021ABD4 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
 		03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */; };
 		03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
 		03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
@@ -40,7 +40,7 @@
 		03C201A31926804000264702 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03C201A61926835C00264702 /* GETFrameTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C201A41926835C00264702 /* GETFrameTests.cpp */; };
 		03C201A71926896700264702 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
-		03C201A81926896700264702 /* GETDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */; };
+		03C201A81926896700264702 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
 		03C201A91926896700264702 /* GETFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GETFrame.cpp */; };
 		03C201AA1926896700264702 /* GETFrameDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GETFrameDataItem.cpp */; };
 		03C201AB1926896700264702 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
@@ -129,7 +129,7 @@
 		03514B42192CEEAB0077C431 /* event_file.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_file.rst; sourceTree = "<group>"; };
 		03514B43192CEEAB0077C431 /* exceptions.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = exceptions.rst; sourceTree = "<group>"; };
 		03514B44192CEEAB0077C431 /* formats.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = formats.rst; sourceTree = "<group>"; };
-		03514B45192CEEAB0077C431 /* getdatafile.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = getdatafile.rst; sourceTree = "<group>"; };
+		03514B45192CEEAB0077C431 /* GRAWFile.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAWFile.rst; sourceTree = "<group>"; };
 		03514B46192CEEAB0077C431 /* GETFrame.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GETFrame.rst; sourceTree = "<group>"; };
 		03514B47192CEEAB0077C431 /* GRAW.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAW.rst; sourceTree = "<group>"; };
 		03514B48192CEEAB0077C431 /* index.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = index.rst; sourceTree = "<group>"; };
@@ -154,8 +154,8 @@
 		03AB40A0191C269F0021ABD4 /* GETConsolidate Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GETConsolidate Tests-Info.plist"; sourceTree = "<group>"; };
 		03AB40A2191C269F0021ABD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		03AB40A6191C269F0021ABD4 /* GETConsolidate Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GETConsolidate Tests-Prefix.pch"; sourceTree = "<group>"; };
-		03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETDataFile.cpp; sourceTree = "<group>"; };
-		03AB40B2191D0D950021ABD4 /* GETDataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETDataFile.h; sourceTree = "<group>"; };
+		03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFile.cpp; sourceTree = "<group>"; };
+		03AB40B2191D0D950021ABD4 /* GRAWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWFile.h; sourceTree = "<group>"; };
 		03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETDataFileTests.mm; sourceTree = "<group>"; };
 		03AB40B9191D45900021ABD4 /* EventFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventFile.cpp; sourceTree = "<group>"; };
 		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFile.h; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		03C2019019267C2900264702 /* GetConsolidateTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GetConsolidateTests.1; sourceTree = "<group>"; };
 		03C2019F19267D8A00264702 /* TraceTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TraceTests.cpp; sourceTree = "<group>"; };
 		03C201A41926835C00264702 /* GETFrameTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GETFrameTests.cpp; sourceTree = "<group>"; };
-		03C201B019268E7E00264702 /* MockGETDataFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGETDataFile.h; sourceTree = "<group>"; };
+		03C201B019268E7E00264702 /* MockGRAWFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGRAWFile.h; sourceTree = "<group>"; };
 		03C201B11926942F00264702 /* MockData */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MockData; sourceTree = "<group>"; };
 		03C201B41926A6E700264702 /* libgmock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgmock.a; path = /usr/local/lib/libgmock.a; sourceTree = "<absolute>"; };
 		03DDF3961917FD1000306788 /* GETConsolidate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GETConsolidate; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,7 +241,7 @@
 				03514B42192CEEAB0077C431 /* event_file.rst */,
 				03514B43192CEEAB0077C431 /* exceptions.rst */,
 				03514B44192CEEAB0077C431 /* formats.rst */,
-				03514B45192CEEAB0077C431 /* getdatafile.rst */,
+				03514B45192CEEAB0077C431 /* GRAWFile.rst */,
 				03514B46192CEEAB0077C431 /* GETFrame.rst */,
 				03514B47192CEEAB0077C431 /* GRAW.rst */,
 				03514B48192CEEAB0077C431 /* index.rst */,
@@ -379,7 +379,7 @@
 				03AB40C0191D546C0021ABD4 /* GETExceptions.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
 				037A338E192A5E8E006E2E84 /* DataFile.h */,
-				03AB40B2191D0D950021ABD4 /* GETDataFile.h */,
+				03AB40B2191D0D950021ABD4 /* GRAWFile.h */,
 				03AB40BA191D45900021ABD4 /* EventFile.h */,
 				03DDF3A31917FD9100306788 /* GETFrame.h */,
 				03DDF3A61918026900306788 /* GETFrameDataItem.h */,
@@ -395,7 +395,7 @@
 				0302EAF61932C1F6007F898D /* UserInterface.cpp */,
 				03DDF3B21919621A00306788 /* PadLookupTable.cpp */,
 				037A338D192A5E8E006E2E84 /* DataFile.cpp */,
-				03AB40B1191D0D950021ABD4 /* GETDataFile.cpp */,
+				03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */,
 				03AB40B9191D45900021ABD4 /* EventFile.cpp */,
 				03DDF3A21917FD9100306788 /* GETFrame.cpp */,
 				03DDF3A51918026900306788 /* GETFrameDataItem.cpp */,
@@ -410,7 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				03C201B11926942F00264702 /* MockData */,
-				03C201B019268E7E00264702 /* MockGETDataFile.h */,
+				03C201B019268E7E00264702 /* MockGRAWFile.h */,
 				038AB1041927F08B009C1C38 /* FakeRawFrame.h */,
 				038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */,
 				03C201A41926835C00264702 /* GETFrameTests.cpp */,
@@ -583,7 +583,7 @@
 			files = (
 				03B0AF8819224FAB0027E9F2 /* GETFrameTests.mm in Sources */,
 				03AB40BC191D45900021ABD4 /* EventFile.cpp in Sources */,
-				03AB40B4191D0D950021ABD4 /* GETDataFile.cpp in Sources */,
+				03AB40B4191D0D950021ABD4 /* GRAWFile.cpp in Sources */,
 				03AB40AD191C26C10021ABD4 /* GETFrame.cpp in Sources */,
 				03AB40B6191D24AB0021ABD4 /* GETDataFileTests.mm in Sources */,
 				0332FDBC1922EED00065697C /* TraceTests.mm in Sources */,
@@ -598,7 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03C201A81926896700264702 /* GETDataFile.cpp in Sources */,
+				03C201A81926896700264702 /* GRAWFile.cpp in Sources */,
 				03C201AA1926896700264702 /* GETFrameDataItem.cpp in Sources */,
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
 				037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */,
@@ -620,7 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */,
-				03AB40B3191D0D950021ABD4 /* GETDataFile.cpp in Sources */,
+				03AB40B3191D0D950021ABD4 /* GRAWFile.cpp in Sources */,
 				03DDF3AE19195A5E00306788 /* Event.cpp in Sources */,
 				03DDF3A41917FD9100306788 /* GETFrame.cpp in Sources */,
 				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
