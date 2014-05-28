@@ -73,15 +73,15 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--lookup &quot;/Users/josh/Documents/Data/pads_lookup.csv&quot;"
+            argument = "--lookup &quot;/Users/josh/Documents/Data/new_lookup.csv&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/20140522170747&quot;"
+            argument = "&quot;/Users/josh/Documents/Data/mutant&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/josh/Desktop/output.bin&quot;"
+            argument = "&quot;/Users/josh/Documents/Data/output.evt&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
