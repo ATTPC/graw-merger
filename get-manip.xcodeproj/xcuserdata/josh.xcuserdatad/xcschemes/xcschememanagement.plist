@@ -4,27 +4,27 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>GETConsolidate run ls.xcscheme_^#shared#^_</key>
+		<key>get-manip run ls.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>GETConsolidate run merge.xcscheme_^#shared#^_</key>
+		<key>get-manip run merge.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>GetConsolidateTests All.xcscheme_^#shared#^_</key>
+		<key>get-manip-tests All.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>GetConsolidateTests GETFrame.xcscheme_^#shared#^_</key>
+		<key>get-manip-tests GRAWFrame.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>GetConsolidateTests Trace.xcscheme_^#shared#^_</key>
+		<key>get-manip-tests Trace.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>

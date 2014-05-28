@@ -129,7 +129,7 @@
 		03AB40B9191D45900021ABD4 /* EventFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventFile.cpp; sourceTree = "<group>"; };
 		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFile.h; sourceTree = "<group>"; };
 		03AB40C0191D546C0021ABD4 /* GMExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMExceptions.h; sourceTree = "<group>"; };
-		03C2018C19267C2900264702 /* GetConsolidateTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = GetConsolidateTests; path = "get-manip-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C2018C19267C2900264702 /* get-manip-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-manip-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2018E19267C2900264702 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03C2019019267C2900264702 /* GetConsolidateTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GetConsolidateTests.1; sourceTree = "<group>"; };
 		03C2019F19267D8A00264702 /* TraceTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TraceTests.cpp; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		03C201B019268E7E00264702 /* MockGRAWFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGRAWFile.h; sourceTree = "<group>"; };
 		03C201B11926942F00264702 /* MockData */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MockData; sourceTree = "<group>"; };
 		03C201B41926A6E700264702 /* libgmock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgmock.a; path = /usr/local/lib/libgmock.a; sourceTree = "<absolute>"; };
-		03DDF3961917FD1000306788 /* GETConsolidate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = GETConsolidate; path = "get-manip"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03DDF3961917FD1000306788 /* get-manip */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-manip"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
 		03DDF3A21917FD9100306788 /* GRAWFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFrame.cpp; sourceTree = "<group>"; };
@@ -379,8 +379,8 @@
 		03DDF3971917FD1000306788 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03DDF3961917FD1000306788 /* GETConsolidate */,
-				03C2018C19267C2900264702 /* GetConsolidateTests */,
+				03DDF3961917FD1000306788 /* get-manip */,
+				03C2018C19267C2900264702 /* get-manip-tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -412,7 +412,7 @@
 			);
 			name = "get-manip-tests";
 			productName = GetConsolidateTests;
-			productReference = 03C2018C19267C2900264702 /* GetConsolidateTests */;
+			productReference = 03C2018C19267C2900264702 /* get-manip-tests */;
 			productType = "com.apple.product-type.tool";
 		};
 		03DDF3951917FD1000306788 /* get-manip */ = {
@@ -430,7 +430,7 @@
 			);
 			name = "get-manip";
 			productName = GETConsolidate;
-			productReference = 03DDF3961917FD1000306788 /* GETConsolidate */;
+			productReference = 03DDF3961917FD1000306788 /* get-manip */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
