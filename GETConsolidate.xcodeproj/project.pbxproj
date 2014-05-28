@@ -159,7 +159,7 @@
 		03AB40B5191D24AB0021ABD4 /* GETDataFileTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETDataFileTests.mm; sourceTree = "<group>"; };
 		03AB40B9191D45900021ABD4 /* EventFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventFile.cpp; sourceTree = "<group>"; };
 		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFile.h; sourceTree = "<group>"; };
-		03AB40C0191D546C0021ABD4 /* GETExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GETExceptions.h; sourceTree = "<group>"; };
+		03AB40C0191D546C0021ABD4 /* GMExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMExceptions.h; sourceTree = "<group>"; };
 		03B0AF8719224FAB0027E9F2 /* GETFrameTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GETFrameTests.mm; sourceTree = "<group>"; };
 		03C2018C19267C2900264702 /* GetConsolidateTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GetConsolidateTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2018E19267C2900264702 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -374,9 +374,9 @@
 		03AB40BD191D45A90021ABD4 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				0302EAF71932C1F6007F898D /* UserInterface.h */,
 				039056CC192552AE00214C6C /* Utilities.h */,
-				03AB40C0191D546C0021ABD4 /* GETExceptions.h */,
+				03AB40C0191D546C0021ABD4 /* GMExceptions.h */,
+				0302EAF71932C1F6007F898D /* UserInterface.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
 				037A338E192A5E8E006E2E84 /* DataFile.h */,
 				03AB40B2191D0D950021ABD4 /* GRAWFile.h */,

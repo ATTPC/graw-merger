@@ -7,7 +7,7 @@
 //
 
 #include "PadLookupTable.h"
-#include "GETExceptions.h"
+#include "GMExceptions.h"
 #include <string>
 #include <sstream>
 

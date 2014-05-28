@@ -16,7 +16,7 @@
 #include <map>
 #include <vector>
 
-#include "GETExceptions.h"
+#include "GMExceptions.h"
 
 /** \brief A generic class representing a data file.
  

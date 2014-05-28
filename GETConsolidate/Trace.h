@@ -14,7 +14,7 @@
 #include <vector>
 #include <numeric>
 #include <assert.h>
-#include "GETExceptions.h"
+#include "GMExceptions.h"
 #include "Utilities.h"
 
 class Trace

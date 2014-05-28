@@ -15,7 +15,7 @@
 #include "GRAWDataItem.h"
 #include "Trace.h"
 #include "PadLookupTable.h"
-#include "GETExceptions.h"
+#include "GMExceptions.h"
 #include <unordered_map>
 #include <cmath>
 #include "Utilities.h"

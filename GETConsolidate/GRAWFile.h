@@ -17,7 +17,7 @@
 #include <string>
 #include <cmath>
 
-#include "GETExceptions.h"
+#include "GMExceptions.h"
 #include "Utilities.h"
 #include "DataFile.h"
 #include "GRAWFrame.h"

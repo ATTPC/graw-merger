@@ -17,7 +17,7 @@
 #include <boost/filesystem.hpp>
 
 #include "Event.h"
-#include "GETExceptions.h"
+#include "GMExceptions.h"
 #include "DataFile.h"
 
 /** \brief Interface to an Event file.

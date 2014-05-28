@@ -1,5 +1,5 @@
 //
-//  GETExceptions.h
+//  GMExceptions.h
 //  GETConsolidate
 //
 //  Created by Joshua Bradt on 5/9/14.
