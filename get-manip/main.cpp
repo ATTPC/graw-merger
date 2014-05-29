@@ -23,8 +23,6 @@
 #include <algorithm>
 #include "UserInterface.h"
 
-bool g_verbose = false;
-
 std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
     namespace fs = boost::filesystem;
@@ -41,9 +39,7 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
     
     for ( ; dirIter != endOfDir; dirIter++) {
         if (is_directory(dirIter->path())) {
-            if (g_verbose) {
-                std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
-            }
+            std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
         }
         else if (is_regular_file(dirIter->path()) && dirIter->path().extension() == ".graw") {
             std::cout << "    Found file: " << dirIter->path().filename().string() << std::endl;
@@ -245,7 +241,6 @@ int main(int argc, const char * argv[])
         ("lookup,l", po::value<fs::path>(), "Lookup table")
         ("input,i", po::value<fs::path>(), "Input directory")
         ("output,o", po::value<fs::path>(), "Output file")
-        ("verbose,v", "Print more output.")
     ;
     
     po::positional_options_description pos_opts;
@@ -263,10 +258,6 @@ int main(int argc, const char * argv[])
         return 0;
     }
     
-    if (vm.count("verbose")) {
-        g_verbose = true;
-    }
-
     if (vm.count("merge")) {
         if (vm.count("lookup") and vm.count("input") and vm.count("output")) {
             auto rootDir = vm["input"].as<fs::path>();
@@ -282,10 +273,12 @@ int main(int argc, const char * argv[])
             }
         }
     }
-    
-    if (vm.count("ls")) {
+    else if (vm.count("ls")) {
         auto filePath = vm["input"].as<fs::path>();
         ListEventFileContents(filePath);
+    }
+    else {
+        std::cout << usage << std::endl;
     }
     
     
