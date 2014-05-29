@@ -213,20 +213,16 @@ int main(int argc, const char * argv[])
 {
     namespace po = boost::program_options;
     namespace fs = boost::filesystem;
-    
-    /* Arguments passed from command line:
-     *     [command] [verb] [options] [input directory] [output file]
-     */
-    
+        
     // Usage:
     
     std::string usage = "Usage:\n"
-        "[command] [verb] [options] [inputs] [outputs] \n"
-        "Verbs include: merge, info\n"
+        "get-manip [verb] [inputs] [outputs] \n"
+        "Verbs include: merge, ls\n"
         "See documentation for more information.";
     
     std::string merge_usage = "Verb 'merge' usage:\n"
-        "[command] merge [options] input_directory output_file\n"
+        "get-manip --merge [options] input_directory output_file\n"
         "The input directory must have the correct structure.";
     
     po::options_description opts_desc ("Allowed options.");
