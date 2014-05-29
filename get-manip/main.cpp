@@ -174,6 +174,8 @@ void MergeFiles(boost::filesystem::path input_path,
         prog.Write();
     }
     
+    std::cout << '\n' << "Finished merging files." << std::endl;
+    
     output.CloseFile();
 
 }

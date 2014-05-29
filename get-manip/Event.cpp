@@ -127,7 +127,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
     // Make sure pointers to required objects are valid
 
     if (lookupTable == NULL) {
-        std::cout << "Error: No lookup table provided to Event." << std::endl;
+        LOG_ERROR << "No lookup table provided to Event." << std::endl;
     }
     
     // Get header information from frame
@@ -139,15 +139,15 @@ void Event::AppendFrame(const GRAWFrame& frame)
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
-        std::cout << "Appended frame's event ID doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+        LOG_WARNING << "Appended frame's event ID doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
     
     if (nFramesAppended == 0) {
         this->eventTime = frame.eventTime;
     }
     else if (this->eventTime != frame.eventTime) {
-        std::cout << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
-        std::cout << "CoBo " << int(cobo) << " Event " << eventId << " time delta: " << long(this->eventTime) - long(frame.eventTime) << std::endl;
+        LOG_WARNING << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+        LOG_WARNING << "CoBo " << int(cobo) << " Event " << eventId << " time delta: " << long(this->eventTime) - long(frame.eventTime) << std::endl;
     }
     
     nFramesAppended++;
