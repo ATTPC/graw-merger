@@ -29,9 +29,24 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>libgetdata.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>038A772F1937A9C1006A2AAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>038A77371937A9E8006A2AAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>03AB4099191C269F0021ABD4</key>
 		<dict>
 			<key>primary</key>

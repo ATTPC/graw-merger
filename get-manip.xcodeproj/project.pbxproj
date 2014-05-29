@@ -17,6 +17,31 @@
 		036F43351933F44C00D1F146 /* libboost_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 036F43321933F44C00D1F146 /* libboost_log.a */; };
 		037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
+		038A773C1937A9FC006A2AAB /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
+		038A773D1937A9FC006A2AAB /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
+		038A773E1937A9FC006A2AAB /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
+		038A773F1937A9FC006A2AAB /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
+		038A77401937A9FC006A2AAB /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
+		038A77411937A9FC006A2AAB /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
+		038A77421937A9FC006A2AAB /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
+		038A77431937A9FC006A2AAB /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
+		038A77441937A9FC006A2AAB /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
+		038A77451937AA1F006A2AAB /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
+		038A77461937AA1F006A2AAB /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 036F43311933F44C00D1F146 /* libboost_date_time.a */; };
+		038A77471937AA1F006A2AAB /* libboost_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 036F43321933F44C00D1F146 /* libboost_log.a */; };
+		038A77481937AA1F006A2AAB /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
+		038A77491937AA1F006A2AAB /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
+		038A774A1937AA37006A2AAB /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 039056CC192552AE00214C6C /* Utilities.h */; };
+		038A774B1937AA37006A2AAB /* GMExceptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 03AB40C0191D546C0021ABD4 /* GMExceptions.h */; };
+		038A774C1937AA37006A2AAB /* UserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 0302EAF71932C1F6007F898D /* UserInterface.h */; };
+		038A774D1937AA37006A2AAB /* PadLookupTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DDF3B31919621A00306788 /* PadLookupTable.h */; };
+		038A774E1937AA37006A2AAB /* DataFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 037A338E192A5E8E006E2E84 /* DataFile.h */; };
+		038A774F1937AA37006A2AAB /* GRAWFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 03AB40B2191D0D950021ABD4 /* GRAWFile.h */; };
+		038A77501937AA37006A2AAB /* EventFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 03AB40BA191D45900021ABD4 /* EventFile.h */; };
+		038A77511937AA37006A2AAB /* GRAWFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DDF3A31917FD9100306788 /* GRAWFrame.h */; };
+		038A77521937AA37006A2AAB /* GRAWDataItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DDF3A61918026900306788 /* GRAWDataItem.h */; };
+		038A77531937AA37006A2AAB /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DDF3AD19195A5E00306788 /* Event.h */; };
+		038A77541937AA37006A2AAB /* Trace.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DDF3B019195B6100306788 /* Trace.h */; };
 		038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */; };
 		03AB40B3191D0D950021ABD4 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
 		03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
@@ -119,6 +144,7 @@
 		036F43321933F44C00D1F146 /* libboost_log.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_log.a; path = /usr/local/lib/libboost_log.a; sourceTree = "<absolute>"; };
 		037A338D192A5E8E006E2E84 /* DataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = DataFile.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		037A338E192A5E8E006E2E84 /* DataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataFile.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		038A77381937A9E8006A2AAB /* libgetdata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgetdata.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = FakeRawFrame.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		038AB1041927F08B009C1C38 /* FakeRawFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FakeRawFrame.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		039056CC192552AE00214C6C /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -153,6 +179,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		038A77351937A9E8006A2AAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				038A77451937AA1F006A2AAB /* libboost_filesystem.a in Frameworks */,
+				038A77461937AA1F006A2AAB /* libboost_date_time.a in Frameworks */,
+				038A77471937AA1F006A2AAB /* libboost_log.a in Frameworks */,
+				038A77481937AA1F006A2AAB /* libboost_program_options.a in Frameworks */,
+				038A77491937AA1F006A2AAB /* libboost_system.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C2018919267C2900264702 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +419,7 @@
 			children = (
 				03DDF3961917FD1000306788 /* get-manip */,
 				03C2018C19267C2900264702 /* get-manip-tests */,
+				038A77381937A9E8006A2AAB /* libgetdata.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -397,7 +436,45 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		038A77361937A9E8006A2AAB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				038A774A1937AA37006A2AAB /* Utilities.h in Headers */,
+				038A774B1937AA37006A2AAB /* GMExceptions.h in Headers */,
+				038A774C1937AA37006A2AAB /* UserInterface.h in Headers */,
+				038A774D1937AA37006A2AAB /* PadLookupTable.h in Headers */,
+				038A774E1937AA37006A2AAB /* DataFile.h in Headers */,
+				038A774F1937AA37006A2AAB /* GRAWFile.h in Headers */,
+				038A77501937AA37006A2AAB /* EventFile.h in Headers */,
+				038A77511937AA37006A2AAB /* GRAWFrame.h in Headers */,
+				038A77521937AA37006A2AAB /* GRAWDataItem.h in Headers */,
+				038A77531937AA37006A2AAB /* Event.h in Headers */,
+				038A77541937AA37006A2AAB /* Trace.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		038A77371937A9E8006A2AAB /* getdata */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 038A77391937A9E8006A2AAB /* Build configuration list for PBXNativeTarget "getdata" */;
+			buildPhases = (
+				038A77341937A9E8006A2AAB /* Sources */,
+				038A77351937A9E8006A2AAB /* Frameworks */,
+				038A77361937A9E8006A2AAB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = getdata;
+			productName = getdata;
+			productReference = 038A77381937A9E8006A2AAB /* libgetdata.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		03C2018B19267C2900264702 /* get-manip-tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */;
@@ -456,6 +533,7 @@
 			targets = (
 				03DDF3951917FD1000306788 /* get-manip */,
 				03C2018B19267C2900264702 /* get-manip-tests */,
+				038A77371937A9E8006A2AAB /* getdata */,
 			);
 		};
 /* End PBXProject section */
@@ -477,6 +555,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		038A77341937A9E8006A2AAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				038A773C1937A9FC006A2AAB /* UserInterface.cpp in Sources */,
+				038A773D1937A9FC006A2AAB /* PadLookupTable.cpp in Sources */,
+				038A773E1937A9FC006A2AAB /* DataFile.cpp in Sources */,
+				038A773F1937A9FC006A2AAB /* GRAWFile.cpp in Sources */,
+				038A77401937A9FC006A2AAB /* EventFile.cpp in Sources */,
+				038A77411937A9FC006A2AAB /* GRAWFrame.cpp in Sources */,
+				038A77421937A9FC006A2AAB /* GRAWDataItem.cpp in Sources */,
+				038A77431937A9FC006A2AAB /* Event.cpp in Sources */,
+				038A77441937A9FC006A2AAB /* Trace.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C2018819267C2900264702 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -518,6 +612,38 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		038A773A1937A9E8006A2AAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		038A773B1937A9E8006A2AAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		03C2019319267C2900264702 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -653,6 +779,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		038A77391937A9E8006A2AAB /* Build configuration list for PBXNativeTarget "getdata" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				038A773A1937A9E8006A2AAB /* Debug */,
+				038A773B1937A9E8006A2AAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
