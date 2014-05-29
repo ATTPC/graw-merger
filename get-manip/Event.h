@@ -1,13 +1,13 @@
 //
 //  Event.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/6/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__Event__
-#define __GETConsolidate__Event__
+#ifndef __get_manip__Event__
+#define __get_manip__Event__
 
 #include <iostream>
 #include <vector>
@@ -121,4 +121,4 @@ private:
     friend class EventTestFixture;
 };
 
-#endif /* defined(__GETConsolidate__Event__) */
+#endif /* defined(__get_manip__Event__) */

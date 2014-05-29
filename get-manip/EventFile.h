@@ -1,13 +1,13 @@
 //
 //  EventFile.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/9/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__EventFile__
-#define __GETConsolidate__EventFile__
+#ifndef __get_manip__EventFile__
+#define __get_manip__EventFile__
 
 #include <iostream>
 #include <fstream>
@@ -112,4 +112,4 @@ private:
     static const int magic;
 };
 
-#endif /* defined(__GETConsolidate__EventFile__) */
+#endif /* defined(__get_manip__EventFile__) */

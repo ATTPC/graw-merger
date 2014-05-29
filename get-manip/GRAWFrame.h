@@ -1,13 +1,13 @@
 //
 //  GRAWFrame.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/5/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__GRAWFrame__
-#define __GETConsolidate__GRAWFrame__
+#ifndef __get_manip__GRAWFrame__
+#define __get_manip__GRAWFrame__
 
 #include <iostream>
 #include <vector>
@@ -69,4 +69,4 @@ private:
     friend class GRAWFile;
 };
 
-#endif /* defined(__GETConsolidate__GRAWFrame__) */
+#endif /* defined(__getmanip__GRAWFrame__) */

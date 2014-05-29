@@ -1,13 +1,13 @@
 //
 //  Trace.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/6/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__Trace__
-#define __GETConsolidate__Trace__
+#ifndef __get_manip__Trace__
+#define __get_manip__Trace__
 
 #include <iostream>
 #include <map>
@@ -81,4 +81,4 @@ private:
     friend class TraceTestFixture;
 };
 
-#endif /* defined(__GETConsolidate__Trace__) */
+#endif /* defined(__get_manip__Trace__) */

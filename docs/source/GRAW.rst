@@ -34,21 +34,23 @@ Each frame consists of a header (with information about the CoBo, AsAd, and even
 Header
 ^^^^^^
 
+These items are written at the beginning of each frame:
+
 +-------------+-------+---------------------------------------------------------+
 |    Field    | Bytes |                       Description                       |
 +=============+=======+=========================================================+
-| metaType    |     1 | Should be 6                                             |
+| metaType    |     1 | Should be 8                                             |
 +-------------+-------+---------------------------------------------------------+
-| frameSize   |     3 | Size of the frame in units of 64 bytes                  |
+| frameSize   |     3 | Size of the frame in units of 256 bytes                 |
 +-------------+-------+---------------------------------------------------------+
 | dataSource  |     1 | ID of the source of the data (not used)                 |
 +-------------+-------+---------------------------------------------------------+
 | frameType   |     2 | Should be 1                                             |
 +-------------+-------+---------------------------------------------------------+
-| revision    |     1 | Currently at revision 4                                 |
+| revision    |     1 | Currently at revision 5                                 |
 +-------------+-------+---------------------------------------------------------+
-| headerSize  |     2 | Size of the header, in units of 64 bytes.               |
-|             |       | This is currently set to 4.                             |
+| headerSize  |     2 | Size of the header, in units of 256 bytes.              |
+|             |       | This is currently set to 1.                             |
 +-------------+-------+---------------------------------------------------------+
 | itemSize    |     2 | Size of a data item in bytes. Should be 4.              |
 +-------------+-------+---------------------------------------------------------+
@@ -56,8 +58,8 @@ Header
 +-------------+-------+---------------------------------------------------------+
 | eventTime   |     6 | Timestamp of this event.                                |
 +-------------+-------+---------------------------------------------------------+
-| eventId     |     4 | Index of this event. This may vary within a frame,      |
-|             |       | even for the same event.                                |
+| eventId     |     4 | Index of this event. This may vary between files within |
+|             |       | a run.                                                  |
 +-------------+-------+---------------------------------------------------------+
 | coboId      |     1 | ID of the CoBo this frame is for. This is currently     |
 |             |       | set to 0 for all CoBos, and the correct CoBo number     |

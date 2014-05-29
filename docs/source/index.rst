@@ -1,10 +1,10 @@
-.. GETConsolidate documentation master file, created by
+.. get-manip documentation master file, created by
    sphinx-quickstart on Sun May 18 11:49:00 2014.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to GETConsolidate's documentation!
-==========================================
+Documentation of get-manip command and libraries
+================================================
 
 Contents:
 
@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
    :numbered:
 
-   intro.rst
+   usage.rst
    classes.rst
    formats.rst
    exceptions.rst

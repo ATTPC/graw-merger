@@ -1,13 +1,13 @@
 //
 //  GMExceptions.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/9/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__TextException__
-#define __GETConsolidate__TextException__
+#ifndef __get_manip__TextException__
+#define __get_manip__TextException__
 
 #include <iostream>
 #include <exception>
@@ -230,4 +230,4 @@ namespace Exceptions {
 }
 
 
-#endif /* defined(__GETConsolidate__TextException__) */
+#endif /* defined(__get_manip__TextException__) */

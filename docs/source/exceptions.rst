@@ -1,5 +1,5 @@
-Exceptions thrown by the GETConsolidate program
-===============================================
+Exceptions thrown by the get-manip program
+==========================================
 
 This page lists exceptions that could be thrown by functions in this program. These are all defined in the header file `GMExceptions.h`, and they are contained in the namespace `Exceptions`. They are all derived from the standard library class `std::exception`.
 

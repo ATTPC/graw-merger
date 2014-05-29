@@ -1,13 +1,13 @@
 //
 //  FakeRawFrame.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/17/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__FakeRawFrame__
-#define __GETConsolidate__FakeRawFrame__
+#ifndef __get_manip__FakeRawFrame__
+#define __get_manip__FakeRawFrame__
 
 #include <vector>
 #include <bitset>
@@ -49,4 +49,4 @@ public:
     void UpdateSizes();
 };
 
-#endif /* defined(__GETConsolidate__FakeRawFrame__) */
+#endif /* defined(__getmanip__FakeRawFrame__) */

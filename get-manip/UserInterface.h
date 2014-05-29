@@ -1,13 +1,13 @@
 //
 //  UserInterface.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/25/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__UserInterface__
-#define __GETConsolidate__UserInterface__
+#ifndef __get_manip__UserInterface__
+#define __get_manip__UserInterface__
 
 #include <iostream>
 #include <iomanip>
@@ -60,4 +60,4 @@ private:
 
 
 
-#endif /* defined(__GETConsolidate__UserInterface__) */
+#endif /* defined(__get_manip__UserInterface__) */

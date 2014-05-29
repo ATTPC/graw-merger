@@ -1,13 +1,13 @@
 //
 //  Utilities.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/15/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef GETConsolidate_Utilities_h
-#define GETConsolidate_Utilities_h
+#ifndef __get_manip__Utilities_h
+#define __get_manip__Utilities_h
 
 #include <vector>
 

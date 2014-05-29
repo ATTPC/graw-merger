@@ -70,9 +70,9 @@
 
 /* Begin PBXFileReference section */
 		0302EAF61932C1F6007F898D /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserInterface.cpp; sourceTree = "<group>"; };
-		0302EAF71932C1F6007F898D /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInterface.h; sourceTree = "<group>"; };
+		0302EAF71932C1F6007F898D /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = UserInterface.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03250BC5192FED5F00FBA1FB /* datafile.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = datafile.rst; sourceTree = "<group>"; };
-		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = Doxyfile; sourceTree = "<group>"; };
 		03514B1E192CEEAB0077C431 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		03514B22192CEEAB0077C431 /* layout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = layout.html; sourceTree = "<group>"; };
 		03514B23192CEEAB0077C431 /* NEWS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS.txt; sourceTree = "<group>"; };
@@ -99,36 +99,36 @@
 		03514B3E192CEEAB0077C431 /* theme.conf */ = {isa = PBXFileReference; lastKnownFileType = text; path = theme.conf; sourceTree = "<group>"; };
 		03514B3F192CEEAB0077C431 /* versions.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = versions.html; sourceTree = "<group>"; };
 		03514B40192CEEAB0077C431 /* classes.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = classes.rst; sourceTree = "<group>"; };
-		03514B41192CEEAB0077C431 /* conf.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conf.py; sourceTree = "<group>"; };
+		03514B41192CEEAB0077C431 /* conf.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; lineEnding = 0; path = conf.py; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.python; };
 		03514B42192CEEAB0077C431 /* event_file.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_file.rst; sourceTree = "<group>"; };
-		03514B43192CEEAB0077C431 /* exceptions.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = exceptions.rst; sourceTree = "<group>"; };
+		03514B43192CEEAB0077C431 /* exceptions.rst */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = exceptions.rst; sourceTree = "<group>"; };
 		03514B44192CEEAB0077C431 /* formats.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = formats.rst; sourceTree = "<group>"; };
 		03514B45192CEEAB0077C431 /* GRAWFile.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAWFile.rst; sourceTree = "<group>"; };
 		03514B46192CEEAB0077C431 /* GRAWFrame.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAWFrame.rst; sourceTree = "<group>"; };
 		03514B47192CEEAB0077C431 /* GRAW.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRAW.rst; sourceTree = "<group>"; };
 		03514B48192CEEAB0077C431 /* index.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = index.rst; sourceTree = "<group>"; };
-		03514B49192CEEAB0077C431 /* intro.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = intro.rst; sourceTree = "<group>"; };
 		03514B4A192CEEAB0077C431 /* trace.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = trace.rst; sourceTree = "<group>"; };
 		03514B4D192CF51B0077C431 /* padlookuptable.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = padlookuptable.rst; sourceTree = "<group>"; };
 		03514B58192D11240077C431 /* event.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = event.rst; sourceTree = "<group>"; };
-		03514B59192D16B60077C431 /* EventTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventTests.cpp; sourceTree = "<group>"; };
+		03514B59192D16B60077C431 /* EventTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = EventTests.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		03517E0A192307A700F2C732 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = /usr/local/lib/libboost_filesystem.a; sourceTree = "<absolute>"; };
 		03517E0B192307A700F2C732 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = /usr/local/lib/libboost_program_options.a; sourceTree = "<absolute>"; };
 		03517E0C192307A700F2C732 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = /usr/local/lib/libboost_system.a; sourceTree = "<absolute>"; };
 		036F43301933F18200D1F146 /* event_file_class.rst */ = {isa = PBXFileReference; lastKnownFileType = text; path = event_file_class.rst; sourceTree = "<group>"; };
 		036F43311933F44C00D1F146 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = /usr/local/lib/libboost_date_time.a; sourceTree = "<absolute>"; };
 		036F43321933F44C00D1F146 /* libboost_log.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_log.a; path = /usr/local/lib/libboost_log.a; sourceTree = "<absolute>"; };
-		037A338D192A5E8E006E2E84 /* DataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataFile.cpp; sourceTree = "<group>"; };
-		037A338E192A5E8E006E2E84 /* DataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFile.h; sourceTree = "<group>"; };
-		038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeRawFrame.cpp; sourceTree = "<group>"; };
-		038AB1041927F08B009C1C38 /* FakeRawFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeRawFrame.h; sourceTree = "<group>"; };
+		037A338D192A5E8E006E2E84 /* DataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = DataFile.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		037A338E192A5E8E006E2E84 /* DataFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataFile.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = FakeRawFrame.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		038AB1041927F08B009C1C38 /* FakeRawFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FakeRawFrame.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		039056CC192552AE00214C6C /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		0398C5561937846F0027B8FE /* usage.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = usage.rst; sourceTree = "<group>"; };
 		03AB409C191C269F0021ABD4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFile.cpp; sourceTree = "<group>"; };
-		03AB40B2191D0D950021ABD4 /* GRAWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWFile.h; sourceTree = "<group>"; };
-		03AB40B9191D45900021ABD4 /* EventFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventFile.cpp; sourceTree = "<group>"; };
-		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFile.h; sourceTree = "<group>"; };
-		03AB40C0191D546C0021ABD4 /* GMExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMExceptions.h; sourceTree = "<group>"; };
+		03AB40B2191D0D950021ABD4 /* GRAWFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GRAWFile.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		03AB40B9191D45900021ABD4 /* EventFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = EventFile.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		03AB40BA191D45900021ABD4 /* EventFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = EventFile.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		03AB40C0191D546C0021ABD4 /* GMExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GMExceptions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03C2018C19267C2900264702 /* get-manip-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-manip-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2018E19267C2900264702 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03C2019019267C2900264702 /* GetConsolidateTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GetConsolidateTests.1; sourceTree = "<group>"; };
@@ -141,15 +141,15 @@
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
 		03DDF3A21917FD9100306788 /* GRAWFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFrame.cpp; sourceTree = "<group>"; };
-		03DDF3A31917FD9100306788 /* GRAWFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWFrame.h; sourceTree = "<group>"; };
+		03DDF3A31917FD9100306788 /* GRAWFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GRAWFrame.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03DDF3A51918026900306788 /* GRAWDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWDataItem.cpp; sourceTree = "<group>"; };
-		03DDF3A61918026900306788 /* GRAWDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRAWDataItem.h; sourceTree = "<group>"; };
-		03DDF3AC19195A5E00306788 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
-		03DDF3AD19195A5E00306788 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		03DDF3A61918026900306788 /* GRAWDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GRAWDataItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		03DDF3AC19195A5E00306788 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Event.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		03DDF3AD19195A5E00306788 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Event.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03DDF3AF19195B6100306788 /* Trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trace.cpp; sourceTree = "<group>"; };
-		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trace.h; sourceTree = "<group>"; };
+		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Trace.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03DDF3B21919621A00306788 /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
-		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PadLookupTable.h; sourceTree = "<group>"; };
+		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PadLookupTable.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,12 +202,12 @@
 				03514B46192CEEAB0077C431 /* GRAWFrame.rst */,
 				03514B47192CEEAB0077C431 /* GRAW.rst */,
 				03514B48192CEEAB0077C431 /* index.rst */,
-				03514B49192CEEAB0077C431 /* intro.rst */,
 				03514B4A192CEEAB0077C431 /* trace.rst */,
 				03514B4D192CF51B0077C431 /* padlookuptable.rst */,
 				03514B58192D11240077C431 /* event.rst */,
 				03250BC5192FED5F00FBA1FB /* datafile.rst */,
 				036F43301933F18200D1F146 /* event_file_class.rst */,
+				0398C5561937846F0027B8FE /* usage.rst */,
 			);
 			path = source;
 			sourceTree = "<group>";

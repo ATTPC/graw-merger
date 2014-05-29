@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# GETConsolidate documentation build configuration file, created by
+# get-manip documentation build configuration file, created by
 # sphinx-quickstart on Sun May 18 11:49:00 2014.
 #
 # This file is execfile()d with the current directory set to its
@@ -50,7 +50,7 @@ primary_domain = 'cpp'
 master_doc = 'index'
 
 # General information about the project.
-project = u'GETConsolidate'
+project = u'get-manip'
 copyright = u'2014, Joshua Bradt'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -201,7 +201,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'GETConsolidatedoc'
+htmlhelp_basename = 'get-manipdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -223,7 +223,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'GETConsolidate.tex', u'GETConsolidate Documentation',
+  ('index', 'get-manip.tex', u'get-manip Documentation',
    u'Joshua Bradt', 'manual'),
 ]
 
@@ -253,7 +253,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'getconsolidate', u'GETConsolidate Documentation',
+    ('index', 'get-manip', u'get-manip Documentation',
      [u'Joshua Bradt'], 1)
 ]
 
@@ -267,8 +267,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'GETConsolidate', u'GETConsolidate Documentation',
-   u'Joshua Bradt', 'GETConsolidate', 'One line description of project.',
+  ('index', 'get-manip', u'get-manip Documentation',
+   u'Joshua Bradt', 'get-manip', 'One line description of project.',
    'Miscellaneous'),
 ]
 

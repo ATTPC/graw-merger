@@ -1,13 +1,13 @@
 //
 //  MockGRAWFile.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/16/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef GETConsolidate_mock_GRAWFile_h
-#define GETConsolidate_mock_GRAWFile_h
+#ifndef __get_manip__mock_GRAWFile_h
+#define __get_manip__mock_GRAWFile_h
 
 #include "gmock/gmock.h"
 

@@ -1,13 +1,13 @@
 //
 //  GRAWDataItem.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/5/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__GRAWDataItem__
-#define __GETConsolidate__GRAWDataItem__
+#ifndef __get_manip__GRAWDataItem__
+#define __get_manip__GRAWDataItem__
 
 #include <iostream>
 
@@ -28,4 +28,4 @@ private:
     uint16_t sample;
 };
 
-#endif /* defined(__GETConsolidate__GRAWDataItem__) */
+#endif /* defined(__get_manip__GRAWDataItem__) */

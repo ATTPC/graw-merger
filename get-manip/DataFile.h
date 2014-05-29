@@ -1,13 +1,13 @@
 //
 //  DataFile.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/19/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__DataFile__
-#define __GETConsolidate__DataFile__
+#ifndef __get_manip__DataFile__
+#define __get_manip__DataFile__
 
 #include <iostream>
 #include <fstream>
@@ -130,4 +130,4 @@ protected:
     bool isEOF = false;
 };
 
-#endif /* defined(__GETConsolidate__DataFile__) */
+#endif /* defined(__get_manip__DataFile__) */

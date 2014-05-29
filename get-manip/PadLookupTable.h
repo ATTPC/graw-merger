@@ -1,13 +1,13 @@
 //
 //  PadLookupTable.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/6/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__PadLookupTable__
-#define __GETConsolidate__PadLookupTable__
+#ifndef __get_manip__PadLookupTable__
+#define __get_manip__PadLookupTable__
 
 #include <iostream>
 #include <fstream>
@@ -47,4 +47,4 @@ private:
     std::unordered_map<uint32_t,uint16_t> table;  // The hashtable, maps hash:pad#
 };
 
-#endif /* defined(__GETConsolidate__PadLookupTable__) */
+#endif /* defined(__get_manip__PadLookupTable__) */

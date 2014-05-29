@@ -1,13 +1,13 @@
 //
 //  GRAWFile.h
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/9/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
 //
 
-#ifndef __GETConsolidate__GRAWFile__
-#define __GETConsolidate__GRAWFile__
+#ifndef __get_manip__GRAWFile__
+#define __get_manip__GRAWFile__
 
 #include <iostream>
 #include <fstream>
@@ -109,4 +109,4 @@ private:
     static void AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes);
 };
 
-#endif /* defined(__GETConsolidate__GRAWFile__) */
+#endif /* defined(__get_manip__GRAWFile__) */

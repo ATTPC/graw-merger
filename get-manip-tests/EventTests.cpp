@@ -1,6 +1,6 @@
 //
 //  EventTests.cpp
-//  GETConsolidate
+//  get-manip
 //
 //  Created by Joshua Bradt on 5/21/14.
 //  Copyright (c) 2014 NSCL. All rights reserved.
