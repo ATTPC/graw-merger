@@ -74,27 +74,81 @@ public:
      */
     void SetLookupTable(PadLookupTable* table);
     
+    //! \brief Set the event ID for this event.
     void SetEventId(const uint32_t eventId_in);
+    
+    //! \brief Set the event time for this event.
     void SetEventTime(const uint64_t eventTime_in);
     
+    /** \brief Append a frame to the event.
+     
+     The frame should be initialized and filled with data before appending it to the event. This function should be called for each frame that composes the event. The event time and event ID will be checked for each frame. If no frames have been appended to the Event yet, then the event time and event ID will be set by the first frame to be appended. If the time or ID do not match on subsequent frames, an error message will be printed.
+     
+     */
     void AppendFrame(const GRAWFrame& frame);
+    
+    /** \brief Turns the event back into GRAW frames.
+     
+     \rst
+     
+     This can be used to produce a file in the original GRAW format. 
+     
+     ..  WARNING::
+         As some of the data from the original file is thrown out, the header information written by this function may not be entirely meaningful. It does try to recreate things like the hit patterns, time stamps, and IDs, but some information like the metaType, status, and other unused fields might be inconsistent with the current GRAW file specifications.
+     
+     \endrst
+     
+     */
     std::vector<GRAWFrame> ExtractAllFrames();
     
     // Getting properties and members
     
+    //! \brief Get the size of the event as written to a file, in bytes.
     uint32_t Size() const;
     
+    //! \brief Get the Trace for the given set of parameters.
     Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
+    //! \returns The event ID.
     uint32_t GetEventId() const;
+    
+    //! \returns The event time.
     uint64_t GetEventTime() const;
     
     // Manipulations of contained data
     
+    /** \brief Subtract the fixed pattern noise (FPN) from the rest of the data
+     
+     \rst
+     
+     This function goes through the data one AGET at a time. For each AGET, it does the following:
+     
+         #. Find the fixed pattern noise channels (channels 11, 22, 45, and 56).
+     
+         #. Average them together.
+     
+         #. Renormalize this average to zero. (This is necessary due to the arbitrary gain on each channel.)
+     
+         #. Subtract this renormalized average from all other channels on this AGET.
+     
+     After this process, the FPN channels are deleted from the event. This reduces the size of the output file substantially.
+     
+     \endrst
+     
+     */
     void SubtractFPN();
     
     // I/O functions
     
+    /** \brief Write the event to an output stream.
+     
+     \rst
+     
+     The event data is written in the event file format. This is documented at :doc:`event_file.rst`.
+     
+     \endrst
+     
+     */
     friend std::ostream& operator<<(std::ostream& stream, const Event& event);
     
 private:
