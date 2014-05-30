@@ -111,10 +111,10 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     
     for (int aget = 0; aget<4; aget++) {
         std::bitset<9*8> bs {};   // init to 0
-        for (int byte = 8; byte>=0; byte--) {
-            //hitPattern[aget][byte] = *rawFrameIter;
-            bs &= (*rawFrameIter) << byte*8;
-//            std::cout << int(*rawFrameIter) << std::endl;
+        for (int byte = 8; byte >=0; byte--) {
+            std::bitset<72> temp {*rawFrameIter};
+            temp <<= byte*8;
+            bs |= temp;
             rawFrameIter++;
         }
         hitPatterns.push_back(bs);
@@ -130,6 +130,8 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     auto dataBegin = rawFrame.begin() + headerSize*GRAWFrame::sizeUnit;
     auto dataEnd   = dataBegin + nItems*itemSize;
     
+    std::vector< std::bitset<72> > actualHitPattern {0,0,0,0};
+    
     for (rawFrameIter = dataBegin; rawFrameIter != dataEnd; rawFrameIter+=itemSize) {
         uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+itemSize);
         
@@ -140,9 +142,29 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
         
         data.push_back(GRAWDataItem(aget,channel,tbid,sample));
         
-//        if (!(hitPatterns.at(aget).test(channel))) {
+        // WARNING: The hit pattern is in the reverse order of the bitset's accessor.
+        
+        actualHitPattern.at(aget).set(67-channel);
+        
+//        if (!(hitPatterns.at(aget).test(channel)) && eventId != 0) {
 //            std::cout << "Channel " << int(channel) << " on CoBo " << int(coboId) << " AsAd " << int(asadId) << " AGET " << int(aget) << " not on in hitpattern." << std::endl;
 //        }
+    }
+    
+    // Compare hit patterns
+    
+    for (int aget_iter = 0; aget_iter < 4; aget_iter++) {
+        for (int ch_iter = 0; ch_iter < 68; ch_iter ++) {
+            bool isExpected = hitPatterns.at(aget_iter).test(ch_iter);
+            bool isFound = actualHitPattern.at(aget_iter).test(ch_iter);
+
+            if (isExpected and !isFound) {
+                std::cerr << "Missing channel " << int(eventId) << "/" << int(coboId) << "/" << int(asadId) << "/" << aget_iter << "/" << ch_iter << std::endl;
+            }
+            else if (isFound and !isExpected) {
+                std::cerr << "Unexpected channel " << int(eventId) << "/" << int(coboId) << "/" << int(asadId) << "/" << aget_iter << "/" << ch_iter << std::endl;
+            }
+        }
     }
     
     if (data.size() != nItems) {
