@@ -14,7 +14,7 @@
 #include <string>
 #include <assert.h>
 
-#define LOG_ERROR std::cout << '\r' << std::string(40,' ') << '\r' << "Error: "
+#define LOG_ERROR   std::cout << '\r' << std::string(40,' ') << '\r' << "Error: "
 #define LOG_WARNING std::cout << '\r' << std::string(40,' ') << '\r' << "Warning: "
 
 namespace UI {

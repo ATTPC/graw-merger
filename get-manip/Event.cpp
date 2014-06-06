@@ -139,15 +139,18 @@ void Event::AppendFrame(const GRAWFrame& frame)
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
-        LOG_WARNING << "Appended frame's event ID doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+        LOG_WARNING << "Event ID mismatch: CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
+    
+    long delta = static_cast<int64_t> (this->eventTime - frame.eventTime);
     
     if (nFramesAppended == 0) {
         this->eventTime = frame.eventTime;
     }
-    else if (this->eventTime != frame.eventTime) {
-        LOG_WARNING << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
-        LOG_WARNING << "CoBo " << int(cobo) << " Event " << eventId << " time delta: " << long(this->eventTime) - long(frame.eventTime) << std::endl;
+    else if (labs(delta) > 10000) {
+        // labs = long abs
+        
+        LOG_WARNING << "Large event time mismatch. Event " << eventId << ", CoBo " << (int) cobo << ", AsAd, " << (int) asad << ". Delta " << long(this->eventTime) - long(frame.eventTime) <<  std::endl;
     }
     
     nFramesAppended++;

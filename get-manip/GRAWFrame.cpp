@@ -89,14 +89,12 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     rawFrameIter++;
     
     if (coboId != fileCobo) {
-//        std::cout << "    CoBo ID in file does not match CoBo ID in path. Using path value." << std::endl;
+        // This is the usual case.
         coboId = fileCobo;
     }
     
     asadId = *rawFrameIter;
     rawFrameIter++;
-    
-//    std::cout << "    This frame is for CoBo " << (int) coboId << " AsAd " << (int) asadId << std::endl;
     
     if (asadId != fileAsad) {
         std::cout << "    AsAd ID in file does not match AsAd ID in path. Using path value." << std::endl;
@@ -145,13 +143,12 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
         // WARNING: The hit pattern is in the reverse order of the bitset's accessor.
         
         actualHitPattern.at(aget).set(67-channel);
-        
-//        if (!(hitPatterns.at(aget).test(channel)) && eventId != 0) {
-//            std::cout << "Channel " << int(channel) << " on CoBo " << int(coboId) << " AsAd " << int(asadId) << " AGET " << int(aget) << " not on in hitpattern." << std::endl;
-//        }
     }
     
     // Compare hit patterns
+    
+    unsigned int nMissing = 0;
+    unsigned int nUnexpected = 0;
     
     for (int aget_iter = 0; aget_iter < 4; aget_iter++) {
         for (int ch_iter = 0; ch_iter < 68; ch_iter ++) {
@@ -159,16 +156,21 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
             bool isFound = actualHitPattern.at(aget_iter).test(ch_iter);
 
             if (isExpected and !isFound) {
-                std::cerr << "Missing channel " << int(eventId) << "/" << int(coboId) << "/" << int(asadId) << "/" << aget_iter << "/" << ch_iter << std::endl;
+                nMissing++;
             }
             else if (isFound and !isExpected) {
-                std::cerr << "Unexpected channel " << int(eventId) << "/" << int(coboId) << "/" << int(asadId) << "/" << aget_iter << "/" << ch_iter << std::endl;
+                nUnexpected++;
             }
         }
     }
     
+    if (nMissing > 0)
+        LOG_WARNING << "Missing " << nMissing << " channels." << std::endl;
+    if (nUnexpected > 0)
+        LOG_WARNING << "Found " << nUnexpected << " unexpected channels." << std::endl;
+    
     if (data.size() != nItems) {
-        std::cout << "Missing data items." << std::endl;
+        LOG_WARNING << "Missing data items." << std::endl;
     }
 }
 
