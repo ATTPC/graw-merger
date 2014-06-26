@@ -138,6 +138,10 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
         uint16_t tbid   = ExtractTBid(item);
         int16_t sample  = ExtractSample(item);
         
+        assert(aget >= 0 and aget < 4);
+        assert(channel >= 0 and channel < 68);
+        assert(tbid >= 0 and tbid < 512);
+        
         data.push_back(GRAWDataItem(aget,channel,tbid,sample));
         
         // WARNING: The hit pattern is in the reverse order of the bitset's accessor.
