@@ -21,7 +21,6 @@ const uint32_t Trace::sampleSize = 3;
 Trace::Trace()
 : coboId(0),asadId(0),agetId(0),channel(0),padId(0)
 {
-    data = std::vector<int16_t> (512,0);
 }
 
 
@@ -33,14 +32,10 @@ Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
     assert(aget < 4 && aget >= 0);
     assert(ch < 68 && ch >= 0);
     assert(pad <= 10240 && pad >= 0);
-    
-    data = std::vector<int16_t> (512,0);
 }
 
 Trace::Trace(const std::vector<uint8_t>& raw)
 {
-    data = std::vector<int16_t> (512,0);
-    
     auto pos = raw.begin();
     
     uint32_t traceSize = Utilities::ExtractInt<uint32_t>(pos, pos+sizeof(uint32_t));
@@ -124,7 +119,7 @@ Trace& Trace::operator=(Trace&& orig)
 
 void Trace::AppendSample(int tBucket, int sample)
 {
-    data.at(tBucket) = sample;
+    data.emplace(tBucket,sample);
 }
 
 int16_t Trace::GetSample(int tBucket) const
@@ -145,11 +140,7 @@ uint32_t Trace::size() const
     
     uint32_t size = sizeof(uint32_t) + sizeof(coboId) + sizeof(asadId) + sizeof(agetId) + sizeof(channel) + sizeof(padId);
     
-    for (auto item : data) {
-        if (item != 0) {
-            size += Trace::sampleSize;
-        }
-    }
+    size += Trace::sampleSize * data.size();
     
     return size;
 }
@@ -165,49 +156,52 @@ unsigned long Trace::GetNumberOfTimeBuckets()
 
 Trace& Trace::operator+=(Trace& other)
 {
-    auto pos = data.begin();
-    auto other_pos = other.data.begin();
-    
-    while (pos != data.end()) {
-        *pos += *other_pos;
-        pos++;
-        other_pos++;
+    for (auto& item : this->data) {
+        try {
+            item.second += other.data.at(item.first);
+        }
+        catch (std::range_error& e) {
+            continue;
+        }
     }
     return *this;
 }
 
 Trace& Trace::operator-=(Trace& other)
 {
-    auto pos = data.begin();
-    auto other_pos = other.data.begin();
-    
-    while (pos != data.end()) {
-        *pos -= *other_pos;
-        pos++;
-        other_pos++;
+    for (auto& item : this->data) {
+        try {
+            item.second -= other.data.at(item.first);
+        }
+        catch (std::range_error& e) {
+            continue;
+        }
     }
     return *this;
 }
 
 Trace& Trace::operator/=(Trace& other)
 {
-    auto pos = data.begin();
-    auto other_pos = other.data.begin();
-    
-    while (pos != data.end()) {
-        if (*other_pos != 0) {
-            *pos /= *other_pos;
+    for (auto& item : this->data) {
+        try {
+            auto div = other.data.at(item.first);
+            if (div != 0) {
+                item.second /= div;
+            }
         }
-        pos++;
-        other_pos++;
+        catch (std::range_error& e) {
+            continue;
+        }
     }
     return *this;
 }
 
 Trace& Trace::operator/=(int i)
 {
-    for (auto& el : data) {
-        el /= i;
+    assert(i != 0);
+    
+    for (auto& item : data) {
+        item.second /= i;
     }
     return *this;
 }
@@ -216,11 +210,16 @@ void Trace::RenormalizeToZero()
 {
     if (data.empty()) throw Exceptions::No_Data();
     
-    int64_t total = std::accumulate(data.begin(),data.end(),0);
+    int64_t total = 0;
+    
+    for (const auto& item : data) {
+        total += item.second;
+    }
+
     total /= data.size();
     
-    for (auto& el : data) {
-        el -= total;
+    for (auto& item : data) {
+        item.second -= total;
     }
 }
 

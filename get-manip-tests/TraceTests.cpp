@@ -208,7 +208,13 @@ TEST_F(TraceTestFixture, TestScalarDivision)
 void TraceTestFixture::TestNormalization(Trace& tr)
 {
     tr.RenormalizeToZero();
-    auto mean = std::accumulate(tr.data.begin(), tr.data.end(), 0,std::plus<int16_t>()) / tr.GetNumberOfTimeBuckets();
+    
+    int mean = 0;
+    for (const auto& item : tr.data) {
+        mean += item.second;
+    }
+    mean /= tr.GetNumberOfTimeBuckets();
+    
     ASSERT_EQ(mean, 0);
 }
 
