@@ -160,7 +160,7 @@ Trace& Trace::operator+=(Trace& other)
         try {
             item.second += other.data.at(item.first);
         }
-        catch (std::range_error& e) {
+        catch (std::out_of_range& e) {
             continue;
         }
     }
@@ -173,7 +173,7 @@ Trace& Trace::operator-=(Trace& other)
         try {
             item.second -= other.data.at(item.first);
         }
-        catch (std::range_error& e) {
+        catch (std::out_of_range& e) {
             continue;
         }
     }
@@ -189,7 +189,7 @@ Trace& Trace::operator/=(Trace& other)
                 item.second /= div;
             }
         }
-        catch (std::range_error& e) {
+        catch (std::out_of_range& e) {
             continue;
         }
     }
@@ -240,9 +240,13 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     
     for (int i = 0; i < trace.data.size(); i++)
     {
-        if (trace.data.at(i) == 0) continue;
-        auto compacted_data = Trace::CompactSample(i, trace.data.at(i));
-        stream.write((char*) &compacted_data ,Trace::sampleSize);
+        try {
+            auto compacted_data = Trace::CompactSample(i, trace.data.at(i));
+            stream.write((char*) &compacted_data ,Trace::sampleSize);
+        }
+        catch (std::out_of_range& e) {
+            continue;
+        }
     }
     
     return stream;
@@ -255,7 +259,23 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
 uint32_t Trace::CompactSample(uint16_t tb, int16_t val)
 {
     // val is 12-bits and tb is 9 bits. Fit this in 24 bits.
-    uint32_t joined = (tb << 15) | val;
+    // Use one bit for parity
+    
+    uint16_t narrowed = 0;
+    uint16_t parity = 0;
+    
+    if (val < 0) {
+        parity = (1 << 12);
+        narrowed = -1*val;
+    }
+    else if (val >= 4095) {
+        narrowed = 4095;
+    }
+    else {
+        narrowed = val;
+    }
+    
+    uint32_t joined = (tb << 15) | narrowed | parity;
     return joined;
 }
 
@@ -263,6 +283,12 @@ std::pair<uint16_t,int16_t> Trace::UnpackSample(const uint32_t packed)
 {
     uint16_t tb = (packed & 0xFF8000) >> 15;
     int16_t val = packed & 0xFFF;
+    int16_t parity = (packed & 0x1000) >> 12;
+    
+    if (parity == 1) {
+        val *= -1;
+    }
+    
     std::pair<uint16_t,int16_t> res {tb,val};
     return res;
 }
