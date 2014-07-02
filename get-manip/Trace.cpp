@@ -238,15 +238,10 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     stream.write((char*) &(trace.channel), sizeof(trace.channel));
     stream.write((char*) &(trace.padId), sizeof(trace.padId));
     
-    for (int i = 0; i < trace.data.size(); i++)
+    for (const auto& item : trace.data)
     {
-        try {
-            auto compacted_data = Trace::CompactSample(i, trace.data.at(i));
-            stream.write((char*) &compacted_data ,Trace::sampleSize);
-        }
-        catch (std::out_of_range& e) {
-            continue;
-        }
+        auto compacted_data = Trace::CompactSample(item.first, item.second);
+        stream.write((char*) &compacted_data ,Trace::sampleSize);
     }
     
     return stream;
