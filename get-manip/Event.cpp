@@ -139,15 +139,18 @@ void Event::AppendFrame(const GRAWFrame& frame)
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
-        LOG_WARNING << "Appended frame's event ID doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+        LOG_WARNING << "Event ID mismatch: CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
+    
+    long delta = static_cast<int64_t> (this->eventTime - frame.eventTime);
     
     if (nFramesAppended == 0) {
         this->eventTime = frame.eventTime;
     }
-    else if (this->eventTime != frame.eventTime) {
-        LOG_WARNING << "Appended frame's event time doesn't match. CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
-        LOG_WARNING << "CoBo " << int(cobo) << " Event " << eventId << " time delta: " << long(this->eventTime) - long(frame.eventTime) << std::endl;
+    else if (labs(delta) > 10000) {
+        // labs = long abs
+        
+//        LOG_WARNING << "Large event time mismatch. Event " << eventId << ", CoBo " << (int) cobo << ", AsAd, " << (int) asad << ". Delta " << long(this->eventTime) - long(frame.eventTime) <<  std::endl;
     }
     
     nFramesAppended++;
@@ -265,13 +268,25 @@ void Event::SubtractFPN()
         for (int asad = 0; asad < 4; asad++) {
             for (int aget = 0; aget < 4; aget++) {
                 
-                // Get the FPN channels and find the mean
+                // Get the FPN channels and find the mean.
+                // Each FPN channel may be missing different time buckets, so
+                // count the denom of the mean separately for each TB.
+                
                 Trace mean_fpn {};
+                for (int i = 0; i < 512; i++) {
+                    mean_fpn.AppendSample(i, 0);
+                }
+                
+                std::vector<int> tb_multip (512,0);
                 int num_fpns = 0;
                 
                 for (auto ch : fpn_channels) {
                     try {
-                        mean_fpn += GetTrace(cobo, asad, aget, ch);
+                        auto tr = GetTrace(cobo, asad, aget, ch);
+                        mean_fpn += tr;
+                        for (const auto& item : tr.data) {
+                            tb_multip.at(item.first)++;
+                        }
                         num_fpns++;
                     }
                     catch (std::out_of_range& e) {
@@ -283,7 +298,11 @@ void Event::SubtractFPN()
                 
                 if (num_fpns == 0) continue;
                 
-                mean_fpn /= num_fpns;
+                for (auto& item : mean_fpn.data) {
+                    if (tb_multip.at(item.first) != 0) {
+                        item.second /= tb_multip.at(item.first);
+                    }
+                }
                 
                 // Renormalize mean FPN to zero
 

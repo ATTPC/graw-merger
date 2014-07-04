@@ -19,8 +19,11 @@ class TraceTestFixture : public testing::Test
 {
 public:
     void TestCompactSample();
+    void TestCompactSampleWithNegative();
     void TestUnpackSample();
+    void TestUnpackSampleWithNegative();
     void TestCompactAndUnpack();
+    void TestCompactAndUnpackWithNegative();
     void TestAddition();
     void TestSubtraction();
     void TestScalarDivision();
@@ -87,6 +90,28 @@ TEST_F(TraceTestFixture, TestCompactSample)
     TestCompactSample();
 }
 
+void TraceTestFixture::TestCompactSampleWithNegative()
+{
+    for (uint16_t tb = 0; tb < 512; tb++) {
+        for (int16_t val = -4095; val < 0xFFF; val++) {
+            uint32_t res = Trace::CompactSample(tb, val);
+            uint16_t res_tb = (res & 0xFF8000) >> 15;
+            int16_t res_val = res & 0xFFF;
+            int16_t res_par = (res & 0x1000) >> 12;
+            if (res_par == 1) {
+                res_val *= -1;
+            }
+            ASSERT_EQ(tb, res_tb);
+            ASSERT_EQ(val, res_val);
+        }
+    }
+}
+
+TEST_F(TraceTestFixture, TestCompactSampleWithNegative)
+{
+    TestCompactSampleWithNegative();
+}
+
 void TraceTestFixture::TestUnpackSample()
 {
     for (uint16_t tb = 0; tb < 512; tb++) {
@@ -104,6 +129,24 @@ TEST_F(TraceTestFixture, TestUnpackSample)
     TestUnpackSample();
 }
 
+void TraceTestFixture::TestUnpackSampleWithNegative()
+{
+    for (uint16_t tb = 0; tb < 512; tb++) {
+        for (int16_t val = -4095; val < 0xFFF; val++) {
+            int16_t parity = val < 0 ? (1 << 12) : 0;
+            uint32_t compacted = (tb << 15) | abs(val) | parity;
+            auto unpacked = Trace::UnpackSample(compacted);
+            ASSERT_EQ(tb, unpacked.first);
+            ASSERT_EQ(val, unpacked.second);
+        }
+    }
+}
+
+TEST_F(TraceTestFixture, TestUnpackSampleWithNegative)
+{
+    TestUnpackSampleWithNegative();
+}
+
 void TraceTestFixture::TestCompactAndUnpack()
 {
     for (uint16_t tb = 0; tb < 512; tb++) {
@@ -119,6 +162,23 @@ void TraceTestFixture::TestCompactAndUnpack()
 TEST_F(TraceTestFixture,TestCompactAndUnpack)
 {
     TestCompactAndUnpack();
+}
+
+void TraceTestFixture::TestCompactAndUnpackWithNegative()
+{
+    for (uint16_t tb = 0; tb < 512; tb++) {
+        for (int16_t val = -4095; val < 0xFFF; val++) {
+            uint32_t comp = Trace::CompactSample(tb, val);
+            auto unp = Trace::UnpackSample(comp);
+            ASSERT_EQ(tb, unp.first);
+            ASSERT_EQ(val, unp.second);
+        }
+    }
+}
+
+TEST_F(TraceTestFixture,TestCompactAndUnpackWithNegative)
+{
+    TestCompactAndUnpackWithNegative();
 }
 
 void TraceTestFixture::TestAddition()
@@ -208,7 +268,13 @@ TEST_F(TraceTestFixture, TestScalarDivision)
 void TraceTestFixture::TestNormalization(Trace& tr)
 {
     tr.RenormalizeToZero();
-    auto mean = std::accumulate(tr.data.begin(), tr.data.end(), 0,std::plus<int16_t>()) / tr.GetNumberOfTimeBuckets();
+    
+    int mean = 0;
+    for (const auto& item : tr.data) {
+        mean += item.second;
+    }
+    mean /= tr.GetNumberOfTimeBuckets();
+    
     ASSERT_EQ(mean, 0);
 }
 

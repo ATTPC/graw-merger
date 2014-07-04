@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <map>
+#include <unordered_map>
 #include <vector>
 #include <numeric>
 #include <assert.h>
@@ -68,7 +69,7 @@ private:
     uint8_t agetId; 
     uint8_t channel;
     uint16_t padId;
-    std::vector<int16_t> data;   // maps timebucket:sample
+    std::unordered_map<uint16_t,int16_t> data;   // maps timebucket:sample
     
     // Private functions to compress data on file write
     

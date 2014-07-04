@@ -17,6 +17,7 @@
 
 #include "GRAWDataItem.h"
 #include "Utilities.h"
+#include "UserInterface.h"
 
 class GRAWFrame
 {
