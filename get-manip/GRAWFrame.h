@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <bitset>
 #include <cmath>
 #include <assert.h>
@@ -27,14 +28,24 @@ public:
     
     // Data extraction functions
     
+    void ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& begin,
+                                   std::vector<uint8_t>::const_iterator& end);
+    void ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& begin,
+                                std::vector<uint8_t>::const_iterator& end);
+    
     static uint8_t ExtractAgetId(const uint32_t raw);
     static uint8_t ExtractChannel(const uint32_t raw);
     static uint16_t ExtractTBid(const uint32_t raw);
     static int16_t ExtractSample(const uint32_t raw);
+    static uint8_t ExtractAgetIdFullReadout(const uint16_t raw);
+    static int16_t ExtractSampleFullReadout(const uint16_t raw);
     
     static const uint8_t  Expected_metaType;
     static const uint16_t Expected_headerSize;
-    static const uint16_t Expected_itemSize;
+    static const uint16_t Expected_itemSizePartialReadout;
+    static const uint16_t Expected_itemSizeFullReadout;
+    static const uint16_t Expected_frameTypePartialReadout;
+    static const uint16_t Expected_frameTypeFullReadout;
     static const int      sizeUnit;
     
 private:

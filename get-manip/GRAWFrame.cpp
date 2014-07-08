@@ -14,7 +14,10 @@
 
 const uint8_t  GRAWFrame::Expected_metaType = 8;
 const uint16_t GRAWFrame::Expected_headerSize = 1;
-const uint16_t GRAWFrame::Expected_itemSize = 4;
+const uint16_t GRAWFrame::Expected_itemSizePartialReadout = 4;
+const uint16_t GRAWFrame::Expected_itemSizeFullReadout = 2;
+const uint16_t GRAWFrame::Expected_frameTypePartialReadout = 1;
+const uint16_t GRAWFrame::Expected_frameTypeFullReadout = 2;
 const int      GRAWFrame::sizeUnit = 256;
 
 // --------
@@ -52,6 +55,10 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     
     frameType = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
+    if (frameType != Expected_frameTypeFullReadout and
+        frameType != Expected_frameTypePartialReadout) {
+        std::cout << "    Unknown frameType. Read will likely fail." << std::endl;
+    }
     
     revision = *rawFrameIter;
     rawFrameIter++;
@@ -65,9 +72,17 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     
     itemSize = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
-    if (itemSize != Expected_itemSize) {
-        std::cout << "    Wrong itemSize " << int(itemSize) << ". Correcting." << std::endl;
-        itemSize = Expected_itemSize;
+    if ((frameType == Expected_frameTypePartialReadout and
+         itemSize != Expected_itemSizePartialReadout) or
+        (frameType == Expected_frameTypeFullReadout and
+         itemSize != Expected_itemSizeFullReadout)) {
+            std::cout << "    Wrong itemSize " << int(itemSize) << ". Correcting." << std::endl;
+            if (frameType == Expected_frameTypePartialReadout) {
+                itemSize = Expected_itemSizePartialReadout;
+            }
+            else if (frameType == Expected_frameTypeFullReadout) {
+                itemSize = Expected_itemSizeFullReadout;
+            }
     }
     
     nItems = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
@@ -128,9 +143,20 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     auto dataBegin = rawFrame.begin() + headerSize*GRAWFrame::sizeUnit;
     auto dataEnd   = dataBegin + nItems*itemSize;
     
+    if (frameType == Expected_frameTypePartialReadout) {
+        ExtractPartialReadoutData(dataBegin, dataEnd);
+    }
+    else if (frameType == Expected_frameTypeFullReadout) {
+        ExtractFullReadoutData(dataBegin, dataEnd);
+    }
+}
+
+void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& begin,
+                                          std::vector<uint8_t>::const_iterator& end)
+{
     std::vector< std::bitset<72> > actualHitPattern {0,0,0,0};
     
-    for (rawFrameIter = dataBegin; rawFrameIter != dataEnd; rawFrameIter+=itemSize) {
+    for (auto rawFrameIter = begin; rawFrameIter != end; rawFrameIter+=itemSize) {
         uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+itemSize);
         
         uint8_t aget    = ExtractAgetId(item);
@@ -158,7 +184,7 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
         for (int ch_iter = 0; ch_iter < 68; ch_iter ++) {
             bool isExpected = hitPatterns.at(aget_iter).test(ch_iter);
             bool isFound = actualHitPattern.at(aget_iter).test(ch_iter);
-
+            
             if (isExpected and !isFound) {
                 nMissing++;
             }
@@ -176,10 +202,39 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     if (data.size() != nItems) {
         LOG_WARNING << "Missing data items." << std::endl;
     }
+
+}
+
+void GRAWFrame::ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& begin,
+                                       std::vector<uint8_t>::const_iterator& end)
+{
+    std::vector<std::queue<int16_t>> dataQueues (4);
+    
+    for (auto rawFrameIter = begin; rawFrameIter != end; rawFrameIter += itemSize) {
+        uint16_t item = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+itemSize);
+        
+        uint8_t aget    = ExtractAgetIdFullReadout(item);
+        int16_t sample  = ExtractSampleFullReadout(item);
+        
+        assert(aget >= 0 and aget < 4);
+        
+        dataQueues.at(aget).push(sample);
+    }
+    
+    for (uint8_t aget = 0; aget < 4; aget++) {
+        for (uint16_t tbid = 0; tbid < 512; tbid ++) {
+            for (uint8_t channel = 0; channel < 68; channel++) {
+                auto sample = dataQueues.at(aget).front();
+                dataQueues.at(aget).pop();
+                
+                data.push_back(GRAWDataItem(aget,channel,tbid,sample));
+            }
+        }
+    }
 }
 
 // --------
-// Private Data Extraction Functions
+// Data Extraction Functions
 // --------
 
 uint8_t GRAWFrame::ExtractAgetId(const uint32_t raw)
@@ -200,5 +255,15 @@ uint16_t GRAWFrame::ExtractTBid(const uint32_t raw)
 int16_t GRAWFrame::ExtractSample(const uint32_t raw)
 {
     return (raw & 0x00000FFF);
+}
+
+uint8_t GRAWFrame::ExtractAgetIdFullReadout(const uint16_t raw)
+{
+    return (raw & 0xC000)>>14;
+}
+
+int16_t GRAWFrame::ExtractSampleFullReadout(const uint16_t raw)
+{
+    return (raw & 0x0FFF);
 }
 

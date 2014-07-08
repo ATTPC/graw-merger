@@ -122,26 +122,28 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
             isEOF = true;
         }
         else {
-            // This isn't the last frame. The size must be wrong.
-            filestream.seekg(12, std::ios::cur);
+//            // This isn't the last frame. The size must be wrong.
+//            filestream.seekg(12, std::ios::cur);
+//            
+//            std::vector<uint8_t> nItems_raw;
+//            for (int i = 0; i < 4; i++) {
+//                char temp;
+//                filestream.read(&temp, sizeof(uint8_t));
+//                nItems_raw.push_back((uint8_t)temp);
+//            }
+//            
+//            uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
+//            
+//            size = ceil(double(GRAWFrame::Expected_headerSize*GRAWFrame::sizeUnit + GRAWFrame::Expected_itemSize * nItems)/GRAWFrame::sizeUnit);
+//            
+//            filestream.seekg(storedPos + size*GRAWFrame::sizeUnit);
+//            
+//            if (filestream.peek() != metaType) {
+//                // Give up
+//                throw Exceptions::Frame_Read_Error();
+//            }
             
-            std::vector<uint8_t> nItems_raw;
-            for (int i = 0; i < 4; i++) {
-                char temp;
-                filestream.read(&temp, sizeof(uint8_t));
-                nItems_raw.push_back((uint8_t)temp);
-            }
-            
-            uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
-            
-            size = ceil(double(GRAWFrame::Expected_headerSize*GRAWFrame::sizeUnit + GRAWFrame::Expected_itemSize * nItems)/GRAWFrame::sizeUnit);
-            
-            filestream.seekg(storedPos + size*GRAWFrame::sizeUnit);
-            
-            if (filestream.peek() != metaType) {
-                // Give up
-                throw Exceptions::Frame_Read_Error();
-            }
+            throw Exceptions::Frame_Read_Error();
         }
     }
     
