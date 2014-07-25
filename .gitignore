@@ -1,3 +1,6 @@
 docs/build/*
 docs/doxygen_build/*
 Products/*
+get-manip.xcodeproj/project.xcworkspace/xcshareddata/get-manip.xccheckout
+get-manip.xcodeproj/project.xcworkspace/xcuserdata/josh.xcuserdatad/WorkspaceSettings.xcsettings
+get-manip.xcodeproj/xcuserdata/josh.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
