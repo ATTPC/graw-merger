@@ -26,6 +26,11 @@ public:
     GRAWFrame();
     GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad);
     
+    // Getters
+    
+    const uint32_t GetEventId() const;
+    const uint64_t GetEventTime() const;
+    
     // Data extraction functions
     
     void ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& begin,

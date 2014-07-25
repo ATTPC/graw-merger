@@ -151,6 +151,24 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     }
 }
 
+// --------
+// Getters
+// --------
+
+const uint32_t GRAWFrame::GetEventId() const
+{
+    return eventId;
+}
+
+const uint64_t GRAWFrame::GetEventTime() const
+{
+    return eventTime;
+}
+
+// --------
+// Data Extraction Functions
+// --------
+
 void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& begin,
                                           std::vector<uint8_t>::const_iterator& end)
 {
@@ -232,10 +250,6 @@ void GRAWFrame::ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& beg
         }
     }
 }
-
-// --------
-// Data Extraction Functions
-// --------
 
 uint8_t GRAWFrame::ExtractAgetId(const uint32_t raw)
 {
