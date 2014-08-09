@@ -100,6 +100,10 @@ public:
     //! \brief Returns the AsAd number from the filename
     virtual uint8_t GetFileAsad() const;
     
+    //! \brief Returns the event number of the next frame in the file.
+    //! \throws Exceptions::End_of_File if there is not another frame.
+    virtual const uint64_t NextFrameEvtId();
+    
 private:
     
     uint8_t coboId;                      // CoBo ID from the file name

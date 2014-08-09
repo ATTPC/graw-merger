@@ -233,3 +233,28 @@ uint8_t GRAWFile::GetFileAsad() const
 {
     return asadId;
 }
+
+const uint64_t GRAWFile::NextFrameEvtId()
+{
+    auto storedPos = filestream.tellg();
+    filestream.seekg(22, std::ios::end); // 22 bytes from start of frame to id
+    
+    std::vector<uint8_t> id_raw;
+    for (int i = 0; i < 4; i++) {
+        char temp;
+        filestream.read(&temp, sizeof(uint8_t));
+        id_raw.push_back((uint8_t)temp);
+    }
+    
+    if (filestream.eof()) {
+        filestream.seekg(storedPos);
+        throw Exceptions::End_of_File();
+    }
+    
+    uint64_t id = Utilities::ExtractByteSwappedInt<uint64_t>(id_raw.begin(),
+                                                             id_raw.end());
+    
+    filestream.seekg(storedPos);
+    
+    return id;
+}

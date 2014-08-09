@@ -119,6 +119,8 @@ void MergeFiles(boost::filesystem::path input_path,
     while (!dataFiles.empty()) {
         
         std::queue<GRAWFrame> frames;
+        std::vector<unsigned int> evtNums;
+        unsigned long currentEvent = 0;
         
         // Read in a frame from each file
         
@@ -127,6 +129,7 @@ void MergeFiles(boost::filesystem::path input_path,
                 std::vector<uint8_t> raw_frame = file.ReadRawFrame();
                 total_pos += raw_frame.size();
                 frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
+                evtNums.push_back(frames.front().GetEventId());
             }
             catch (std::exception& e) {
                 std::cout << e.what() << std::endl;
@@ -145,6 +148,7 @@ void MergeFiles(boost::filesystem::path input_path,
         
         Event testEvent;
         testEvent.SetLookupTable(&lookupTable);
+        
         
         while (!frames.empty()) {
             testEvent.AppendFrame(frames.front());
