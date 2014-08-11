@@ -236,8 +236,8 @@ uint8_t GRAWFile::GetFileAsad() const
 
 const uint64_t GRAWFile::NextFrameEvtId()
 {
-    auto storedPos = filestream.tellg();
-    filestream.seekg(22, std::ios::end); // 22 bytes from start of frame to id
+    uint64_t storedPos = filestream.tellg();
+    filestream.seekg(22, std::ios::cur); // 22 bytes from start of frame to id
     
     std::vector<uint8_t> id_raw;
     for (int i = 0; i < 4; i++) {

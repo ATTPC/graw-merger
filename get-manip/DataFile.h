@@ -112,6 +112,9 @@ public:
     //! \brief Returns the current file position.
     virtual const long unsigned int GetPosition();
     
+    //! \brief Returns the filename.
+    virtual const std::string GetFilename() const;
+    
 protected:
     /** \brief The path to the file.
      

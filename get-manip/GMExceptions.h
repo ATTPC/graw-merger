@@ -227,6 +227,27 @@ namespace Exceptions {
         //! \return The string "No data in container."
         virtual const char* what() const noexcept {return msg.c_str();};
     };
+    
+    /** \brief Frames were out of order in a file
+     
+     This indicates that the program found a frame with a lower event index than the current one. This shouldn't normally happen.
+     
+     */
+    class Frame_Out_of_Order : public std::exception
+    {
+    private:
+        std::string msg {"Frame out of order in file: "};
+        
+    public:
+        //! \param filename_in The filename or path.
+        Frame_Out_of_Order(const char* filename_in) {msg.append(filename_in);};
+        
+        //! \overload
+        Frame_Out_of_Order(const std::string& filename_in) {msg.append(filename_in);};
+        
+        //! \return The error message.
+        virtual const char* what() const noexcept {return msg.c_str();};
+    };
 }
 
 

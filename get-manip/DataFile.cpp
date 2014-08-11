@@ -106,6 +106,11 @@ const long unsigned int DataFile::GetPosition()
     return filestream.tellg();
 }
 
+const std::string DataFile::GetFilename() const
+{
+    return filePath.filename().string();
+}
+
 bool DataFile::eof() const
 {
     if (!isInitialized) throw Exceptions::Not_Init();

@@ -86,6 +86,19 @@ void MergeFiles(boost::filesystem::path input_path,
         }
     }
     
+    // Find the index of the first event
+    
+    std::vector<uint64_t> evtIds;
+    for (auto& file : dataFiles) {
+        try {
+            evtIds.push_back(file.NextFrameEvtId());
+        }
+        catch (Exceptions::End_of_File e) {
+            continue;
+        }
+    }
+    auto firstEvtId = std::min_element(evtIds.begin(), evtIds.end());
+    
     // Open the output file
     
     EventFile output;
@@ -116,20 +129,29 @@ void MergeFiles(boost::filesystem::path input_path,
         total_size += boost::filesystem::file_size(item);
     }
     
-    while (!dataFiles.empty()) {
+    for (uint64_t currentEvtId = *firstEvtId; !dataFiles.empty(); currentEvtId++) {
         
         std::queue<GRAWFrame> frames;
-        std::vector<unsigned int> evtNums;
-        unsigned long currentEvent = 0;
         
         // Read in a frame from each file
         
         for (auto &file : dataFiles) {
             try {
-                std::vector<uint8_t> raw_frame = file.ReadRawFrame();
-                total_pos += raw_frame.size();
-                frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
-                evtNums.push_back(frames.front().GetEventId());
+                auto fileEvtId = file.NextFrameEvtId();
+                if (fileEvtId == currentEvtId) {
+                    // This frame matches the current event, so read it
+                    std::vector<uint8_t> raw_frame = file.ReadRawFrame();
+                    total_pos += raw_frame.size();
+                    frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
+                }
+                else if (fileEvtId < currentEvtId) {
+                    // This shouldn't happen
+                    throw Exceptions::Frame_Out_of_Order(file.GetFilename());
+                }
+                else {
+                    // Event index is > the current event index. Skip this file for now.
+                    continue;
+                }
             }
             catch (std::exception& e) {
                 std::cout << e.what() << std::endl;
@@ -144,23 +166,25 @@ void MergeFiles(boost::filesystem::path input_path,
         
         // Create an event from this set of frames, if there are any.
         
-        if (frames.empty()) break;
-        
-        Event testEvent;
-        testEvent.SetLookupTable(&lookupTable);
-        
-        
-        while (!frames.empty()) {
-            testEvent.AppendFrame(frames.front());
-            frames.pop();
-            //std::cout << "Appended frame." << std::endl;
+        if (frames.empty()) {
+            // We found no frames for this event... Odd.
+            std::cerr << "No frames found for event ID " << currentEvtId << std::endl;
+            continue;
         }
         
-        testEvent.SubtractFPN();
+        Event event;
+        event.SetLookupTable(&lookupTable);
+        
+        while (!frames.empty()) {
+            event.AppendFrame(frames.front());
+            frames.pop();
+        }
+        
+        event.SubtractFPN();
         
         // Write the event to the output file.
         
-        output.WriteEvent(testEvent);
+        output.WriteEvent(event);
         
 //        auto procFrames = testEvent.ExtractAllFrames();
 //        
