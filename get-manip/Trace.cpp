@@ -287,5 +287,3 @@ std::pair<uint16_t,int16_t> Trace::UnpackSample(const uint32_t packed)
     std::pair<uint16_t,int16_t> res {tb,val};
     return res;
 }
-
-
