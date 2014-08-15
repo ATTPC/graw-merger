@@ -90,7 +90,7 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
         throw Exceptions::Bad_File(filePath.filename().string());
     }
     
-    unsigned long storedPos = filestream.tellg();
+    unsigned long long storedPos = filestream.tellg();
     
     uint8_t metaType = filestream.get();
     

@@ -31,7 +31,7 @@ Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
     assert(asad < 4 && asad >= 0);
     assert(aget < 4 && aget >= 0);
     assert(ch < 68 && ch >= 0);
-    assert(pad <= 10240 && pad >= 0);
+    assert((pad <= 10240 && pad >= 0) || pad == 20000);
 }
 
 Trace::Trace(const std::vector<uint8_t>& raw)

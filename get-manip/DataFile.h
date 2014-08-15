@@ -110,7 +110,7 @@ public:
     virtual bool eof() const;
     
     //! \brief Returns the current file position.
-    virtual const long unsigned int GetPosition();
+    virtual const long long unsigned int GetPosition();
     
     //! \brief Returns the filename.
     virtual const std::string GetFilename() const;

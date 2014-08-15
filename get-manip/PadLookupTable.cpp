@@ -25,7 +25,7 @@ uint16_t PadLookupTable::FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget,
             return foundItem->second;
         }
         else {
-            return -1;
+            return 20000; // an invalid value
         }
     }
     else {

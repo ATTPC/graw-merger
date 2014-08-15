@@ -145,7 +145,8 @@ void MergeFiles(boost::filesystem::path input_path,
                     frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
                 }
                 else if (fileEvtId < currentEvtId) {
-                    // This shouldn't happen
+                    // This shouldn't happen. Throw it out.
+                    std::vector<uint8_t> junk_frame = file.ReadRawFrame();
                     throw Exceptions::Frame_Out_of_Order(file.GetFilename());
                 }
                 else {
