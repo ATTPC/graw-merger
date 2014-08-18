@@ -136,26 +136,34 @@ void MergeFiles(boost::filesystem::path input_path,
         // Read in a frame from each file
         
         for (auto &file : dataFiles) {
-            try {
-                auto fileEvtId = file.NextFrameEvtId();
-                if (fileEvtId == currentEvtId) {
-                    // This frame matches the current event, so read it
-                    std::vector<uint8_t> raw_frame = file.ReadRawFrame();
-                    total_pos += raw_frame.size();
-                    frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()} );
+            bool keepLooking = true;
+            while (keepLooking) {
+                try {
+                    auto fileEvtId = file.NextFrameEvtId();
+                    if (fileEvtId == currentEvtId) {
+                        // This frame matches the current event, so read it
+                        std::vector<uint8_t> raw_frame = file.ReadRawFrame();
+                        total_pos += raw_frame.size();
+                        frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()});
+                        keepLooking = false;
+                    }
+                    else if (fileEvtId < currentEvtId) {
+                        // This could happen if a frame is duplicated...
+                        // Read the frame, but then don't do anything with it.
+                        std::vector<uint8_t> junk_frame = file.ReadRawFrame();
+                        total_pos += junk_frame.size();
+                        keepLooking = true;
+                        std::cout << "Frame out of order: CoBo " << int(file.GetFileCobo())
+                            << " AsAd " << int(file.GetFileAsad()) << std::endl;
+                    }
+                    else {
+                        // Event index is > the current event index. Skip this file for now.
+                        keepLooking = false;
+                    }
                 }
-                else if (fileEvtId < currentEvtId) {
-                    // This shouldn't happen. Throw it out.
-                    std::vector<uint8_t> junk_frame = file.ReadRawFrame();
-                    throw Exceptions::Frame_Out_of_Order(file.GetFilename());
+                catch (std::exception& e) {
+                    std::cout << e.what() << std::endl;
                 }
-                else {
-                    // Event index is > the current event index. Skip this file for now.
-                    continue;
-                }
-            }
-            catch (std::exception& e) {
-                std::cout << e.what() << std::endl;
             }
         }
         

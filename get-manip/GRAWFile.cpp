@@ -248,6 +248,7 @@ const uint64_t GRAWFile::NextFrameEvtId()
     
     if (filestream.eof()) {
         filestream.seekg(storedPos);
+        isEOF = true;
         throw Exceptions::End_of_File();
     }
     
