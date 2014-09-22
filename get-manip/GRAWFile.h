@@ -111,6 +111,8 @@ private:
     
     template<typename T>
     static void AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes);
+    
+    friend class Merger;
 };
 
 #endif /* defined(__get_manip__GRAWFile__) */

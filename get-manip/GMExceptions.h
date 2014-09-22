@@ -213,6 +213,23 @@ namespace Exceptions {
         virtual const char* what() const noexcept {return msg.c_str();};
     };
     
+    //! \brief The file was already read.
+    class File_Already_Read : public std::exception
+    {
+    private:
+        std::string msg {"This file has already been read: "};
+        
+    public:
+        //! \param filename_in The name of the directory.
+        File_Already_Read(const char* filename_in) {msg.append(filename_in);};
+        
+        //! \overload
+        File_Already_Read(const std::string& filename_in) {msg.append(filename_in);};
+        
+        //! \return The string "This file has already been read: [filename]"
+        virtual const char* what() const noexcept {return msg.c_str();};
+    };
+    
     /** \brief Attempted to operate on an empty container.
      
      Thrown when a mathematical function is called on an empty container class, such as a Trace.

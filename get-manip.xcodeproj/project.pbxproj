@@ -67,6 +67,7 @@
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
+		03F4B82819CC8690002CA2FE /* Merger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03F4B82619CC8690002CA2FE /* Merger.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -176,6 +177,8 @@
 		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Trace.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03DDF3B21919621A00306788 /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
 		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PadLookupTable.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		03F4B82619CC8690002CA2FE /* Merger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Merger.cpp; sourceTree = "<group>"; };
+		03F4B82719CC8690002CA2FE /* Merger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Merger.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +367,7 @@
 				03DDF3A61918026900306788 /* GRAWDataItem.h */,
 				03DDF3AD19195A5E00306788 /* Event.h */,
 				03DDF3B019195B6100306788 /* Trace.h */,
+				03F4B82719CC8690002CA2FE /* Merger.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -380,6 +384,7 @@
 				03DDF3A51918026900306788 /* GRAWDataItem.cpp */,
 				03DDF3AC19195A5E00306788 /* Event.cpp */,
 				03DDF3AF19195B6100306788 /* Trace.cpp */,
+				03F4B82619CC8690002CA2FE /* Merger.cpp */,
 				03DDF3991917FD1000306788 /* main.cpp */,
 			);
 			name = Source;
@@ -603,6 +608,7 @@
 				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
 				03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */,
 				0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */,
+				03F4B82819CC8690002CA2FE /* Merger.cpp in Sources */,
 				037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,
 				03DDF3B119195B6100306788 /* Trace.cpp in Sources */,
@@ -790,6 +796,7 @@
 				038A773B1937A9E8006A2AAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		03C2019219267C2900264702 /* Build configuration list for PBXNativeTarget "get-manip-tests" */ = {
 			isa = XCConfigurationList;
