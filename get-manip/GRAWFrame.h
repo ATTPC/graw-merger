@@ -24,7 +24,7 @@ class GRAWFrame
 {
 public:
     GRAWFrame();
-    GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad);
+    GRAWFrame(const std::vector<uint8_t>& rawFrame);
     
     // Getters
     

@@ -22,6 +22,7 @@
 #include <vector>
 #include <algorithm>
 #include "UserInterface.h"
+#include "Merger.h"
 
 std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
@@ -73,36 +74,18 @@ void MergeFiles(boost::filesystem::path input_path,
         throw Exceptions::Dir_is_Empty(input_path.string());
     }
     
-    std::vector<GRAWFile> dataFiles;
+    Merger mg;
     
-    // Open all of the files
+    // Add the files to the merger
     
-    for (auto filename : filePaths) {
-        try {
-            dataFiles.push_back(GRAWFile{filename, std::ios::in});
-        }
-        catch (std::exception& e) {
-            std::cout << e.what() << std::endl;
-        }
+    std::cout << "Mapping frames in files..." << std::endl;
+    
+    for (const auto& path : filePaths) {
+        int numFound = mg.AddFramesFromFileToIndex(path);
+        std::cout << "    Found " << numFound << " frames in file " << path.filename().string() << std::endl;
     }
     
-    // Find the index of the first event
-    
-    std::vector<uint64_t> evtIds;
-    for (auto& file : dataFiles) {
-        try {
-            evtIds.push_back(file.NextFrameEvtId());
-        }
-        catch (Exceptions::End_of_File e) {
-            continue;
-        }
-    }
-    auto firstEvtId = std::min_element(evtIds.begin(), evtIds.end());
-    
-    // Open the output file
-    
-    EventFile output;
-//    GRAWFile output;
+    std::cout << "Finished mapping files." << std::endl;
     
     std::string output_path_string = output_path.string();
     
@@ -115,102 +98,9 @@ void MergeFiles(boost::filesystem::path input_path,
         }
     }
     
-    output.OpenFileForWrite(output_path_string);
-
-    
-    // Main loop
-    
-    UI::ProgressBar prog {};
-    
-    long unsigned total_size = 0;
-    long unsigned total_pos = 0;
-    
-    for (auto item : filePaths) {
-        total_size += boost::filesystem::file_size(item);
-    }
-    
-    for (uint64_t currentEvtId = *firstEvtId; !dataFiles.empty(); currentEvtId++) {
-        
-        std::queue<GRAWFrame> frames;
-        
-        // Read in a frame from each file
-        
-        for (auto &file : dataFiles) {
-            bool keepLooking = true;
-            while (keepLooking) {
-                try {
-                    auto fileEvtId = file.NextFrameEvtId();
-                    if (fileEvtId == currentEvtId) {
-                        // This frame matches the current event, so read it
-                        std::vector<uint8_t> raw_frame = file.ReadRawFrame();
-                        total_pos += raw_frame.size();
-                        frames.push(GRAWFrame {raw_frame, file.GetFileCobo(), file.GetFileAsad()});
-                        keepLooking = false;
-                    }
-                    else if (fileEvtId < currentEvtId) {
-                        // This could happen if a frame is duplicated...
-                        // Read the frame, but then don't do anything with it.
-                        std::vector<uint8_t> junk_frame = file.ReadRawFrame();
-                        total_pos += junk_frame.size();
-                        keepLooking = true;
-                        std::cout << "Frame out of order: CoBo " << int(file.GetFileCobo())
-                            << " AsAd " << int(file.GetFileAsad()) << std::endl;
-                    }
-                    else {
-                        // Event index is > the current event index. Skip this file for now.
-                        keepLooking = false;
-                    }
-                }
-                catch (std::exception& e) {
-                    std::cout << e.what() << std::endl;
-                }
-            }
-        }
-        
-        // Go through the files and get rid of eofs
-        
-        dataFiles.erase(std::remove_if(dataFiles.begin(), dataFiles.end(),
-                                       [] (const GRAWFile & x) {return x.eof();}),
-                        dataFiles.end());
-        
-        // Create an event from this set of frames, if there are any.
-        
-        if (frames.empty()) {
-            // We found no frames for this event... Odd.
-            std::cerr << "No frames found for event ID " << currentEvtId << std::endl;
-            continue;
-        }
-        
-        Event event;
-        event.SetLookupTable(&lookupTable);
-        
-        while (!frames.empty()) {
-            event.AppendFrame(frames.front());
-            frames.pop();
-        }
-        
-        event.SubtractFPN();
-        
-        // Write the event to the output file.
-        
-        output.WriteEvent(event);
-        
-//        auto procFrames = testEvent.ExtractAllFrames();
-//        
-//        for (auto fr : procFrames) {
-//            output.WriteFrame(fr);
-//        }
-        
-        // Find progress
-        
-        prog.SetPercent(static_cast<int>(100*total_pos / total_size));
-        prog.Write();
-    }
+    mg.MergeByEvtId(output_path_string, &lookupTable);
     
     std::cout << '\n' << "Finished merging files." << std::endl;
-    
-    output.CloseFile();
-
 }
 
 void ListEventFileContents(boost::filesystem::path filepath)

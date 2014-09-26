@@ -31,7 +31,7 @@ GRAWFrame::GRAWFrame()
     multiplicity = {0,0,0,0};
 }
 
-GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCobo, const uint8_t fileAsad)
+GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame)
 {
     auto rawFrameIter = rawFrame.begin();
     
@@ -103,18 +103,8 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame, const uint8_t fileCob
     coboId = *rawFrameIter;
     rawFrameIter++;
     
-    if (coboId != fileCobo) {
-        // This is the usual case.
-        coboId = fileCobo;
-    }
-    
     asadId = *rawFrameIter;
     rawFrameIter++;
-    
-    if (asadId != fileAsad) {
-        std::cout << "    AsAd ID in file does not match AsAd ID in path. Using path value." << std::endl;
-        asadId = fileAsad;
-    }
     
     readOffset = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter+=2;

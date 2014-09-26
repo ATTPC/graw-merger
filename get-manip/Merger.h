@@ -11,10 +11,13 @@
 
 #include "GRAWFile.h"
 #include "GRAWFrame.h"
+#include "EventFile.h"
 #include "GMExceptions.h"
+#include "PadLookupTable.h"
 
-#include <unordered_map>
+#include <map>
 #include <vector>
+#include <queue>
 #include <boost/filesystem.hpp>
 #include <memory>
 #include <string>
@@ -24,8 +27,8 @@ class Merger
 {
 public:
     Merger();
-    int AddFramesFromFileToIndex(boost::filesystem::path fpath);
-    
+    int AddFramesFromFileToIndex(const boost::filesystem::path& fpath);
+    void MergeByEvtId(const std::string& outfilename, PadLookupTable* lt);
     
 private:
     struct FrameMetadata
@@ -36,12 +39,14 @@ private:
         uint64_t evtTime;
     };
     
-    typedef std::unordered_multimap<uint32_t, FrameMetadata> MergingMap;
+    typedef std::multimap<uint32_t, FrameMetadata> MergingMap;
     MergingMap mmap;
     
-    std::unordered_map<std::string, std::shared_ptr<GRAWFile>> files;
+    std::map<std::string, std::shared_ptr<GRAWFile>> files;
     
     FrameMetadata ParseRawFrame (const std::vector<uint8_t> raw);
+    
+    void ShowProgress(int currEvt, int numEvt);
 };
 
 #endif /* defined(__get_manip__Merger__) */
