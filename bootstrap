@@ -1,6 +1,12 @@
 #!/bin/bash
 
-glibtoolize
+if [ "$(uname)" == "Darwin" ]
+	then LTZ="glibtoolize"
+else
+	LTZ="libtoolize"
+fi
+
+$LTZ
 aclocal -I m4 \
 && autoconf \
 && automake --add-missing --foreign \
