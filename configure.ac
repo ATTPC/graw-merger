@@ -4,6 +4,7 @@
 AC_INIT(get-manip, 1.1, bradt@nscl.msu.edu)
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([get-manip/])
+AC_CONFIG_MACRO_DIR([M4])
 
 ACLOCAL_AMFLAGS = -I ./boost.m4
 
