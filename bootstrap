@@ -1,0 +1,5 @@
+#!/bin/bash
+
+aclocal -I . \
+&& autoconf \
+&& automake --add-missing --foreign \
