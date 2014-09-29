@@ -1,0 +1,9 @@
+Installation instructions
+=========================
+
+To install, run the following commands:
+
+$ ./bootstrap
+$ ./configure
+$ make
+$ sudo make install
