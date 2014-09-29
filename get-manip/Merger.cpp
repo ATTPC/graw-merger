@@ -26,7 +26,7 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     // Index the frames in the file
     while (!file->eof()) {
         try {
-            size_t currentPos = file->filestream.tellg();
+            std::streamoff currentPos = file->filestream.tellg();
             
             // Reading the frame will advance the file pointer
             GRAWFrame frame {file->ReadRawFrame()};  // inefficient?

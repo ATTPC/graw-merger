@@ -128,6 +128,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
 
     if (lookupTable == NULL) {
         LOG_ERROR << "No lookup table provided to Event." << std::endl;
+        throw Exceptions::Not_Init();
     }
     
     // Get header information from frame
@@ -142,16 +143,16 @@ void Event::AppendFrame(const GRAWFrame& frame)
         LOG_WARNING << "Event ID mismatch: CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
     
-    long delta = static_cast<int64_t> (this->eventTime - frame.eventTime);
+//    long delta = static_cast<int64_t> (this->eventTime - frame.eventTime);
     
     if (nFramesAppended == 0) {
         this->eventTime = frame.eventTime;
     }
-    else if (labs(delta) > 10000) {
+//    else if (labs(delta) > 10000) {
         // labs = long abs
         
 //        LOG_WARNING << "Large event time mismatch. Event " << eventId << ", CoBo " << (int) cobo << ", AsAd, " << (int) asad << ". Delta " << long(this->eventTime) - long(frame.eventTime) <<  std::endl;
-    }
+//    }
     
     nFramesAppended++;
     

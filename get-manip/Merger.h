@@ -58,7 +58,7 @@ private:
     struct FrameMetadata
     {
         std::shared_ptr<GRAWFile> filePtr; // Pointer to the file that contains this frame
-        size_t filePos;                    // Position of the frame in the file
+        std::streamoff filePos;                    // Position of the frame in the file
         uint32_t evtId;
         uint64_t evtTime;
     };
