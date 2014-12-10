@@ -77,7 +77,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/20140707171348data&quot;"
+            argument = "&quot;/Users/josh/Documents/Data/TestSymlink&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

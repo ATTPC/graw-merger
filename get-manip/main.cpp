@@ -42,9 +42,12 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
         if (is_directory(dirIter->path())) {
             std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
         }
-        else if (is_regular_file(dirIter->path()) && dirIter->path().extension() == ".graw") {
-            std::cout << "    Found file: " << dirIter->path().filename().string() << std::endl;
-            filesFound.push_back(dirIter->path());
+        else if ((boost::filesystem::is_regular_file(dirIter->path()) ||
+                  boost::filesystem::is_symlink(dirIter->path()))
+                 && dirIter->path().extension() == ".graw") {
+            auto resolved_path = boost::filesystem::canonical(dirIter->path());
+            std::cout << "    Found file: " << resolved_path.filename().string() << std::endl;
+            filesFound.push_back(resolved_path);
         }
     }
     
