@@ -57,7 +57,7 @@ PadLookupTable::PadLookupTable(const std::string& path)
     while (!file.eof()) {
         int cobo, asad, aget, channel;
         int padNumber;
-        getline(file,line,'\r'); // PROBLEM: Igor outputs \r
+        getline(file,line,'\n');
         std::stringstream lineStream(line);
         std::string element;
         
