@@ -106,39 +106,6 @@ void MergeFiles(boost::filesystem::path input_path,
     std::cout << '\n' << "Finished merging files." << std::endl;
 }
 
-void ListEventFileContents(boost::filesystem::path filepath)
-{
-    namespace fs = boost::filesystem;
-    // Test the path
-    if (!fs::is_regular_file(filepath)) throw Exceptions::Bad_File(filepath.string());
-    
-    EventFile efile {};
-    efile.OpenFileForRead(filepath.string());
-    
-    std::cout << std::setw(4) << "ID" << std::setw(13) << "Time" << std::endl;
-    std::cout << "-----------------" << std::endl;
-    
-    while (!efile.eof()) {
-        try {
-            Event thisEvent = efile.GetNextEvent();
-            
-            auto id = thisEvent.GetEventId();
-            auto time = thisEvent.GetEventTime();
-        
-            std::cout << std::setw(4) << id << std::setw(13) << time << std::endl;
-            
-        }
-        catch (Exceptions::End_of_File& eof) {
-            break;
-        }
-        catch (std::exception& e) {
-            std::cout << e.what() << std::endl;
-        }
-    }
-    
-    efile.CloseFile();
-}
-
 int main(int argc, const char * argv[])
 {
     namespace po = boost::program_options;
@@ -151,19 +118,12 @@ int main(int argc, const char * argv[])
         "Verbs include: merge, ls\n"
         "See documentation for more information.";
     
-    std::string merge_usage = "Verb 'merge' usage:\n"
-        "get-manip --merge [options] input_directory output_file\n"
-        "The input directory must have the correct structure.";
-    
     po::options_description opts_desc ("Allowed options.");
 
     po::variables_map vm;
     
     opts_desc.add_options()
-        ("help", "Output a help message")
-        ("merge,m", "Merge input files")
-        ("frames,f", "Write output as frames")
-        ("ls,l", "List event file contents")
+        ("help,h", "Output a help message")
         ("lookup,l", po::value<fs::path>(), "Lookup table")
         ("input,i", po::value<fs::path>(), "Input directory")
         ("output,o", po::value<fs::path>(), "Output file")
@@ -184,27 +144,18 @@ int main(int argc, const char * argv[])
         return 0;
     }
     
-    if (vm.count("merge")) {
-        if (vm.count("lookup") and vm.count("input") and vm.count("output")) {
-            auto rootDir = vm["input"].as<fs::path>();
-            auto lookupTablePath = vm["lookup"].as<fs::path>();
-            auto outputFilePath = vm["output"].as<fs::path>();
-            
-            try {
-                MergeFiles(rootDir, outputFilePath, lookupTablePath);
-            }
-            catch (std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
-                return 1;
-            }
+    if (vm.count("lookup") and vm.count("input") and vm.count("output")) {
+        auto rootDir = vm["input"].as<fs::path>();
+        auto lookupTablePath = vm["lookup"].as<fs::path>();
+        auto outputFilePath = vm["output"].as<fs::path>();
+        
+        try {
+            MergeFiles(rootDir, outputFilePath, lookupTablePath);
         }
-    }
-    else if (vm.count("ls")) {
-        auto filePath = vm["input"].as<fs::path>();
-        ListEventFileContents(filePath);
-    }
-    else {
-        std::cout << usage << std::endl;
+        catch (std::exception& e) {
+            std::cout << "Error: " << e.what() << std::endl;
+            return 1;
+        }
     }
     
     
