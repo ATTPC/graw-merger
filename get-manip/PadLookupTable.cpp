@@ -74,7 +74,7 @@ PadLookupTable::PadLookupTable(const std::string& path)
         getline(lineStream, element,',');
         channel = stoi(element);
         
-        uint32_t hash = CalculateHash(cobo, asad, aget, channel);
+        auto hash = CalculateHash(cobo, asad, aget, channel);
         
         getline(lineStream, element);
         padNumber = stoi(element);
