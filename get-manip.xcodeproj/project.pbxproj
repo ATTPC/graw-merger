@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
 		0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
+		034043B41A49E00A00339656 /* PadLookupTableTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 034043B31A49E00A00339656 /* PadLookupTableTests.cpp */; };
 		03514B5B192D16B60077C431 /* EventTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03514B59192D16B60077C431 /* EventTests.cpp */; };
 		03517E0D192307A700F2C732 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0A192307A700F2C732 /* libboost_filesystem.a */; };
 		03517E0F192307A700F2C732 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0B192307A700F2C732 /* libboost_program_options.a */; };
@@ -61,7 +62,6 @@
 		03C201B3192694E000264702 /* MockData in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C201B11926942F00264702 /* MockData */; };
 		03C201B51926A6E700264702 /* libgmock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C201B41926A6E700264702 /* libgmock.a */; };
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
-		03DDF39C1917FD1000306788 /* GETConsolidate.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 03DDF39B1917FD1000306788 /* GETConsolidate.1 */; };
 		03DDF3A41917FD9100306788 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
 		03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
@@ -87,7 +87,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				03DDF39C1917FD1000306788 /* GETConsolidate.1 in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
@@ -98,6 +97,8 @@
 		0302EAF61932C1F6007F898D /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserInterface.cpp; sourceTree = "<group>"; };
 		0302EAF71932C1F6007F898D /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = UserInterface.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03250BC5192FED5F00FBA1FB /* datafile.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = datafile.rst; sourceTree = "<group>"; };
+		034043B31A49E00A00339656 /* PadLookupTableTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTableTests.cpp; sourceTree = "<group>"; };
+		034043B51A49E0A100339656 /* MockLookup.csv */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 1; name = MockLookup.csv; path = "get-manip-tests/MockData/MockLookup.csv"; sourceTree = "<group>"; };
 		03514A06192CEEAB0077C431 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = Doxyfile; sourceTree = "<group>"; };
 		03514B1E192CEEAB0077C431 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		03514B22192CEEAB0077C431 /* layout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = layout.html; sourceTree = "<group>"; };
@@ -158,7 +159,6 @@
 		03AB40C0191D546C0021ABD4 /* GMExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GMExceptions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03C2018C19267C2900264702 /* get-manip-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-manip-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2018E19267C2900264702 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		03C2019019267C2900264702 /* GetConsolidateTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GetConsolidateTests.1; sourceTree = "<group>"; };
 		03C2019F19267D8A00264702 /* TraceTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TraceTests.cpp; sourceTree = "<group>"; };
 		03C201A41926835C00264702 /* GRAWFrameTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFrameTests.cpp; sourceTree = "<group>"; };
 		03C201B019268E7E00264702 /* MockGRAWFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGRAWFile.h; sourceTree = "<group>"; };
@@ -166,7 +166,6 @@
 		03C201B41926A6E700264702 /* libgmock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgmock.a; path = /usr/local/lib/libgmock.a; sourceTree = "<absolute>"; };
 		03DDF3961917FD1000306788 /* get-manip */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-manip"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DDF3991917FD1000306788 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		03DDF39B1917FD1000306788 /* GETConsolidate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GETConsolidate.1; sourceTree = "<group>"; };
 		03DDF3A21917FD9100306788 /* GRAWFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWFrame.cpp; sourceTree = "<group>"; };
 		03DDF3A31917FD9100306788 /* GRAWFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GRAWFrame.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03DDF3A51918026900306788 /* GRAWDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRAWDataItem.cpp; sourceTree = "<group>"; };
@@ -399,9 +398,9 @@
 				038AB1031927F08B009C1C38 /* FakeRawFrame.cpp */,
 				03C201A41926835C00264702 /* GRAWFrameTests.cpp */,
 				03C2019F19267D8A00264702 /* TraceTests.cpp */,
+				034043B31A49E00A00339656 /* PadLookupTableTests.cpp */,
 				03514B59192D16B60077C431 /* EventTests.cpp */,
 				03C2018E19267C2900264702 /* main.cpp */,
-				03C2019019267C2900264702 /* GetConsolidateTests.1 */,
 				03C201B41926A6E700264702 /* libgmock.a */,
 			);
 			name = "Unit Tests";
@@ -411,6 +410,7 @@
 		03DDF38D1917FD0F00306788 = {
 			isa = PBXGroup;
 			children = (
+				034043B51A49E0A100339656 /* MockLookup.csv */,
 				03DDF3981917FD1000306788 /* get-manip */,
 				035149B2192CEEAB0077C431 /* docs */,
 				03C2018D19267C2900264702 /* Unit Tests */,
@@ -434,7 +434,6 @@
 			children = (
 				03AB40BD191D45A90021ABD4 /* Headers */,
 				03AB40BE191D45C10021ABD4 /* Source */,
-				03DDF39B1917FD1000306788 /* GETConsolidate.1 */,
 			);
 			path = "get-manip";
 			sourceTree = SOURCE_ROOT;
@@ -580,6 +579,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034043B41A49E00A00339656 /* PadLookupTableTests.cpp in Sources */,
 				03C201A81926896700264702 /* GRAWFile.cpp in Sources */,
 				03C201AA1926896700264702 /* GRAWDataItem.cpp in Sources */,
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
