@@ -144,9 +144,16 @@ int main(int argc, const char * argv[])
             outputFilePath = vm["output"].as<fs::path>();
         }
         else {
-            std::string parentDirString = rootDir.parent_path().string() + "/";
-            std::string dirName = rootDir.filename().string();
-            outputFilePath = fs::path {parentDirString + dirName + ".evt"};
+            if (rootDir.string().back() == '/') {
+                std::string outputFilePathString = rootDir.string();
+                outputFilePathString.pop_back();
+                outputFilePathString.append(".evt");
+                outputFilePath = fs::path {outputFilePathString};
+            }
+            else {
+                std::string outputFilePathString = rootDir.string() + ".evt";
+                outputFilePath = fs::path {outputFilePathString};
+            }
         }
         
         try {

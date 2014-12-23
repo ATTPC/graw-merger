@@ -73,7 +73,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/josh/Documents/Data/alphas/run_0225&quot;"
+            argument = "&quot;/Users/josh/Documents/Data/alphas/run_0225/&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
