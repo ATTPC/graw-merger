@@ -27,19 +27,22 @@ uint32_t PadLookupTable::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget,
 uint16_t PadLookupTable::FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
 {
     if (!table.empty()) {
-        uint16_t hash = CalculateHash(cobo, asad, aget, channel);
+        auto hash = CalculateHash(cobo, asad, aget, channel);
         auto foundItem = table.find(hash);
         if (foundItem != table.end()) {
             return foundItem->second;
         }
         else {
-            return 20000; // an invalid value
+            return missingPad; // an invalid value
         }
     }
     else {
         throw Exceptions::Not_Init();
     }
 }
+
+PadLookupTable::PadLookupTable()
+{}
 
 PadLookupTable::PadLookupTable(const std::string& path)
 {

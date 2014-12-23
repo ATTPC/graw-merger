@@ -31,10 +31,16 @@ public:
      \endrst
      */
     PadLookupTable(const std::string& path);
+    
+    //! \brief A default constructor (for testing only)
+    PadLookupTable();
 
     //! \brief Looks up a pad number in the table using the information passed to the function.
     uint16_t FindPadNumber(uint8_t cobo, uint8_t asad, uint8_t aget,
                            uint8_t channel);
+    
+    //! \brief The value returned when a pad is missing from the lookup table.
+    static const int missingPad = 20000;
     
 private:
     /** \brief Hashing function for the hashtable used to store the pad numbers. 
