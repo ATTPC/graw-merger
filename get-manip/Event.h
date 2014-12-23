@@ -156,7 +156,7 @@ private:
     // Lookup table pointer and hash functions
     
     PadLookupTable *lookupTable;
-    int CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
+    uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
     int nFramesAppended;  // The number of frames appended to this event
     
@@ -169,7 +169,7 @@ private:
     
     // Traces for each pad
     
-    std::unordered_map<int,Trace> traces;
+    std::unordered_map<uint32_t,Trace> traces;
     
     friend class EventFile;
     friend class EventTestFixture;

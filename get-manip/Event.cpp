@@ -362,7 +362,15 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
 // Private Functions
 // --------
 
-int Event::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
+uint32_t Event::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
 {
-    return channel + aget*100 + asad*10000 + cobo*1000000;
+    // Widen the integers so they don't overflow on multiplication
+    auto wcobo = uint32_t(cobo);
+    auto wasad = uint32_t(asad);
+    auto waget = uint32_t(aget);
+    auto wchannel = uint32_t(channel);
+    
+    auto result = wchannel + waget*100 + wasad*10000 + wcobo*1000000;
+    
+    return result;
 }
