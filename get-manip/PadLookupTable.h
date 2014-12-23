@@ -41,10 +41,13 @@ private:
      
      It simply concatenates cobo+asad+aget+channel since this is unique for each pad.
      */
-    uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget,
+    static uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget,
                            uint8_t channel);
     
     std::unordered_map<uint32_t,uint16_t> table;  // The hashtable, maps hash:pad#
+    
+    friend class PadLookupTableTestFixture;
+
 };
 
 #endif /* defined(__get_manip__PadLookupTable__) */
