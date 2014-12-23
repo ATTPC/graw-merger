@@ -92,15 +92,6 @@ void MergeFiles(boost::filesystem::path input_path,
     
     std::string output_path_string = output_path.string();
     
-    if (is_directory(output_path)) {
-        if (output_path_string.back() == '/') {
-            output_path_string = output_path_string.append("output.bin");
-        }
-        else {
-            output_path_string = output_path_string.append("/output.bin");
-        }
-    }
-    
     mg.MergeByEvtId(output_path_string, &lookupTable);
     
     std::cout << '\n' << "Finished merging files." << std::endl;
@@ -114,9 +105,9 @@ int main(int argc, const char * argv[])
     // Usage:
     
     std::string usage = "Usage:\n"
-        "get-manip [verb] [inputs] [outputs] \n"
-        "Verbs include: merge, ls\n"
-        "See documentation for more information.";
+        "get-manip -l /path/to/lookup/table.csv /path/to/inputs/ [output_file] \n"
+        "If output file is not specified, default is based on input path.\n"
+        "Ex: /data/run_0001/ as input produces /data/run_0001.evt as output.\n";
     
     po::options_description opts_desc ("Allowed options.");
 
