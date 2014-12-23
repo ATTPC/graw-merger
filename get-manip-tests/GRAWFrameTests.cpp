@@ -98,7 +98,7 @@ void GRAWFrameTestFixture::TestConstructor(FakeRawFrame& fr, uint8_t cobo, uint8
 {
     auto fakeData = fr.GenerateRawFrameVector();
     
-    GRAWFrame frame {fakeData, cobo, asad};
+    GRAWFrame frame {fakeData};
     EXPECT_EQ(fr.metatype,GetMetaType(frame));
     EXPECT_EQ(fr.frameSize,GRAWFrameSize(frame));
     EXPECT_EQ(fr.headerSize,GetHeaderSize(frame));
@@ -121,7 +121,7 @@ TEST_F(GRAWFrameTestFixture, Constructor_BadCobo)
 {
     FakeRawFrame fakeData {1234567890, 12, 0, 2};
     
-    GRAWFrame frame {fakeData.GenerateRawFrameVector(), 3, 2};
+    GRAWFrame frame {fakeData.GenerateRawFrameVector()};
     ASSERT_EQ(GetCoboId(frame), 3);
 }
 
@@ -129,7 +129,7 @@ TEST_F(GRAWFrameTestFixture, Constructor_BadAsad)
 {
     FakeRawFrame fakeData {1234567890, 12, 3, 0};
     
-    GRAWFrame frame {fakeData.GenerateRawFrameVector(), 3, 2};
+    GRAWFrame frame {fakeData.GenerateRawFrameVector()};
     ASSERT_EQ(GetAsadId(frame), 2);
 }
 

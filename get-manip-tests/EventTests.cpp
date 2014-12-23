@@ -19,7 +19,7 @@ public:
     EventTestFixture()
     {
         FakeRawFrame fake_raw {1234567890, 12, 2, 3};
-        fr = GRAWFrame {fake_raw.GenerateRawFrameVector(), 2, 3};
+        fr = GRAWFrame {fake_raw.GenerateRawFrameVector()};
     }
     
     GRAWFrame fr;
