@@ -144,10 +144,19 @@ int main(int argc, const char * argv[])
         return 0;
     }
     
-    if (vm.count("lookup") and vm.count("input") and vm.count("output")) {
+    if (vm.count("lookup") and vm.count("input")) {
         auto rootDir = vm["input"].as<fs::path>();
         auto lookupTablePath = vm["lookup"].as<fs::path>();
-        auto outputFilePath = vm["output"].as<fs::path>();
+        fs::path outputFilePath {};
+        
+        if (vm.count("output")) {
+            outputFilePath = vm["output"].as<fs::path>();
+        }
+        else {
+            std::string parentDirString = rootDir.parent_path().string() + "/";
+            std::string dirName = rootDir.filename().string();
+            outputFilePath = fs::path {parentDirString + dirName + ".evt"};
+        }
         
         try {
             MergeFiles(rootDir, outputFilePath, lookupTablePath);
@@ -157,7 +166,10 @@ int main(int argc, const char * argv[])
             return 1;
         }
     }
-    
+    else {
+        std::cout << usage << std::endl;
+        return 1;
+    }
     
     return 0;
 }
