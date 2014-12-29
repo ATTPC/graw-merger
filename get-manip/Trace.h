@@ -26,7 +26,7 @@ public:
     // Constructors, copy, and move
     
     Trace();
-    Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad);
+    Trace(addr_t cobo, addr_t asad, addr_t aget, addr_t ch, pad_t pad);
     Trace(const std::vector<uint8_t>& raw);
     Trace(const Trace& orig);
     Trace(Trace&& orig);
@@ -36,8 +36,8 @@ public:
     
     // Adding and getting data items
     
-    void AppendSample(int tBucket, int sample);
-    int16_t GetSample(int tBucket) const;
+    void AppendSample(tb_t tBucket, sample_t sample);
+    sample_t GetSample(tb_t tBucket) const;
     
     // Functions to get info about the size of the trace
     
@@ -69,17 +69,17 @@ private:
     
     // Contained data
     
-    uint8_t coboId;
-    uint8_t asadId;
-    uint8_t agetId; 
-    uint8_t channel;
-    uint16_t padId;
-    std::unordered_map<uint16_t,int16_t> data;   // maps timebucket:sample
+    addr_t coboId;
+    addr_t asadId;
+    addr_t agetId;
+    addr_t channel;
+    pad_t padId;
+    std::unordered_map<tb_t,sample_t> data;   // maps timebucket:sample
     
     // Private functions to compress data on file write
     
-    static uint32_t CompactSample(uint16_t tb, int16_t val);
-    static std::pair<uint16_t,int16_t> UnpackSample(const uint32_t packed);
+    static uint32_t CompactSample(tb_t tb, sample_t val);
+    static std::pair<tb_t,sample_t> UnpackSample(const uint32_t packed);
     
     // Friends
     

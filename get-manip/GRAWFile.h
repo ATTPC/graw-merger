@@ -21,6 +21,7 @@
 #include "Utilities.h"
 #include "DataFile.h"
 #include "GRAWFrame.h"
+#include "Constants.h"
 
 /** \brief Interface to a .GRAW file.
  
@@ -95,19 +96,19 @@ public:
     void WriteFrame(const GRAWFrame& frame);
     
     //! \brief Returns the CoBo number from the file path
-    virtual uint8_t GetFileCobo() const;
+    virtual addr_t GetFileCobo() const;
     
     //! \brief Returns the AsAd number from the filename
-    virtual uint8_t GetFileAsad() const;
+    virtual addr_t GetFileAsad() const;
     
     //! \brief Returns the event number of the next frame in the file.
     //! \throws Exceptions::End_of_File if there is not another frame.
-    virtual const uint64_t NextFrameEvtId();
+    virtual const evtid_t NextFrameEvtId();
     
 private:
     
-    uint8_t coboId;                      // CoBo ID from the file name
-    uint8_t asadId;                      // AsAd ID from the file name
+    addr_t coboId;                      // CoBo ID from the file name
+    addr_t asadId;                      // AsAd ID from the file name
     
     template<typename T>
     static void AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes);

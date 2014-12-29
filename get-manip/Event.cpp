@@ -112,12 +112,12 @@ void Event::SetLookupTable(PadLookupTable * table)
     lookupTable = table;
 }
 
-void Event::SetEventId(const uint32_t eventId_in)
+void Event::SetEventId(const evtid_t eventId_in)
 {
     eventId = eventId_in;
 }
 
-void Event::SetEventTime(const uint64_t eventTime_in)
+void Event::SetEventTime(const ts_t eventTime_in)
 {
     eventTime = eventTime_in;
 }
@@ -133,8 +133,8 @@ void Event::AppendFrame(const GRAWFrame& frame)
     
     // Get header information from frame
     
-    uint8_t cobo = frame.coboId;
-    uint8_t asad = frame.asadId;
+    addr_t cobo = frame.coboId;
+    addr_t asad = frame.asadId;
     
     if (nFramesAppended == 0) {
         this->eventId = frame.eventId;
@@ -165,7 +165,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
         auto tbid = dataItem.GetTimeBucketId();
         auto sample = dataItem.GetSample();
         
-        int hash = CalculateHash(cobo, asad, aget, channel);
+        auto hash = CalculateHash(cobo, asad, aget, channel);
         auto pad = lookupTable->Find(cobo, asad, aget, channel);
         
         // Find trace in hash table, if it exists
@@ -187,8 +187,8 @@ std::vector<GRAWFrame> Event::ExtractAllFrames()
 {
     std::vector<GRAWFrame> frames;
     
-    for (uint8_t cobo = 0; cobo < 10; cobo++) {
-        for (uint8_t asad = 0; asad < 4; asad++) {
+    for (addr_t cobo = 0; cobo < Constants::num_cobos; cobo++) {
+        for (addr_t asad = 0; asad < Constants::num_asads; asad++) {
 
             GRAWFrame fr {};
             fr.coboId = cobo;
@@ -196,8 +196,8 @@ std::vector<GRAWFrame> Event::ExtractAllFrames()
             fr.eventTime = eventTime;
             fr.eventId = eventId;
             
-            for (uint8_t aget = 0; aget < 4; aget++) {
-                for (uint8_t ch = 0; ch < 68; ch++) {
+            for (addr_t aget = 0; aget < Constants::num_agets; aget++) {
+                for (addr_t ch = 0; ch < Constants::num_channels; ch++) {
                     auto tr = traces.find(CalculateHash(cobo, asad, aget, ch));
                     if (tr == traces.end()) continue;
                     
@@ -241,18 +241,18 @@ uint32_t Event::Size() const
     return size;
 }
 
-Trace& Event::GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
+Trace& Event::GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
 {
     auto index = CalculateHash(cobo, asad, aget, channel);
     return traces.at(index);  // could throw out_of_range
 }
 
-uint32_t Event::GetEventId() const
+evtid_t Event::GetEventId() const
 {
     return eventId;
 }
 
-uint64_t Event::GetEventTime() const
+ts_t Event::GetEventTime() const
 {
     return eventTime;
 }
@@ -265,20 +265,20 @@ void Event::SubtractFPN()
 {
     std::vector<uint8_t> fpn_channels {11,22,45,56};  // from AGET Docs
     
-    for (int cobo = 0; cobo < 10; cobo++) {
-        for (int asad = 0; asad < 4; asad++) {
-            for (int aget = 0; aget < 4; aget++) {
+    for (addr_t cobo = 0; cobo < Constants::num_cobos; cobo++) {
+        for (addr_t asad = 0; asad < Constants::num_asads; asad++) {
+            for (addr_t aget = 0; aget < Constants::num_agets; aget++) {
                 
                 // Get the FPN channels and find the mean.
                 // Each FPN channel may be missing different time buckets, so
                 // count the denom of the mean separately for each TB.
                 
                 Trace mean_fpn {};
-                for (int i = 0; i < 512; i++) {
-                    mean_fpn.AppendSample(i, 0);
+                for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+                    mean_fpn.AppendSample(tb, 0);
                 }
                 
-                std::vector<int> tb_multip (512,0);
+                std::vector<int> tb_multip (Constants::num_tbs,0);
                 int num_fpns = 0;
                 
                 for (auto ch : fpn_channels) {
@@ -315,7 +315,7 @@ void Event::SubtractFPN()
 //                auto begin = traces.lower_bound(CalculateHash(cobo, asad, aget, 0));
 //                auto end = traces.upper_bound(CalculateHash(cobo, asad, aget, 68));
                 
-                for (auto ch = 0; ch < 68; ch++) {
+                for (addr_t ch = 0; ch < Constants::num_channels; ch++) {
                     auto tr = traces.find(CalculateHash(cobo, asad, aget, ch));
                     if (tr != traces.end()) {
                         tr->second -= mean_fpn;
@@ -401,15 +401,15 @@ std::ostream& operator<<(std::ostream& stream, const Event& event)
 // Private Functions
 // --------
 
-uint32_t Event::CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel)
+hash_t Event::CalculateHash(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
 {
     // Widen the integers so they don't overflow on multiplication
-    auto wcobo = uint32_t(cobo);
-    auto wasad = uint32_t(asad);
-    auto waget = uint32_t(aget);
-    auto wchannel = uint32_t(channel);
+    auto wcobo = hash_t(cobo);
+    auto wasad = hash_t(asad);
+    auto waget = hash_t(aget);
+    auto wchannel = hash_t(channel);
     
-    auto result = wchannel + waget*100 + wasad*10000 + wcobo*1000000;
+    hash_t result = wchannel + waget*100 + wasad*10000 + wcobo*1000000;
     
     return result;
 }

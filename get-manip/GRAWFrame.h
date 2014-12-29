@@ -19,6 +19,7 @@
 #include "GRAWDataItem.h"
 #include "Utilities.h"
 #include "UserInterface.h"
+#include "Constants.h"
 
 class GRAWFrame
 {
@@ -28,8 +29,8 @@ public:
     
     // Getters
     
-    const uint32_t GetEventId() const;
-    const uint64_t GetEventTime() const;
+    const evtid_t GetEventId() const;
+    const ts_t GetEventTime() const;
     
     // Data extraction functions
     
@@ -38,12 +39,12 @@ public:
     void ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& begin,
                                 std::vector<uint8_t>::const_iterator& end);
     
-    static uint8_t ExtractAgetId(const uint32_t raw);
-    static uint8_t ExtractChannel(const uint32_t raw);
-    static uint16_t ExtractTBid(const uint32_t raw);
-    static int16_t ExtractSample(const uint32_t raw);
-    static uint8_t ExtractAgetIdFullReadout(const uint16_t raw);
-    static int16_t ExtractSampleFullReadout(const uint16_t raw);
+    static addr_t ExtractAgetId(const uint32_t raw);
+    static addr_t ExtractChannel(const uint32_t raw);
+    static tb_t ExtractTBid(const uint32_t raw);
+    static sample_t ExtractSample(const uint32_t raw);
+    static addr_t ExtractAgetIdFullReadout(const uint16_t raw);
+    static sample_t ExtractSampleFullReadout(const uint16_t raw);
     
     static const uint8_t  Expected_metaType;
     static const uint16_t Expected_headerSize;

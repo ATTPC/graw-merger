@@ -60,7 +60,7 @@ void EventFile::WriteEvent(const Event& event)
         throw Exceptions::Not_Init();
     }
     
-    unsigned long long currentPos = filestream.tellg();
+    std::streamoff currentPos = filestream.tellg();
     offsetTable.emplace(event.eventId, currentPos);
     
     filestream << event;
@@ -79,9 +79,10 @@ void EventFile::RebuildIndex()
     filestream.seekg(sizeof(EventFile::magic));  // go to end of file magic number
     
     while (!filestream.eof()) {
-        unsigned long long currentPos = filestream.tellg();
+        std::streamoff currentPos = filestream.tellg();
         uint8_t magic_in;
-        uint32_t eventSize, eventId;
+        uint32_t eventSize;
+        evtid_t eventId;
         filestream.read((char*) &magic_in, sizeof(magic_in));
         
         if (magic_in != Event::magic) throw Exceptions::Wrong_File_Position();

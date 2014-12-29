@@ -10,22 +10,23 @@
 #define __get_manip__GRAWDataItem__
 
 #include <iostream>
+#include "Constants.h"
 
 class GRAWDataItem {
 public:
-    GRAWDataItem(uint8_t agetId_in, uint8_t channel_in,
-                     uint16_t timeBucketId_in, uint16_t sample_in);
+    GRAWDataItem(addr_t agetId_in, addr_t channel_in,
+                 tb_t timeBucketId_in, sample_t sample_in);
     
-    uint8_t GetAgetId() const;
-    uint8_t GetChannel() const;
-    uint16_t GetTimeBucketId() const;
-    uint16_t GetSample() const;
+    addr_t GetAgetId() const;
+    addr_t GetChannel() const;
+    tb_t GetTimeBucketId() const;
+    sample_t GetSample() const;
     
 private:
-    uint8_t agetId;
-    uint8_t channel;
-    uint16_t timeBucketId;
-    uint16_t sample;
+    addr_t agetId;
+    addr_t channel;
+    tb_t timeBucketId;
+    sample_t sample;
 };
 
 #endif /* defined(__get_manip__GRAWDataItem__) */

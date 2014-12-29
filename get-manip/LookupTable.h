@@ -40,8 +40,7 @@ public:
     LookupTable();
 
     //! \brief Looks up a pad number in the table using the information passed to the function.
-    mapped_t Find(uint8_t cobo, uint8_t asad, uint8_t aget,
-                           uint8_t channel) const;
+    mapped_t Find(addr_t cobo, addr_t asad, addr_t aget, addr_t channel) const;
     
     //! \brief Tests if the table is empty.
     bool Empty() const;
@@ -57,10 +56,9 @@ protected:
      
      It simply concatenates cobo+asad+aget+channel since this is unique for each value.
      */
-    static uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget,
-                           uint8_t channel);
+    static hash_t CalculateHash(addr_t cobo, addr_t asad, addr_t aget, addr_t channel);
     
-    std::unordered_map<uint32_t,mapped_t> table;  // The hashtable, maps hash:value
+    std::unordered_map<hash_t,mapped_t> table;  // The hashtable, maps hash:value
     
     friend class EventTestFixture;
 };

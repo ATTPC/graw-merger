@@ -145,12 +145,12 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame)
 // Getters
 // --------
 
-const uint32_t GRAWFrame::GetEventId() const
+const evtid_t GRAWFrame::GetEventId() const
 {
     return eventId;
 }
 
-const uint64_t GRAWFrame::GetEventTime() const
+const ts_t GRAWFrame::GetEventTime() const
 {
     return eventTime;
 }
@@ -167,10 +167,10 @@ void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& 
     for (auto rawFrameIter = begin; rawFrameIter != end; rawFrameIter+=itemSize) {
         uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+itemSize);
         
-        uint8_t aget    = ExtractAgetId(item);
-        uint8_t channel = ExtractChannel(item);
-        uint16_t tbid   = ExtractTBid(item);
-        int16_t sample  = ExtractSample(item);
+        addr_t aget    = ExtractAgetId(item);
+        addr_t channel = ExtractChannel(item);
+        tb_t tbid   = ExtractTBid(item);
+        sample_t sample  = ExtractSample(item);
         
         assert(aget >= 0 and aget < 4);
         assert(channel >= 0 and channel < 68);
@@ -221,17 +221,17 @@ void GRAWFrame::ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& beg
     for (auto rawFrameIter = begin; rawFrameIter != end; rawFrameIter += itemSize) {
         uint16_t item = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+itemSize);
         
-        uint8_t aget    = ExtractAgetIdFullReadout(item);
-        int16_t sample  = ExtractSampleFullReadout(item);
+        addr_t aget    = ExtractAgetIdFullReadout(item);
+        sample_t sample  = ExtractSampleFullReadout(item);
         
         assert(aget >= 0 and aget < 4);
         
         dataQueues.at(aget).push(sample);
     }
     
-    for (uint8_t aget = 0; aget < 4; aget++) {
-        for (uint16_t tbid = 0; tbid < 512; tbid ++) {
-            for (uint8_t channel = 0; channel < 68; channel++) {
+    for (addr_t aget = 0; aget < 4; aget++) {
+        for (tb_t tbid = 0; tbid < 512; tbid ++) {
+            for (addr_t channel = 0; channel < 68; channel++) {
                 auto sample = dataQueues.at(aget).front();
                 dataQueues.at(aget).pop();
                 
@@ -241,32 +241,32 @@ void GRAWFrame::ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& beg
     }
 }
 
-uint8_t GRAWFrame::ExtractAgetId(const uint32_t raw)
+addr_t GRAWFrame::ExtractAgetId(const uint32_t raw)
 {
     return (raw & 0xC0000000)>>30;
 }
 
-uint8_t GRAWFrame::ExtractChannel(const uint32_t raw)
+addr_t GRAWFrame::ExtractChannel(const uint32_t raw)
 {
     return (raw & 0x3F800000)>>23;
 }
 
-uint16_t GRAWFrame::ExtractTBid(const uint32_t raw)
+tb_t GRAWFrame::ExtractTBid(const uint32_t raw)
 {
     return (raw & 0x007FC000)>>14;
 }
 
-int16_t GRAWFrame::ExtractSample(const uint32_t raw)
+sample_t GRAWFrame::ExtractSample(const uint32_t raw)
 {
     return (raw & 0x00000FFF);
 }
 
-uint8_t GRAWFrame::ExtractAgetIdFullReadout(const uint16_t raw)
+addr_t GRAWFrame::ExtractAgetIdFullReadout(const uint16_t raw)
 {
     return (raw & 0xC000)>>14;
 }
 
-int16_t GRAWFrame::ExtractSampleFullReadout(const uint16_t raw)
+sample_t GRAWFrame::ExtractSampleFullReadout(const uint16_t raw)
 {
     return (raw & 0x0FFF);
 }

@@ -24,14 +24,14 @@ Trace::Trace()
 }
 
 
-Trace::Trace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t ch, uint16_t pad)
+Trace::Trace(addr_t cobo, addr_t asad, addr_t aget, addr_t ch, pad_t pad)
 : coboId(cobo), asadId(asad), agetId(aget), channel(ch), padId(pad)
 {
-    assert(cobo < 10 && cobo >= 0);
-    assert(asad < 4 && asad >= 0);
-    assert(aget < 4 && aget >= 0);
-    assert(ch < 68 && ch >= 0);
-    assert((pad <= 10240 && pad >= 0) || pad == 20000);
+    assert(cobo < Constants::num_cobos && cobo >= 0);
+    assert(asad < Constants::num_asads && asad >= 0);
+    assert(aget < Constants::num_agets && aget >= 0);
+    assert(ch < Constants::num_channels && ch >= 0);
+    assert((pad <= Constants::num_pads && pad >= 0) || pad == 20000);
 }
 
 Trace::Trace(const std::vector<uint8_t>& raw)
@@ -117,12 +117,12 @@ Trace& Trace::operator=(Trace&& orig)
 // Adding and Getting Data Items
 // --------
 
-void Trace::AppendSample(int tBucket, int sample)
+void Trace::AppendSample(tb_t tBucket, sample_t sample)
 {
     data.emplace(tBucket,sample);
 }
 
-int16_t Trace::GetSample(int tBucket) const
+sample_t Trace::GetSample(tb_t tBucket) const
 {
     return data.at(tBucket);
 }
@@ -285,7 +285,7 @@ std::ostream& operator<<(std::ostream& stream, const Trace& trace)
 // Private Data Compression Functions
 // --------
 
-uint32_t Trace::CompactSample(uint16_t tb, int16_t val)
+uint32_t Trace::CompactSample(tb_t tb, sample_t val)
 {
     // val is 12-bits and tb is 9 bits. Fit this in 24 bits.
     // Use one bit for parity
@@ -308,16 +308,16 @@ uint32_t Trace::CompactSample(uint16_t tb, int16_t val)
     return joined;
 }
 
-std::pair<uint16_t,int16_t> Trace::UnpackSample(const uint32_t packed)
+std::pair<tb_t,sample_t> Trace::UnpackSample(const uint32_t packed)
 {
-    uint16_t tb = (packed & 0xFF8000) >> 15;
-    int16_t val = packed & 0xFFF;
-    int16_t parity = (packed & 0x1000) >> 12;
+    tb_t tb = (packed & 0xFF8000) >> 15;
+    sample_t val = packed & 0xFFF;
+    sample_t parity = (packed & 0x1000) >> 12;
     
     if (parity == 1) {
         val *= -1;
     }
     
-    std::pair<uint16_t,int16_t> res {tb,val};
+    std::pair<tb_t,sample_t> res {tb,val};
     return res;
 }

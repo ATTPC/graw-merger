@@ -12,14 +12,14 @@
 #include <sstream>
 
 template <typename mapped_t>
-uint32_t LookupTable<mapped_t>::CalculateHash(uint8_t cobo, uint8_t asad,
-                                              uint8_t aget, uint8_t channel)
+hash_t LookupTable<mapped_t>::CalculateHash(addr_t cobo, addr_t asad,
+                                            addr_t aget, addr_t channel)
 {
     // Widen the integers so they don't overflow on multiplication
-    auto wcobo = uint32_t(cobo);
-    auto wasad = uint32_t(asad);
-    auto waget = uint32_t(aget);
-    auto wchannel = uint32_t(channel);
+    auto wcobo = hash_t(cobo);
+    auto wasad = hash_t(asad);
+    auto waget = hash_t(aget);
+    auto wchannel = hash_t(channel);
     
     auto result = wchannel + waget*100 + wasad*10000 + wcobo*1000000;
     
@@ -27,8 +27,8 @@ uint32_t LookupTable<mapped_t>::CalculateHash(uint8_t cobo, uint8_t asad,
 }
 
 template <typename mapped_t>
-mapped_t LookupTable<mapped_t>::Find(uint8_t cobo, uint8_t asad,
-                                     uint8_t aget, uint8_t channel) const
+mapped_t LookupTable<mapped_t>::Find(addr_t cobo, addr_t asad,
+                                     addr_t aget, addr_t channel) const
 {
     if (!table.empty()) {
         auto hash = CalculateHash(cobo, asad, aget, channel);
@@ -77,7 +77,7 @@ void LookupTable<mapped_t>::ReadFile(const std::string& path)
     std::string line;
     
     while (!file.eof()) {
-        uint8_t cobo, asad, aget, channel;
+        addr_t cobo, asad, aget, channel;
         mapped_t value;
         getline(file,line,'\n');
         std::stringstream lineStream(line);

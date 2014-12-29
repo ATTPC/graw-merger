@@ -19,6 +19,7 @@
 #include "Event.h"
 #include "GMExceptions.h"
 #include "DataFile.h"
+#include "Constants.h"
 
 /** \brief Interface to an Event file.
  
@@ -104,8 +105,8 @@ public:
     //    Event GetEventByNumber(const unsigned int evtNumber);
     
 private:
-    std::map<unsigned int,unsigned long long> offsetTable; // evt# : offset
-    std::map<unsigned int,unsigned long long>::iterator currentEvt;
+    std::map<evtid_t,std::streamoff> offsetTable; // evt# : offset
+    std::map<evtid_t,std::streamoff>::iterator currentEvt;
     
     // Magic string for file ID
     

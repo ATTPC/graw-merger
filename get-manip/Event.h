@@ -77,10 +77,10 @@ public:
     void SetLookupTable(PadLookupTable* table);
     
     //! \brief Set the event ID for this event.
-    void SetEventId(const uint32_t eventId_in);
+    void SetEventId(const evtid_t eventId_in);
     
     //! \brief Set the event time for this event.
-    void SetEventTime(const uint64_t eventTime_in);
+    void SetEventTime(const ts_t eventTime_in);
     
     /** \brief Append a frame to the event.
      
@@ -112,13 +112,13 @@ public:
         
      \throws std::out_of_range if the trace is not present in the event.
      */
-    Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
+    Trace& GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel);
     
     //! \returns The event ID.
-    uint32_t GetEventId() const;
+    evtid_t GetEventId() const;
     
     //! \returns The event time.
-    uint64_t GetEventTime() const;
+    ts_t GetEventTime() const;
     
     // Manipulations of contained data
     
@@ -179,20 +179,20 @@ private:
     // Lookup table pointer and hash functions
     
     PadLookupTable *lookupTable;
-    uint32_t CalculateHash(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
+    hash_t CalculateHash(addr_t cobo, addr_t asad, addr_t aget, addr_t channel);
     
     int nFramesAppended;  // The number of frames appended to this event
     
     // Event Header fields
     
-    uint32_t eventId;
-    uint64_t eventTime;
+    evtid_t eventId;
+    ts_t eventTime;
     
     static const uint8_t magic; // Equals 0xEE, defined in Event.cpp
     
     // Traces for each pad
     
-    std::unordered_map<uint32_t,Trace> traces;
+    std::unordered_map<hash_t,Trace> traces;
     
     friend class EventFile;
     friend class EventTestFixture;

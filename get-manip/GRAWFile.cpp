@@ -224,19 +224,19 @@ void GRAWFile::AppendBytes(std::vector<uint8_t>& vec, T val, int nBytes)
     }
 }
 
-uint8_t GRAWFile::GetFileCobo() const
+addr_t GRAWFile::GetFileCobo() const
 {
     return coboId;
 }
 
-uint8_t GRAWFile::GetFileAsad() const
+addr_t GRAWFile::GetFileAsad() const
 {
     return asadId;
 }
 
-const uint64_t GRAWFile::NextFrameEvtId()
+const evtid_t GRAWFile::NextFrameEvtId()
 {
-    uint64_t storedPos = filestream.tellg();
+    std::streamoff storedPos = filestream.tellg();
     filestream.seekg(22, std::ios::cur); // 22 bytes from start of frame to id
     
     std::vector<uint8_t> id_raw;
@@ -252,8 +252,8 @@ const uint64_t GRAWFile::NextFrameEvtId()
         throw Exceptions::End_of_File();
     }
     
-    uint64_t id = Utilities::ExtractByteSwappedInt<uint64_t>(id_raw.begin(),
-                                                             id_raw.end());
+    evtid_t id = Utilities::ExtractByteSwappedInt<evtid_t>(id_raw.begin(),
+                                                           id_raw.end());
     
     filestream.seekg(storedPos);
     

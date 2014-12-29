@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "GMExceptions.h"
+#include "Constants.h"
 
 /** \brief A generic class representing a data file.
  
@@ -110,7 +111,7 @@ public:
     virtual bool eof() const;
     
     //! \brief Returns the current file position.
-    virtual const long long unsigned int GetPosition();
+    virtual std::streamoff GetPosition();
     
     //! \brief Returns the filename.
     virtual const std::string GetFilename() const;

@@ -62,11 +62,11 @@ private:
     {
         std::shared_ptr<GRAWFile> filePtr; // Pointer to the file that contains this frame
         std::streamoff filePos;                    // Position of the frame in the file
-        uint32_t evtId;
-        uint64_t evtTime;
+        evtid_t evtId;
+        ts_t evtTime;
     };
     
-    typedef std::multimap<uint32_t, FrameMetadata> MergingMap; // key = event ID
+    typedef std::multimap<evtid_t, FrameMetadata> MergingMap; // key = event ID
     MergingMap mmap;
     
     // This map is for keeping track of what files we've already seen
