@@ -108,6 +108,10 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
             evt.ApplyThreshold(threshold);
         }
         
+        if (suppZeros) {
+            evt.DropZeros();
+        }
+        
         outfile.WriteEvent(evt);
         
         mmap.erase(currentEvtId);

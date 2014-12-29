@@ -32,6 +32,7 @@ public:
     void TestNormalization(Trace& tr);
     void TestEquality(Trace& tr1, Trace& tr2);
     void TestThreshold();
+    void TestDropZeros();
 };
 
 void TraceTestFixture::TestEquality(Trace &tr1, Trace &tr2)
@@ -421,4 +422,28 @@ void TraceTestFixture::TestThreshold()
 TEST_F(TraceTestFixture, TestThreshold)
 {
     TestThreshold();
+}
+
+void TraceTestFixture::TestDropZeros()
+{
+    Trace tr {};
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        tr.AppendSample(tb, tb % 2);
+    }
+    tr.DropZeros();
+    
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        if (tb % 2) {
+            ASSERT_NO_THROW(tr.GetSample(tb));
+        }
+        else {
+            ASSERT_THROW(tr.GetSample(tb), std::out_of_range);
+        }
+        
+    }
+}
+
+TEST_F(TraceTestFixture, TestDropZeros)
+{
+    TestDropZeros();
 }

@@ -359,6 +359,19 @@ void Event::ApplyThreshold(const sample_t threshold)
     }
 }
 
+void Event::DropZeros()
+{
+    for (auto trIter = traces.begin(); trIter != traces.end();) {
+        trIter->second.DropZeros();
+        if (trIter->second.Empty()) {
+            trIter = traces.erase(trIter);
+        }
+        else {
+            trIter++;
+        }
+    }
+}
+
 // --------
 // I/O Functions
 // --------

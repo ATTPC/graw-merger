@@ -108,7 +108,10 @@ public:
     //! \brief Get the size of the event as written to a file, in bytes.
     uint32_t Size() const;
     
-    //! \brief Get the Trace for the given set of parameters.
+    /** \brief Get the Trace for the given set of parameters.
+        
+     \throws std::out_of_range if the trace is not present in the event.
+     */
     Trace& GetTrace(uint8_t cobo, uint8_t asad, uint8_t aget, uint8_t channel);
     
     //! \returns The event ID.
@@ -149,6 +152,14 @@ public:
     
     */
     void ApplyThreshold(const sample_t threshold);
+    
+    /** \brief Drops zeros from all traces.
+     
+     This function is called to implement zero suppression. It calls the DropZeros function for each trace contained in the event. If a trace is empty after dropping all of its zeros, it will be dropped entirely from the event.
+     
+     In general, this should be called right before writing the event to disk.
+     */
+    void DropZeros();
     
     // I/O functions
     

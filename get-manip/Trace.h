@@ -43,6 +43,7 @@ public:
     
     uint32_t size() const;
     unsigned long GetNumberOfTimeBuckets();
+    bool Empty() const;
     
     // Operations on contained data
     
@@ -54,6 +55,7 @@ public:
     
     void RenormalizeToZero();
     void ApplyThreshold(const sample_t threshold);
+    void DropZeros();
     
     // Constants
     

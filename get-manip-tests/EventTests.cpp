@@ -20,6 +20,7 @@ class EventTestFixture : public testing::Test
 public:
     void TestSubtractPedestals();
     void TestApplyThreshold();
+    void TestDropZeros();
 };
 
 void EventTestFixture::TestSubtractPedestals()
@@ -112,4 +113,68 @@ void EventTestFixture::TestApplyThreshold()
 TEST_F(EventTestFixture, TestApplyThreshold)
 {
     TestApplyThreshold();
+}
+
+void EventTestFixture::TestDropZeros()
+{
+    Event evt {};
+    
+    for (sample_t cobo = 0; cobo < Constants::num_cobos; cobo++) {
+        for (sample_t asad = 0; asad < Constants::num_asads; asad++) {
+            for (sample_t aget = 0; aget < Constants::num_agets; aget++) {
+                for (sample_t ch = 0; ch < Constants::num_channels; ch++) {
+                    Trace tr {};
+                    
+                    tr.coboId = cobo;
+                    tr.asadId = asad;
+                    tr.agetId = aget;
+                    tr.channel = ch;
+                    
+                    for (sample_t tb = 0; tb < Constants::num_tbs; tb++) {
+                        sample_t dataValue = 0;
+                        if (ch % 2) {
+                            dataValue = 0;
+                        }
+                        else {
+                            dataValue = tb % 2;
+                        }
+                        tr.AppendSample(tb, dataValue);
+                    }
+                    auto trHash = evt.CalculateHash(cobo, asad, aget, ch);
+                    evt.traces.emplace(trHash, tr);
+                }
+            }
+        }
+    }
+    
+    evt.DropZeros();
+    
+    for (sample_t cobo = 0; cobo < Constants::num_cobos; cobo++) {
+        for (sample_t asad = 0; asad < Constants::num_asads; asad++) {
+            for (sample_t aget = 0; aget < Constants::num_agets; aget++) {
+                for (sample_t ch = 0; ch < Constants::num_channels; ch++) {
+                    if (ch % 2) {
+                        ASSERT_THROW(evt.GetTrace(cobo, asad, aget, ch),
+                                     std::out_of_range);
+                    }
+                    else {
+                        auto& tr = evt.GetTrace(cobo, asad, aget, ch);
+                        for (sample_t tb = 0; tb < Constants::num_tbs; tb++) {
+                            if (tb % 2) {
+                                ASSERT_NO_THROW(tr.GetSample(tb));
+                            }
+                            else {
+                                ASSERT_THROW(tr.GetSample(tb), std::out_of_range);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_F(EventTestFixture, TestDropZeros)
+{
+    TestDropZeros();
 }

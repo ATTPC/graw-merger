@@ -150,6 +150,11 @@ unsigned long Trace::GetNumberOfTimeBuckets()
     return data.size();
 }
 
+bool Trace::Empty() const
+{
+    return data.empty();
+}
+
 // --------
 // Operations on Contained Data
 // --------
@@ -236,6 +241,18 @@ void Trace::ApplyThreshold(const sample_t threshold)
     for (auto& item : data) {
         if (item.second < threshold) {
             item.second = 0;
+        }
+    }
+}
+
+void Trace::DropZeros()
+{
+    for (auto it = data.begin(); it != data.end();) {
+        if (it->second == 0) {
+            it = data.erase(it);
+        }
+        else {
+            it++;
         }
     }
 }
