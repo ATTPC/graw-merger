@@ -73,6 +73,18 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-z"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p &quot;/Users/josh/Dropbox/routing/Peds20141208-2.csv&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-t 100"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "&quot;/Users/josh/Documents/Data/Alphas-Dec14/run_0225/&quot;"
             isEnabled = "YES">
          </CommandLineArgument>

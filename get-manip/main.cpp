@@ -147,7 +147,16 @@ int main(int argc, const char * argv[])
         // This is the typical execution path
         
         auto rootDir = vm["input"].as<fs::path>();
+        if (not fs::exists(rootDir)) {
+            std::cout << "Error: Provided input path does not exist." << std::endl;
+            return 1;
+        }
+        
         auto lookupTablePath = vm["lookup"].as<fs::path>();
+        if (not fs::exists(lookupTablePath)) {
+            std::cout << "Error: Provided lookup table path does not exist." << std::endl;
+            return 1;
+        }
         
         // Build the output path
         fs::path outputFilePath {};
