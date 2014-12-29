@@ -19,7 +19,6 @@
 		037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		038A773C1937A9FC006A2AAB /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0302EAF61932C1F6007F898D /* UserInterface.cpp */; };
-		038A773D1937A9FC006A2AAB /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 		038A773E1937A9FC006A2AAB /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 037A338D192A5E8E006E2E84 /* DataFile.cpp */; };
 		038A773F1937A9FC006A2AAB /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
 		038A77401937A9FC006A2AAB /* EventFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B9191D45900021ABD4 /* EventFile.cpp */; };
@@ -35,7 +34,6 @@
 		038A774A1937AA37006A2AAB /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 039056CC192552AE00214C6C /* Utilities.h */; };
 		038A774B1937AA37006A2AAB /* GMExceptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 03AB40C0191D546C0021ABD4 /* GMExceptions.h */; };
 		038A774C1937AA37006A2AAB /* UserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 0302EAF71932C1F6007F898D /* UserInterface.h */; };
-		038A774D1937AA37006A2AAB /* PadLookupTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DDF3B31919621A00306788 /* PadLookupTable.h */; };
 		038A774E1937AA37006A2AAB /* DataFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 037A338E192A5E8E006E2E84 /* DataFile.h */; };
 		038A774F1937AA37006A2AAB /* GRAWFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 03AB40B2191D0D950021ABD4 /* GRAWFile.h */; };
 		038A77501937AA37006A2AAB /* EventFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 03AB40BA191D45900021ABD4 /* EventFile.h */; };
@@ -50,7 +48,6 @@
 		03C201A119267D8A00264702 /* TraceTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C2019F19267D8A00264702 /* TraceTests.cpp */; };
 		03C201A31926804000264702 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
 		03C201A61926835C00264702 /* GRAWFrameTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C201A41926835C00264702 /* GRAWFrameTests.cpp */; };
-		03C201A71926896700264702 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
 		03C201A81926896700264702 /* GRAWFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */; };
 		03C201A91926896700264702 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
 		03C201AA1926896700264702 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
@@ -66,7 +63,8 @@
 		03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
 		03DDF3AE19195A5E00306788 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AC19195A5E00306788 /* Event.cpp */; };
 		03DDF3B119195B6100306788 /* Trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3AF19195B6100306788 /* Trace.cpp */; };
-		03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3B21919621A00306788 /* PadLookupTable.cpp */; };
+		03F020611A4F2BA50017186A /* LookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03F020601A4F2BA50017186A /* LookupTable.cpp */; };
+		03F020631A4F32B70017186A /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03F020621A4F32B70017186A /* PadLookupTable.cpp */; };
 		03F4B82819CC8690002CA2FE /* Merger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03F4B82619CC8690002CA2FE /* Merger.cpp */; };
 /* End PBXBuildFile section */
 
@@ -174,8 +172,11 @@
 		03DDF3AD19195A5E00306788 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Event.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		03DDF3AF19195B6100306788 /* Trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trace.cpp; sourceTree = "<group>"; };
 		03DDF3B019195B6100306788 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Trace.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		03DDF3B21919621A00306788 /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
 		03DDF3B31919621A00306788 /* PadLookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PadLookupTable.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		03E5AF031A50B93600F8C581 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		03F0205F1A4F2B7E0017186A /* LookupTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupTable.h; sourceTree = "<group>"; };
+		03F020601A4F2BA50017186A /* LookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LookupTable.cpp; sourceTree = "<group>"; };
+		03F020621A4F32B70017186A /* PadLookupTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PadLookupTable.cpp; sourceTree = "<group>"; };
 		03F4B82619CC8690002CA2FE /* Merger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Merger.cpp; sourceTree = "<group>"; };
 		03F4B82719CC8690002CA2FE /* Merger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Merger.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -358,6 +359,8 @@
 				039056CC192552AE00214C6C /* Utilities.h */,
 				03AB40C0191D546C0021ABD4 /* GMExceptions.h */,
 				0302EAF71932C1F6007F898D /* UserInterface.h */,
+				03F0205F1A4F2B7E0017186A /* LookupTable.h */,
+				03E5AF031A50B93600F8C581 /* Constants.h */,
 				03DDF3B31919621A00306788 /* PadLookupTable.h */,
 				037A338E192A5E8E006E2E84 /* DataFile.h */,
 				03AB40B2191D0D950021ABD4 /* GRAWFile.h */,
@@ -375,7 +378,8 @@
 			isa = PBXGroup;
 			children = (
 				0302EAF61932C1F6007F898D /* UserInterface.cpp */,
-				03DDF3B21919621A00306788 /* PadLookupTable.cpp */,
+				03F020601A4F2BA50017186A /* LookupTable.cpp */,
+				03F020621A4F32B70017186A /* PadLookupTable.cpp */,
 				037A338D192A5E8E006E2E84 /* DataFile.cpp */,
 				03AB40B1191D0D950021ABD4 /* GRAWFile.cpp */,
 				03AB40B9191D45900021ABD4 /* EventFile.cpp */,
@@ -448,7 +452,6 @@
 				038A774A1937AA37006A2AAB /* Utilities.h in Headers */,
 				038A774B1937AA37006A2AAB /* GMExceptions.h in Headers */,
 				038A774C1937AA37006A2AAB /* UserInterface.h in Headers */,
-				038A774D1937AA37006A2AAB /* PadLookupTable.h in Headers */,
 				038A774E1937AA37006A2AAB /* DataFile.h in Headers */,
 				038A774F1937AA37006A2AAB /* GRAWFile.h in Headers */,
 				038A77501937AA37006A2AAB /* EventFile.h in Headers */,
@@ -564,7 +567,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				038A773C1937A9FC006A2AAB /* UserInterface.cpp in Sources */,
-				038A773D1937A9FC006A2AAB /* PadLookupTable.cpp in Sources */,
 				038A773E1937A9FC006A2AAB /* DataFile.cpp in Sources */,
 				038A773F1937A9FC006A2AAB /* GRAWFile.cpp in Sources */,
 				038A77401937A9FC006A2AAB /* EventFile.cpp in Sources */,
@@ -591,7 +593,6 @@
 				03C2018F19267C2900264702 /* main.cpp in Sources */,
 				038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */,
 				03C201A91926896700264702 /* GRAWFrame.cpp in Sources */,
-				03C201A71926896700264702 /* PadLookupTable.cpp in Sources */,
 				03514B5B192D16B60077C431 /* EventTests.cpp in Sources */,
 				03C201A119267D8A00264702 /* TraceTests.cpp in Sources */,
 			);
@@ -603,13 +604,14 @@
 			files = (
 				03AB40BB191D45900021ABD4 /* EventFile.cpp in Sources */,
 				03AB40B3191D0D950021ABD4 /* GRAWFile.cpp in Sources */,
+				03F020611A4F2BA50017186A /* LookupTable.cpp in Sources */,
+				03F020631A4F32B70017186A /* PadLookupTable.cpp in Sources */,
 				03DDF3AE19195A5E00306788 /* Event.cpp in Sources */,
+				037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03DDF3A41917FD9100306788 /* GRAWFrame.cpp in Sources */,
-				03DDF3B41919621A00306788 /* PadLookupTable.cpp in Sources */,
 				03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */,
 				0302EAF81932C1F6007F898D /* UserInterface.cpp in Sources */,
 				03F4B82819CC8690002CA2FE /* Merger.cpp in Sources */,
-				037A338F192A5E8E006E2E84 /* DataFile.cpp in Sources */,
 				03DDF39A1917FD1000306788 /* main.cpp in Sources */,
 				03DDF3B119195B6100306788 /* Trace.cpp in Sources */,
 			);

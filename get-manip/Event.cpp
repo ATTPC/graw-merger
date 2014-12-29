@@ -166,7 +166,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
         auto sample = dataItem.GetSample();
         
         int hash = CalculateHash(cobo, asad, aget, channel);
-        auto pad = lookupTable->FindPadNumber(cobo, asad, aget, channel);
+        auto pad = lookupTable->Find(cobo, asad, aget, channel);
         
         // Find trace in hash table, if it exists
         auto foundTrace = traces.find(hash);

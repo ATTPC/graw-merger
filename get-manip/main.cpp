@@ -13,6 +13,7 @@
 #include <boost/program_options.hpp>
 #include "GRAWFrame.h"
 #include "PadLookupTable.h"
+#include "LookupTable.h"
 #include "Event.h"
 #include "GRAWFile.h"
 #include "EventFile.h"
@@ -23,6 +24,7 @@
 #include <algorithm>
 #include "UserInterface.h"
 #include "Merger.h"
+#include "Constants.h"
 
 std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
@@ -58,7 +60,9 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
 
 void MergeFiles(boost::filesystem::path input_path,
                 boost::filesystem::path output_path,
-                boost::filesystem::path lookup_path)
+                boost::filesystem::path lookup_path,
+                LookupTable<sample_t>& pedsTable,
+                bool suppZeros, sample_t threshold)
 {
     // Import the lookup table
     
@@ -92,7 +96,8 @@ void MergeFiles(boost::filesystem::path input_path,
     
     std::string output_path_string = output_path.string();
     
-    mg.MergeByEvtId(output_path_string, &lookupTable);
+    mg.MergeByEvtId(output_path_string, &lookupTable, pedsTable,
+                    suppZeros, threshold);
     
     std::cout << '\n' << "Finished merging files." << std::endl;
 }
@@ -116,6 +121,9 @@ int main(int argc, const char * argv[])
     opts_desc.add_options()
         ("help,h", "Output a help message")
         ("lookup,l", po::value<fs::path>(), "Lookup table")
+        ("pedestals,p", po::value<fs::path>(), "Pedestals file")
+        ("threshold,t", po::value<sample_t>(), "Threshold")
+        ("zerosupp,z", po::bool_switch(), "Zero suppression")
         ("input,i", po::value<fs::path>(), "Input directory")
         ("output,o", po::value<fs::path>(), "Output file")
     ;
@@ -136,10 +144,13 @@ int main(int argc, const char * argv[])
     }
     
     if (vm.count("lookup") and vm.count("input")) {
+        // This is the typical execution path
+        
         auto rootDir = vm["input"].as<fs::path>();
         auto lookupTablePath = vm["lookup"].as<fs::path>();
-        fs::path outputFilePath {};
         
+        // Build the output path
+        fs::path outputFilePath {};
         if (vm.count("output")) {
             outputFilePath = vm["output"].as<fs::path>();
         }
@@ -156,8 +167,34 @@ int main(int argc, const char * argv[])
             }
         }
         
+        // Load the pedestals file, if given
+        
+        auto pedsTable = LookupTable<sample_t> {};
+        if (vm.count("pedestals")) {
+            // Load pedestals
+            auto pedsPath = vm["pedestals"].as<fs::path>();
+            if (fs::exists(pedsPath)) {
+                pedsTable.ReadFile(pedsPath.string());
+            }
+            else {
+                std::cout << "Error: Pedestals file does not exist." << std::endl;
+                return 1;
+            }
+        }
+        
+        bool suppZeros {false};
+        if (vm.count("zerosupp")) {
+            suppZeros = true;
+        }
+        
+        sample_t threshold {0};
+        if (vm.count("threshold")) {
+            threshold = vm["threshold"].as<sample_t>();
+        }
+        
         try {
-            MergeFiles(rootDir, outputFilePath, lookupTablePath);
+            MergeFiles(rootDir, outputFilePath, lookupTablePath, pedsTable,
+                       suppZeros, threshold);
         }
         catch (std::exception& e) {
             std::cout << "Error: " << e.what() << std::endl;

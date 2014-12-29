@@ -14,6 +14,7 @@
 #include "EventFile.h"
 #include "GMExceptions.h"
 #include "PadLookupTable.h"
+#include "Constants.h"
 
 #include <map>
 #include <vector>
@@ -52,7 +53,9 @@ public:
      This function does the actual merging of the files. It looks through the map of events created by the AddFramesFromFileToIndex function and puts together frames that have the same event ID. The fixed pattern noise is subtracted from these events, and they are then written to a new file.
      
      */
-    void MergeByEvtId(const std::string& outfilename, PadLookupTable* lt);
+    void MergeByEvtId(const std::string& outfilename, PadLookupTable* lt,
+                      LookupTable<sample_t>& pedsTable, bool suppZeros,
+                      sample_t threshold);
     
 private:
     struct FrameMetadata

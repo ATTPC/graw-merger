@@ -58,7 +58,9 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     return nFramesRead;
 }
 
-void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt)
+void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
+                          LookupTable<sample_t>& pedsTable, bool suppZeros,
+                          sample_t threshold)
 {
     EventFile outfile;
     outfile.OpenFileForWrite(outfilename);
