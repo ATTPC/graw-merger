@@ -99,6 +99,15 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
         }
         
         evt.SubtractFPN();
+        
+        if (not pedsTable.Empty()) {
+            evt.SubtractPedestals(pedsTable);
+        }
+        
+        if (threshold > Constants::min_sample) {
+            evt.ApplyThreshold(threshold);
+        }
+        
         outfile.WriteEvent(evt);
         
         mmap.erase(currentEvtId);

@@ -23,6 +23,9 @@ namespace Constants {
     static const addr_t num_agets {4};
     static const addr_t num_channels {68};
     static const tb_t   num_tbs {512};
+    
+    static const sample_t min_sample {INT16_MIN};
+    static const sample_t max_sample {INT16_MAX};
 }
 
 #endif

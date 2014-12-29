@@ -46,6 +46,12 @@ mapped_t LookupTable<mapped_t>::Find(uint8_t cobo, uint8_t asad,
 }
 
 template <typename mapped_t>
+bool LookupTable<mapped_t>::Empty() const
+{
+    return table.empty();
+}
+
+template <typename mapped_t>
 LookupTable<mapped_t>::LookupTable()
 {}
 
