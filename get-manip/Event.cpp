@@ -283,7 +283,7 @@ void Event::SubtractFPN()
                 
                 for (auto ch : fpn_channels) {
                     try {
-                        auto tr = GetTrace(cobo, asad, aget, ch);
+                        auto& tr = GetTrace(cobo, asad, aget, ch);
                         mean_fpn += tr;
                         for (const auto& item : tr.data) {
                             tb_multip.at(item.first)++;

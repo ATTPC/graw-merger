@@ -81,7 +81,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-t 100"
+            argument = "-t 40"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -90,7 +90,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/josh/Documents/Data/output.evt&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
