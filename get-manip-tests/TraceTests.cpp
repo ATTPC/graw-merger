@@ -7,6 +7,7 @@
 //
 
 #include "Trace.h"
+#include "Constants.h"
 
 #include <map>
 #include <algorithm>
@@ -27,8 +28,10 @@ public:
     void TestAddition();
     void TestSubtraction();
     void TestScalarDivision();
+    void TestScalarSubtraction();
     void TestNormalization(Trace& tr);
     void TestEquality(Trace& tr1, Trace& tr2);
+    void TestThreshold();
 };
 
 void TraceTestFixture::TestEquality(Trace &tr1, Trace &tr2)
@@ -265,6 +268,32 @@ TEST_F(TraceTestFixture, TestScalarDivision)
     TestScalarDivision();
 }
 
+void TraceTestFixture::TestScalarSubtraction()
+{
+    Trace *t1;
+    
+    for (sample_t a = 200; a < 210; a++) {
+        for (sample_t b = 1; b < 10; b++) {
+            t1 = new Trace ();
+            for (int i = 0; i < 512; i++) {
+                t1->AppendSample(i, a);
+            }
+            *t1 -= b;
+            
+            for (int i = 0; i < 512; i++) {
+                auto val = t1->GetSample(i);
+                ASSERT_EQ(a-b, val);
+            }
+            delete t1;
+        }
+    }
+}
+
+TEST_F(TraceTestFixture, TestScalarSubtraction)
+{
+    TestScalarSubtraction();
+}
+
 void TraceTestFixture::TestNormalization(Trace& tr)
 {
     tr.RenormalizeToZero();
@@ -369,4 +398,27 @@ TEST_F(TraceTestFixture, DISABLED_TestSerializeAndUnpack)
     Trace tr2 {raw};
     
     TestEquality(tr1, tr2);
+}
+
+void TraceTestFixture::TestThreshold()
+{
+    Trace tr {};
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        tr.AppendSample(tb, tb*2); // These will range [0, 1024)
+    }
+    
+    sample_t threshold = 200;
+    
+    tr.ApplyThreshold(threshold);
+    
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        sample_t expected = tb*2 < threshold ? 0 : tb*2;
+        auto result = tr.GetSample(tb);
+        ASSERT_EQ(expected, result);
+    }
+}
+
+TEST_F(TraceTestFixture, TestThreshold)
+{
+    TestThreshold();
 }

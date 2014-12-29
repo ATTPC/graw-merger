@@ -28,7 +28,7 @@ uint32_t LookupTable<mapped_t>::CalculateHash(uint8_t cobo, uint8_t asad,
 
 template <typename mapped_t>
 mapped_t LookupTable<mapped_t>::Find(uint8_t cobo, uint8_t asad,
-                                     uint8_t aget, uint8_t channel)
+                                     uint8_t aget, uint8_t channel) const
 {
     if (!table.empty()) {
         auto hash = CalculateHash(cobo, asad, aget, channel);

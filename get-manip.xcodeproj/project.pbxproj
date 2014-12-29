@@ -58,6 +58,8 @@
 		03C201AF19268A0500264702 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03517E0C192307A700F2C732 /* libboost_system.a */; };
 		03C201B3192694E000264702 /* MockData in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C201B11926942F00264702 /* MockData */; };
 		03C201B51926A6E700264702 /* libgmock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C201B41926A6E700264702 /* libgmock.a */; };
+		03C628151A51A0AA002931FA /* LookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03F020601A4F2BA50017186A /* LookupTable.cpp */; };
+		03C628161A51A0B4002931FA /* PadLookupTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03F020621A4F32B70017186A /* PadLookupTable.cpp */; };
 		03DDF39A1917FD1000306788 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3991917FD1000306788 /* main.cpp */; };
 		03DDF3A41917FD9100306788 /* GRAWFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A21917FD9100306788 /* GRAWFrame.cpp */; };
 		03DDF3A71918026900306788 /* GRAWDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03DDF3A51918026900306788 /* GRAWDataItem.cpp */; };
@@ -586,10 +588,12 @@
 				03C201AA1926896700264702 /* GRAWDataItem.cpp in Sources */,
 				03C201AC1926896700264702 /* EventFile.cpp in Sources */,
 				037A3390192A5E8E006E2E84 /* DataFile.cpp in Sources */,
+				03C628151A51A0AA002931FA /* LookupTable.cpp in Sources */,
 				0302EAF91932C1F6007F898D /* UserInterface.cpp in Sources */,
 				03C201A61926835C00264702 /* GRAWFrameTests.cpp in Sources */,
 				03C201AB1926896700264702 /* Event.cpp in Sources */,
 				03C201A31926804000264702 /* Trace.cpp in Sources */,
+				03C628161A51A0B4002931FA /* PadLookupTable.cpp in Sources */,
 				03C2018F19267C2900264702 /* main.cpp in Sources */,
 				038AB1051927F08B009C1C38 /* FakeRawFrame.cpp in Sources */,
 				03C201A91926896700264702 /* GRAWFrame.cpp in Sources */,

@@ -17,6 +17,7 @@
 #include <assert.h>
 #include "GMExceptions.h"
 #include "Utilities.h"
+#include "Constants.h"
 
 class Trace
 {
@@ -47,10 +48,12 @@ public:
     
     Trace& operator+=(Trace& other);
     Trace& operator-=(Trace& other);
+    Trace& operator-=(const sample_t i);
     Trace& operator/=(Trace& other);    // division by another trace
     Trace& operator/=(int i);           // division by an integer
     
     void RenormalizeToZero();
+    void ApplyThreshold(const sample_t threshold);
     
     // Constants
     
@@ -80,6 +83,7 @@ private:
     
     friend class Event;
     friend class TraceTestFixture;
+    friend class EventTestFixture;
 };
 
 #endif /* defined(__get_manip__Trace__) */

@@ -41,7 +41,7 @@ public:
 
     //! \brief Looks up a pad number in the table using the information passed to the function.
     mapped_t Find(uint8_t cobo, uint8_t asad, uint8_t aget,
-                           uint8_t channel);
+                           uint8_t channel) const;
    
     //! \brief Read the file at the provided path and replace all values in the hash table with values from the file.
     void ReadFile(const std::string& path);
@@ -58,6 +58,8 @@ protected:
                            uint8_t channel);
     
     std::unordered_map<uint32_t,mapped_t> table;  // The hashtable, maps hash:value
+    
+    friend class EventTestFixture;
 };
 
 #endif /* defined(__get_manip__LookupTable__) */

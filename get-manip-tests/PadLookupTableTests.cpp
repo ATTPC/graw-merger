@@ -59,7 +59,7 @@ void PadLookupTableTestFixture::TestFindPadNumber()
         for (int asad = 0; asad < 4; asad++) {
             for (int aget = 0; aget < 4; aget++) {
                 for (int ch = 0; ch < 68; ch++) {
-                    auto found = lt.FindPadNumber(cobo, asad, aget, ch);
+                    auto found = lt.Find(cobo, asad, aget, ch);
                     EXPECT_EQ(pad, found);
                     pad++;
                 }

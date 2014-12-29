@@ -180,6 +180,14 @@ Trace& Trace::operator-=(Trace& other)
     return *this;
 }
 
+Trace& Trace::operator-=(const sample_t i)
+{
+    for (auto& item : data) {
+        item.second -= i;
+    }
+    return *this;
+}
+
 Trace& Trace::operator/=(Trace& other)
 {
     for (auto& item : this->data) {
@@ -220,6 +228,15 @@ void Trace::RenormalizeToZero()
     
     for (auto& item : data) {
         item.second -= total;
+    }
+}
+
+void Trace::ApplyThreshold(const sample_t threshold)
+{
+    for (auto& item : data) {
+        if (item.second < threshold) {
+            item.second = 0;
+        }
     }
 }
 

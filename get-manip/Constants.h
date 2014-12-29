@@ -13,6 +13,7 @@ typedef uint64_t ts_t;
 typedef uint32_t evtid_t;
 typedef uint8_t addr_t;
 typedef uint16_t pad_t;
+typedef uint16_t tb_t;
 typedef int16_t sample_t;
 
 namespace Constants {
@@ -21,6 +22,7 @@ namespace Constants {
     static const addr_t num_asads {4};
     static const addr_t num_agets {4};
     static const addr_t num_channels {68};
+    static const tb_t   num_tbs {512};
 }
 
 #endif

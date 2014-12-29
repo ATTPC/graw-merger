@@ -11,9 +11,11 @@
 
 #include <iostream>
 #include <vector>
+#include "Constants.h"
 #include "GRAWFrame.h"
 #include "GRAWDataItem.h"
 #include "Trace.h"
+#include "LookupTable.h"
 #include "PadLookupTable.h"
 #include "GMExceptions.h"
 #include <unordered_map>
@@ -137,6 +139,16 @@ public:
      
      */
     void SubtractFPN();
+    
+    //! \brief Subtract precomputed pedestal values from each trace in the event.
+    void SubtractPedestals(const LookupTable<sample_t>& pedsTable);
+    
+    /** \brief Applies the provided threshold to the traces in the event.
+    
+    Any sample that is less than the threshold is set to zero.
+    
+    */
+    void ApplyThreshold(const sample_t threshold);
     
     // I/O functions
     

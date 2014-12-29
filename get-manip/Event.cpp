@@ -333,6 +333,32 @@ void Event::SubtractFPN()
     }
 }
 
+void Event::SubtractPedestals(const LookupTable<sample_t>& pedsTable)
+{
+    for (auto& trace : traces) {
+        auto cobo = trace.second.coboId;
+        auto asad = trace.second.asadId;
+        auto aget = trace.second.agetId;
+        auto channel = trace.second.channel;
+        
+        auto pedValue = pedsTable.Find(cobo, asad, aget, channel);
+        
+        if (pedValue != 0) {
+            trace.second -= pedValue;
+        }
+        else {
+            continue;
+        }
+    }
+}
+
+void Event::ApplyThreshold(const sample_t threshold)
+{
+    for (auto& item : traces) {
+        item.second.ApplyThreshold(threshold);
+    }
+}
+
 // --------
 // I/O Functions
 // --------
