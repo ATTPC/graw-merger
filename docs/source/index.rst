@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
    :numbered:
 
-   usage.rst
+   intro.rst
    classes.rst
    formats.rst
    exceptions.rst

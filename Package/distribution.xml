@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+    <title>get-manip</title>
+    <pkg-ref id="edu.msu.nscl.get-manip"/>
+    <options customize="never" require-scripts="false"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="edu.msu.nscl.get-manip"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="edu.msu.nscl.get-manip" visible="false">
+        <pkg-ref id="edu.msu.nscl.get-manip"/>
+    </choice>
+    <pkg-ref id="edu.msu.nscl.get-manip" version="1.4" onConclusion="none">get-manip.pkg</pkg-ref>
+</installer-gui-script>
