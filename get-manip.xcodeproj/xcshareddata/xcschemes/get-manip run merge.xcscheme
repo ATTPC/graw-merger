@@ -69,7 +69,19 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--lookup &quot;/Users/josh/Dropbox/routing/Lookup20141208.csv&quot;"
+            argument = "-l &quot;/Users/josh/Dropbox/routing/Lookup20141208.csv&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p &quot;/Users/josh/Dropbox/routing/Peds20141208-2.csv&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-t 40"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-z"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -78,7 +90,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "&quot;/Users/josh/Documents/Data/output.evt&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

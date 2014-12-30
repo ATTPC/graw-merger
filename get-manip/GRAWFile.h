@@ -74,6 +74,9 @@ public:
     //! \overload
     void OpenFileForWrite(const boost::filesystem::path& path) override;
     
+    //! \brief Find the size of the next frame in the file
+    uint16_t GetNextFrameSize();
+    
     /** \brief Get the next raw frame from the file
      
      This function returns the next raw frame from the data file as a vector of integers. This can then be processed using, say, a GRAWFrame. This data is big-endian by default.
@@ -85,6 +88,30 @@ public:
      \throws Exceptions::Frame_Read_Error Thrown if the read frame has size zero.
      */
     std::vector<uint8_t> ReadRawFrame() override;
+    
+    /** \brief A structure containing metadata describing a frame.
+     
+     This struct is useful when a function only needs some of the header information from a frame, as it can be read much faster than an entire frame. This is used, for example, in the file indexing function of the merger.
+     */
+    struct FrameMetadata
+    {
+        //! \brief Position of the frame in the GRAW file
+        std::streamoff filePos;
+        
+        //! \brief The event ID from the header
+        evtid_t evtId;
+        
+        //! \brief The event time from the header
+        ts_t evtTime;
+    };
+    
+    /** \brief Read some metadata from the header of the next frame.
+     
+     This function reads the header of the next frame in the file and extracts the information contained in the :class:`FrameMetadata` struct. This leaves the filestream position at the start of the next frame.
+     
+     \return FrameMetadata struct describing the frame
+     */
+    FrameMetadata ReadFrameMetadata();
 
     /** \brief Writes a frame to the file.
      

@@ -78,11 +78,10 @@ void GRAWFile::OpenFileForWrite(const std::string& path)
 // Getters for Raw Data and Properties
 // --------
 
-std::vector<uint8_t> GRAWFile::ReadRawFrame()
+uint16_t GRAWFile::GetNextFrameSize()
 {
     std::vector<uint8_t> size_raw;
     uint16_t size;
-    std::vector<uint8_t> frame_raw;
     
     // Test the input file for validity
     
@@ -90,7 +89,7 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
         throw Exceptions::Bad_File(filePath.filename().string());
     }
     
-    unsigned long long storedPos = filestream.tellg();
+    std::streamoff storedPos = filestream.tellg();
     
     uint8_t metaType = filestream.get();
     
@@ -100,7 +99,8 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
         size_raw.push_back((uint8_t)temp);
     }
     
-    size = Utilities::ExtractByteSwappedInt<uint32_t>(size_raw.begin(), size_raw.end());
+    size = Utilities::ExtractByteSwappedInt<decltype(size)>(size_raw.begin(),
+                                                            size_raw.end());
     
     if (size == 0) {
         if (filestream.eof()) {
@@ -122,32 +122,17 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
             isEOF = true;
         }
         else {
-//            // This isn't the last frame. The size must be wrong.
-//            filestream.seekg(12, std::ios::cur);
-//            
-//            std::vector<uint8_t> nItems_raw;
-//            for (int i = 0; i < 4; i++) {
-//                char temp;
-//                filestream.read(&temp, sizeof(uint8_t));
-//                nItems_raw.push_back((uint8_t)temp);
-//            }
-//            
-//            uint32_t nItems = Utilities::ExtractByteSwappedInt<uint32_t>(nItems_raw.begin(), nItems_raw.end());
-//            
-//            size = ceil(double(GRAWFrame::Expected_headerSize*GRAWFrame::sizeUnit + GRAWFrame::Expected_itemSize * nItems)/GRAWFrame::sizeUnit);
-//            
-//            filestream.seekg(storedPos + size*GRAWFrame::sizeUnit);
-//            
-//            if (filestream.peek() != metaType) {
-//                // Give up
-//                throw Exceptions::Frame_Read_Error();
-//            }
-            
             throw Exceptions::Frame_Read_Error();
         }
     }
-    
     filestream.seekg(storedPos); // rewind to start of frame
+    return size;
+}
+
+std::vector<uint8_t> GRAWFile::ReadRawFrame()
+{
+    std::vector<uint8_t> frame_raw;
+    auto size = GetNextFrameSize();
     
     for (unsigned long i = 0; i < size*GRAWFrame::sizeUnit; i++) {
         char temp;
@@ -156,7 +141,40 @@ std::vector<uint8_t> GRAWFile::ReadRawFrame()
     }
     
     return frame_raw;
-    // Leaves file pointer at end of frame. This assumes the frame size is correct.
+}
+
+GRAWFile::FrameMetadata GRAWFile::ReadFrameMetadata()
+{
+    std::streamoff startPos = filestream.tellg();
+    auto size = GetNextFrameSize();
+    
+    filestream.seekg(16, std::ios::cur); // timestamp is 16 bytes from start
+    
+    std::vector<uint8_t> timestamp_raw;
+    for (int i = 0; i < 6; i++) {
+        char temp;
+        filestream.read(&temp, sizeof(uint8_t));
+        timestamp_raw.push_back((uint8_t)temp);
+    }
+    ts_t timestamp = Utilities::ExtractByteSwappedInt<ts_t>(timestamp_raw.begin(), timestamp_raw.end());
+    
+    std::vector<uint8_t> evtid_raw;
+    for (int i = 0; i < 4; i++) {
+        char temp;
+        filestream.read(&temp, sizeof(uint8_t));
+        evtid_raw.push_back((uint8_t)temp);
+    }
+    evtid_t evtid = Utilities::ExtractByteSwappedInt<evtid_t>(evtid_raw.begin(),
+                                                              evtid_raw.end());
+    
+    filestream.seekg(startPos + size*GRAWFrame::sizeUnit); // move to start of next frame
+    
+    GRAWFile::FrameMetadata meta {};
+    meta.filePos = startPos;
+    meta.evtId = evtid;
+    meta.evtTime = timestamp;
+    
+    return meta;
 }
 
 void GRAWFile::WriteFrame(const GRAWFrame& frame)

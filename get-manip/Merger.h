@@ -58,15 +58,18 @@ public:
                       sample_t threshold);
     
 private:
-    struct FrameMetadata
+    //! \brief Provides the position and file pointer for an event
+    struct MergingMapEntry
     {
-        std::shared_ptr<GRAWFile> filePtr; // Pointer to the file that contains this frame
-        std::streamoff filePos;                    // Position of the frame in the file
-        evtid_t evtId;
-        ts_t evtTime;
+        std::shared_ptr<GRAWFile> filePtr;
+        std::streamoff filePos;
     };
     
-    typedef std::multimap<evtid_t, FrameMetadata> MergingMap; // key = event ID
+    /** \brief A map linking event ID to frames in GRAW files.
+    
+     The keys in the map represent event IDs, and the mapped values provide a file pointer and offset.
+     */
+    typedef std::multimap<evtid_t, MergingMapEntry> MergingMap;
     MergingMap mmap;
     
     // This map is for keeping track of what files we've already seen

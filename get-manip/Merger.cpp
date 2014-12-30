@@ -26,18 +26,12 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     // Index the frames in the file
     while (!file->eof()) {
         try {
-            std::streamoff currentPos = file->filestream.tellg();
+            auto fm = file->ReadFrameMetadata();
+            MergingMapEntry me {};
+            me.filePtr = file;
+            me.filePos = fm.filePos;
             
-            // Reading the frame will advance the file pointer
-            GRAWFrame frame {file->ReadRawFrame()};  // inefficient?
-            
-            FrameMetadata fm;
-            fm.filePtr = file;
-            fm.filePos = currentPos;
-            fm.evtId = frame.GetEventId();
-            fm.evtTime = frame.GetEventTime();
-            
-            mmap.emplace(fm.evtId, fm);
+            mmap.emplace(fm.evtId, me);
             nFramesRead++;
         }
         catch (Exceptions::Frame_Read_Error& frErr) {
@@ -83,7 +77,7 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
         // Extract frames from files
         std::queue<GRAWFrame> frames;
         for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
-            FrameMetadata& fref = frameRefPtr->second;
+            auto& fref = frameRefPtr->second;
             fref.filePtr->filestream.seekg(fref.filePos);
             std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
             frames.push(GRAWFrame {rawFrame});
