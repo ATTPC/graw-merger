@@ -109,10 +109,14 @@ int main(int argc, const char * argv[])
         
     // Usage:
     
-    std::string usage = "Usage:\n"
-        "get-manip -l /path/to/lookup/table.csv /path/to/inputs/ [output_file] \n"
+    std::string usage =
+        "get-manip (v1.3): A tool for merging GRAW files into Event files.\n"
+        "\n"
+        "usage: get-manip --lookup <path> [--pedestals <path>] [--threshold <value>]\n"
+        "                [--zerosupp] <input_path> [<output_path>]\n"
+        "\n"
         "If output file is not specified, default is based on input path.\n"
-        "Ex: /data/run_0001/ as input produces /data/run_0001.evt as output.\n";
+        "Ex: /data/run_0001/ as input produces /data/run_0001.evt as output.";
     
     po::options_description opts_desc ("Allowed options.");
 
