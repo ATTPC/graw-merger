@@ -200,7 +200,8 @@ int main(int argc, const char * argv[])
             suppZeros = true;
         }
         
-        sample_t threshold {0};
+        // Init threshold to min sample value: like not having a threshold
+        sample_t threshold {Constants::min_sample};
         if (vm.count("threshold")) {
             threshold = vm["threshold"].as<sample_t>();
         }
