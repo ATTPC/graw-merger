@@ -12,5 +12,5 @@
     <choice id="edu.msu.nscl.get-manip" visible="false">
         <pkg-ref id="edu.msu.nscl.get-manip"/>
     </choice>
-    <pkg-ref id="edu.msu.nscl.get-manip" version="1.4" onConclusion="none">get-manip.pkg</pkg-ref>
+    <pkg-ref id="edu.msu.nscl.get-manip" version="1.4.1" onConclusion="none">get-manip.pkg</pkg-ref>
 </installer-gui-script>
