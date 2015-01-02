@@ -66,51 +66,106 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
     
     // Create events and append to file
-    for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; currentEvtId++ )
+    for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; )
     {
-        // Find frames for this event. equal_range() returns a pair containing
-        // iterators to the first and last frame with this event ID. If no frames
-        // are found, they'll both point to the next highest event ID.
-        auto currentRange = mmap.equal_range(currentEvtId);
-        if (currentRange.first->first > currentEvtId) continue; // no frames found
+        std::vector<std::future<Event>> futures {};
+        std::vector<std::packaged_task<Event()>> pts {};
+        std::vector<std::thread> threads;
         
-        // Extract frames from files
-        std::queue<GRAWFrame> frames;
-        for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
-            auto& fref = frameRefPtr->second;
-            fref.filePtr->filestream.seekg(fref.filePos);
-            std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
-            frames.push(GRAWFrame {rawFrame});
+        for (int qiter = 0; qiter < 8 and mmap.size() > 0; qiter++) {
+            // Find frames for this event. equal_range() returns a pair containing
+            // iterators to the first and last frame with this event ID. If no frames
+            // are found, they'll both point to the next highest event ID.
+            auto currentRange = mmap.equal_range(currentEvtId);
+            if (currentRange.first->first > currentEvtId) continue; // no frames found
+            
+            // Extract frames from files
+            std::queue<GRAWFrame> frames;
+            for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
+                auto& fref = frameRefPtr->second;
+                fref.filePtr->filestream.seekg(fref.filePos);
+                std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
+                frames.push(GRAWFrame {rawFrame});
+            }
+            
+            EventProcessingTask task {std::move(frames), lt, pedsTable, suppZeros, threshold};
+            
+            std::packaged_task<Event()> pt {std::move(task)};
+            
+            futures.push_back(pt.get_future());
+            
+            threads.push_back(std::thread{std::move(pt)});
+
+            mmap.erase(currentEvtId);
+            currentEvtId++;
         }
         
-        // Append frames to a new event
-        Event evt;
-        evt.SetLookupTable(lt);
-        
-        while (!frames.empty()) {
-            evt.AppendFrame(frames.front());
-            frames.pop();
+        for (int qiter = 0; qiter < 8; qiter++) {
+            threads[qiter].join();
+            try {
+                auto processed = futures[qiter].get();
+                outfile.WriteEvent(processed);
+            }
+            catch (std::exception& e) {
+                std::cout << "Error in thread: " << e.what() << std::endl;
+            }
         }
         
-        evt.SubtractFPN();
-        
-        if (not pedsTable.Empty()) {
-            evt.SubtractPedestals(pedsTable);
-        }
-        
-        if (threshold > Constants::min_sample) {
-            evt.ApplyThreshold(threshold);
-        }
-        
-        if (suppZeros) {
-            evt.DropZeros();
-        }
-        
-        outfile.WriteEvent(evt);
-        
-        mmap.erase(currentEvtId);
         ShowProgress(currentEvtId - firstEvtId, numEvts);
     }
+}
+
+Merger::EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr,
+                                                 PadLookupTable* lt,
+                                                 LookupTable<sample_t> peds,
+                                                 bool suppZeros, sample_t th)
+: frames(fr), pads(lt), peds(peds), suppZeros(suppZeros), threshold(th)
+{}
+
+Event Merger::EventProcessingTask::operator()()
+{
+    Event res {};
+    res.SetLookupTable(pads);
+    
+    while (!frames.empty()) {
+        res.AppendFrame(frames.front());
+        frames.pop();
+    }
+    
+    res.SubtractFPN();
+    
+    if (not peds.Empty()) {
+        res.SubtractPedestals(peds);
+    }
+    
+    if (threshold > Constants::min_sample) {
+        res.ApplyThreshold(threshold);
+    }
+    
+    if (suppZeros) {
+        res.DropZeros();
+    }
+    
+    return res;
+}
+
+Event Merger::ProcessEvent(Event evt, const LookupTable<sample_t> pedsTable, const bool suppZeros, const sample_t threshold)
+{
+    evt.SubtractFPN();
+    
+    if (not pedsTable.Empty()) {
+        evt.SubtractPedestals(pedsTable);
+    }
+    
+    if (threshold > Constants::min_sample) {
+        evt.ApplyThreshold(threshold);
+    }
+    
+    if (suppZeros) {
+        evt.DropZeros();
+    }
+
+    return evt;
 }
 
 void Merger::ShowProgress(int currEvt, int numEvt)

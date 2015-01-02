@@ -21,6 +21,8 @@
 #include <queue>
 #include <boost/filesystem.hpp>
 #include <memory>
+#include <future>
+#include <thread>
 #include <string>
 #include <iostream>
 
@@ -58,6 +60,20 @@ public:
                       sample_t threshold);
     
 private:
+    class EventProcessingTask {
+    public:
+        EventProcessingTask(std::queue<GRAWFrame> fr, PadLookupTable* lt, LookupTable<sample_t> peds, bool suppZeros, sample_t th);
+        
+        Event operator()();
+        
+    private:
+        std::queue<GRAWFrame> frames;
+        PadLookupTable* pads;
+        LookupTable<sample_t> peds;
+        bool suppZeros;
+        sample_t threshold;
+    };
+    
     //! \brief Provides the position and file pointer for an event
     struct MergingMapEntry
     {
@@ -77,6 +93,9 @@ private:
 
     //! \brief Creates the progress bar in the terminal
     void ShowProgress(int currEvt, int numEvt);
+    
+    Event ProcessEvent(Event evt, const LookupTable<sample_t> pedsTable,
+                       const bool suppZeros, const sample_t threshold);
 };
 
 #endif /* defined(__get_manip__Merger__) */
