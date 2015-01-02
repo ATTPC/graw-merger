@@ -33,6 +33,9 @@ public:
     void TestEquality(Trace& tr1, Trace& tr2);
     void TestThreshold();
     void TestDropZeros();
+    
+    void TestCopyAssignment();
+    void TestMoveAssignment();
 };
 
 void TraceTestFixture::TestEquality(Trace &tr1, Trace &tr2)
@@ -446,4 +449,58 @@ void TraceTestFixture::TestDropZeros()
 TEST_F(TraceTestFixture, TestDropZeros)
 {
     TestDropZeros();
+}
+
+void TraceTestFixture::TestCopyAssignment()
+{
+    addr_t cobo = 4;
+    addr_t asad = 2;
+    addr_t aget = 1;
+    addr_t channel = 14;
+    pad_t pad = 1942;
+    
+    Trace tr {cobo, asad, aget, channel, pad};
+    
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        tr.data[tb] = tb*2;
+    }
+    
+    Trace tr2 = tr;
+    
+    TestEquality(tr, tr2);
+    
+    ASSERT_NE(&(tr.data), &(tr2.data));
+}
+
+TEST_F(TraceTestFixture, TestCopyAssignment)
+{
+    TestCopyAssignment();
+}
+
+void TraceTestFixture::TestMoveAssignment()
+{
+    addr_t cobo = 4;
+    addr_t asad = 2;
+    addr_t aget = 1;
+    addr_t channel = 14;
+    pad_t pad = 1942;
+    
+    Trace tr {cobo, asad, aget, channel, pad};
+    
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        tr.data[tb] = tb*2;
+    }
+    
+    Trace tr2 = std::move(tr);
+    
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        ASSERT_EQ(tb*2, tr2.data[tb]);
+    }
+    
+    ASSERT_EQ(0, tr.data.size());
+}
+
+TEST_F(TraceTestFixture, TestMoveAssignment)
+{
+    TestMoveAssignment();
 }
