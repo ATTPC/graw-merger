@@ -65,12 +65,12 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     uint32_t firstEvtId = mmap.lower_bound(0)->first;
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
     
-    std::queue<std::future<Event>> futures {};
-    
     std::vector<std::thread> threads;
-    for (int i = 0; i < std::thread::hardware_concurrency() - 1; i++) {
+    for (int i = 0; i < std::thread::hardware_concurrency() - 2; i++) {
         threads.push_back(std::thread {[this]{ return TaskWorker(); }});
     }
+    
+    std::thread writer {[this, &outfile]{ return ResultWriter(outfile); }};
     
     // Create events and append to file
     for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; )
@@ -95,23 +95,12 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
             
             std::packaged_task<Event()> pt {std::move(task)};
             
-            futures.push(pt.get_future());
+            resq.put(pt.get_future());
             
             tq.put(std::move(pt));
 
             mmap.erase(currentEvtId);
             currentEvtId++;
-        }
-        
-        for (int qiter = 0; qiter < 20; qiter++) {
-            try {
-                auto processed = futures.front().get();
-                futures.pop();
-                outfile.WriteEvent(processed);
-            }
-            catch (std::exception& e) {
-                std::cout << "Error in thread: " << e.what() << std::endl;
-            }
         }
         
         ShowProgress(currentEvtId - firstEvtId, numEvts);
@@ -152,14 +141,24 @@ Event Merger::EventProcessingTask::operator()()
     return res;
 }
 
-void Merger::TaskQueue::put(std::packaged_task<PTT> &&task)
+template<typename T>
+void Merger::SyncQueue<T>::put(const T &task)
+{
+    std::lock_guard<std::mutex> lock(qmtx);
+    q.push_back(task);
+    cond.notify_all();
+}
+
+template<typename T>
+void Merger::SyncQueue<T>::put(T &&task)
 {
     std::lock_guard<std::mutex> lock(qmtx);
     q.push_back(std::move(task));
     cond.notify_all();
 }
 
-void Merger::TaskQueue::get(std::packaged_task<PTT> &dest)
+template<typename T>
+void Merger::SyncQueue<T>::get(T &dest)
 {
     std::unique_lock<std::mutex> lock(qmtx);
     cond.wait(lock, [this]{ return !q.empty(); });
@@ -173,6 +172,21 @@ void Merger::TaskWorker()
         std::packaged_task<PTT> task;
         tq.get(task);
         task();
+    }
+}
+
+void Merger::ResultWriter(EventFile& of)
+{
+    while (true) {
+        try {
+            std::future<Event> processed_fut;
+            resq.get(processed_fut);
+            auto processed = processed_fut.get();
+            of.WriteEvent(processed);
+        }
+        catch (std::exception& e) {
+            std::cout << "Error in thread: " << e.what() << std::endl;
+        }
     }
 }
 

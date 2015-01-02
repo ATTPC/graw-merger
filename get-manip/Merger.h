@@ -78,20 +78,24 @@ private:
     
     using PTT = Event(void);
     
-    class TaskQueue {
+    template<typename T>
+    class SyncQueue {
     public:
-        void put(std::packaged_task<PTT>&& task);
-        void get(std::packaged_task<PTT>& dest);
+        void put(const T& task);
+        void put(T&& task);
+        void get(T& dest);
         
     private:
         std::mutex qmtx;
         std::condition_variable cond;
-        std::list<std::packaged_task<PTT>> q;
+        std::list<T> q;
     };
     
-    TaskQueue tq;
+    SyncQueue<std::packaged_task<PTT>> tq;
+    SyncQueue<std::future<Event>> resq;
     
     void TaskWorker();
+    void ResultWriter(EventFile& of);
     
     //! \brief Provides the position and file pointer for an event
     struct MergingMapEntry
