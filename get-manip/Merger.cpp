@@ -65,14 +65,17 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     uint32_t firstEvtId = mmap.lower_bound(0)->first;
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
     
+    std::queue<std::future<Event>> futures {};
+    
+    std::vector<std::thread> threads;
+    for (int i = 0; i < std::thread::hardware_concurrency() - 1; i++) {
+        threads.push_back(std::thread {[this]{ return TaskWorker(); }});
+    }
+    
     // Create events and append to file
     for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; )
     {
-        std::vector<std::future<Event>> futures {};
-        std::vector<std::packaged_task<Event()>> pts {};
-        std::vector<std::thread> threads;
-        
-        for (int qiter = 0; qiter < 8 and mmap.size() > 0; qiter++) {
+        for (int qiter = 0; qiter < 20 and mmap.size() > 0; qiter++) {
             // Find frames for this event. equal_range() returns a pair containing
             // iterators to the first and last frame with this event ID. If no frames
             // are found, they'll both point to the next highest event ID.
@@ -92,18 +95,18 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
             
             std::packaged_task<Event()> pt {std::move(task)};
             
-            futures.push_back(pt.get_future());
+            futures.push(pt.get_future());
             
-            threads.push_back(std::thread{std::move(pt)});
+            tq.put(std::move(pt));
 
             mmap.erase(currentEvtId);
             currentEvtId++;
         }
         
-        for (int qiter = 0; qiter < 8; qiter++) {
-            threads[qiter].join();
+        for (int qiter = 0; qiter < 20; qiter++) {
             try {
-                auto processed = futures[qiter].get();
+                auto processed = futures.front().get();
+                futures.pop();
                 outfile.WriteEvent(processed);
             }
             catch (std::exception& e) {
@@ -149,23 +152,28 @@ Event Merger::EventProcessingTask::operator()()
     return res;
 }
 
-Event Merger::ProcessEvent(Event evt, const LookupTable<sample_t> pedsTable, const bool suppZeros, const sample_t threshold)
+void Merger::TaskQueue::put(std::packaged_task<PTT> &&task)
 {
-    evt.SubtractFPN();
-    
-    if (not pedsTable.Empty()) {
-        evt.SubtractPedestals(pedsTable);
-    }
-    
-    if (threshold > Constants::min_sample) {
-        evt.ApplyThreshold(threshold);
-    }
-    
-    if (suppZeros) {
-        evt.DropZeros();
-    }
+    std::lock_guard<std::mutex> lock(qmtx);
+    q.push_back(std::move(task));
+    cond.notify_all();
+}
 
-    return evt;
+void Merger::TaskQueue::get(std::packaged_task<PTT> &dest)
+{
+    std::unique_lock<std::mutex> lock(qmtx);
+    cond.wait(lock, [this]{ return !q.empty(); });
+    dest = std::move(q.front());
+    q.pop_front();
+}
+
+void Merger::TaskWorker()
+{
+    while (true) {
+        std::packaged_task<PTT> task;
+        tq.get(task);
+        task();
+    }
 }
 
 void Merger::ShowProgress(int currEvt, int numEvt)

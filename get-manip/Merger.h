@@ -19,8 +19,10 @@
 #include <map>
 #include <vector>
 #include <queue>
+#include <list>
 #include <boost/filesystem.hpp>
 #include <memory>
+#include <mutex>
 #include <future>
 #include <thread>
 #include <string>
@@ -74,6 +76,23 @@ private:
         sample_t threshold;
     };
     
+    using PTT = Event(void);
+    
+    class TaskQueue {
+    public:
+        void put(std::packaged_task<PTT>&& task);
+        void get(std::packaged_task<PTT>& dest);
+        
+    private:
+        std::mutex qmtx;
+        std::condition_variable cond;
+        std::list<std::packaged_task<PTT>> q;
+    };
+    
+    TaskQueue tq;
+    
+    void TaskWorker();
+    
     //! \brief Provides the position and file pointer for an event
     struct MergingMapEntry
     {
@@ -93,9 +112,6 @@ private:
 
     //! \brief Creates the progress bar in the terminal
     void ShowProgress(int currEvt, int numEvt);
-    
-    Event ProcessEvent(Event evt, const LookupTable<sample_t> pedsTable,
-                       const bool suppZeros, const sample_t threshold);
 };
 
 #endif /* defined(__get_manip__Merger__) */
