@@ -65,9 +65,10 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     uint32_t firstEvtId = mmap.lower_bound(0)->first;
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
     
-    std::vector<std::thread> threads;
-    for (int i = 0; i < std::thread::hardware_concurrency() - 2; i++) {
-        threads.push_back(std::thread {[this]{ return TaskWorker(); }});
+    int nWorkers = std::thread::hardware_concurrency();
+    std::vector<std::thread> workers;
+    for (int i = 0; i < nWorkers; i++) {
+        workers.push_back(std::thread {[this]{ return TaskWorker(); }});
     }
     
     std::thread writer {[this, &outfile]{ return ResultWriter(outfile); }};
@@ -111,7 +112,7 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     tq.finish();
     resq.finish();
     
-    for (auto& th : threads) {
+    for (auto& th : workers) {
         th.join();
     }
     
