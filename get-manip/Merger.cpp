@@ -144,7 +144,8 @@ Event Merger::EventProcessingTask::operator()()
 template<typename T>
 void Merger::SyncQueue<T>::put(const T &task)
 {
-    std::lock_guard<std::mutex> lock(qmtx);
+    std::unique_lock<std::mutex> lock(qmtx);
+    cond.wait(lock, [this]{ return q.size() < 20; });
     q.push_back(task);
     cond.notify_all();
 }
@@ -152,7 +153,8 @@ void Merger::SyncQueue<T>::put(const T &task)
 template<typename T>
 void Merger::SyncQueue<T>::put(T &&task)
 {
-    std::lock_guard<std::mutex> lock(qmtx);
+    std::unique_lock<std::mutex> lock(qmtx);
+    cond.wait(lock, [this]{ return q.size() < 20;});
     q.push_back(std::move(task));
     cond.notify_all();
 }
@@ -164,6 +166,7 @@ void Merger::SyncQueue<T>::get(T &dest)
     cond.wait(lock, [this]{ return !q.empty(); });
     dest = std::move(q.front());
     q.pop_front();
+    cond.notify_all();
 }
 
 void Merger::TaskWorker()
