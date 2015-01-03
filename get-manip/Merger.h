@@ -81,14 +81,26 @@ private:
     template<typename T>
     class SyncQueue {
     public:
+        SyncQueue() : finished(false) {};
+        
         void put(const T& task);
         void put(T&& task);
         void get(T& dest);
+        
+        void finish();
+        
+        class NoMoreTasks : public std::exception
+        {
+        public:
+            virtual const char* what() { return "End of Queue"; };
+        };
         
     private:
         std::mutex qmtx;
         std::condition_variable cond;
         std::list<T> q;
+        
+        bool finished;
     };
     
     SyncQueue<std::packaged_task<PTT>> tq;

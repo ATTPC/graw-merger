@@ -105,6 +105,17 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
         
         ShowProgress(currentEvtId - firstEvtId, numEvts);
     }
+    
+    // Now we're done reading events, so cause the threads to finish
+    
+    tq.finish();
+    resq.finish();
+    
+    for (auto& th : threads) {
+        th.join();
+    }
+    
+    writer.join();
 }
 
 Merger::EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr,
@@ -163,9 +174,19 @@ template<typename T>
 void Merger::SyncQueue<T>::get(T &dest)
 {
     std::unique_lock<std::mutex> lock(qmtx);
-    cond.wait(lock, [this]{ return !q.empty(); });
+    cond.wait(lock, [this]{ return !q.empty() or finished; });
+    if (finished) throw NoMoreTasks();
     dest = std::move(q.front());
     q.pop_front();
+    cond.notify_all();
+}
+
+template<typename T>
+void Merger::SyncQueue<T>::finish()
+{
+    std::unique_lock<std::mutex> lock {qmtx};
+    cond.wait(lock, [this]{ return q.empty(); });
+    finished = true;
     cond.notify_all();
 }
 
@@ -173,8 +194,13 @@ void Merger::TaskWorker()
 {
     while (true) {
         std::packaged_task<PTT> task;
-        tq.get(task);
-        task();
+        try {
+            tq.get(task);
+            task();
+        }
+        catch (Merger::SyncQueue<std::packaged_task<PTT>>::NoMoreTasks& t) {
+            return;
+        }
     }
 }
 
@@ -186,6 +212,9 @@ void Merger::ResultWriter(EventFile& of)
             resq.get(processed_fut);
             auto processed = processed_fut.get();
             of.WriteEvent(processed);
+        }
+        catch (Merger::SyncQueue<std::future<Event>>::NoMoreTasks& t) {
+            return;
         }
         catch (std::exception& e) {
             std::cout << "Error in thread: " << e.what() << std::endl;
