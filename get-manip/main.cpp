@@ -110,7 +110,7 @@ int main(int argc, const char * argv[])
     // Usage:
     
     std::string usage =
-        "get-manip (v1.4.1): A tool for merging GRAW files into Event files.\n"
+        "get-manip (v1.5): A tool for merging GRAW files into Event files.\n"
         "\n"
         "usage: get-manip --lookup <path> [--pedestals <path>] [--threshold <value>]\n"
         "                [--zerosupp] <input_path> [<output_path>]\n"
