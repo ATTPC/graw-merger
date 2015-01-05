@@ -74,35 +74,31 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     std::thread writer {[this, &outfile]{ return ResultWriter(outfile); }};
     
     // Create events and append to file
-    for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; )
-    {
-        for (int qiter = 0; qiter < 20 and mmap.size() > 0; qiter++) {
-            // Find frames for this event. equal_range() returns a pair containing
-            // iterators to the first and last frame with this event ID. If no frames
-            // are found, they'll both point to the next highest event ID.
-            auto currentRange = mmap.equal_range(currentEvtId);
-            if (currentRange.first->first > currentEvtId) continue; // no frames found
-            
-            // Extract frames from files
-            std::queue<GRAWFrame> frames;
-            for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
-                auto& fref = frameRefPtr->second;
-                fref.filePtr->filestream.seekg(fref.filePos);
-                std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
-                frames.push(GRAWFrame {rawFrame});
-            }
-            
-            EventProcessingTask task {std::move(frames), lt, pedsTable, suppZeros, threshold};
-            
-            std::packaged_task<Event()> pt {std::move(task)};
-            
-            resq.put(pt.get_future());
-            
-            tq.put(std::move(pt));
-
-            mmap.erase(currentEvtId);
-            currentEvtId++;
+    for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; currentEvtId++) {
+        // Find frames for this event. equal_range() returns a pair containing
+        // iterators to the first and last frame with this event ID. If no frames
+        // are found, they'll both point to the next highest event ID.
+        auto currentRange = mmap.equal_range(currentEvtId);
+        if (currentRange.first->first > currentEvtId) continue; // no frames found
+        
+        // Extract frames from files
+        std::queue<GRAWFrame> frames;
+        for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
+            auto& fref = frameRefPtr->second;
+            fref.filePtr->filestream.seekg(fref.filePos);
+            std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
+            frames.push(GRAWFrame {rawFrame});
         }
+        
+        EventProcessingTask task {std::move(frames), lt, pedsTable, suppZeros, threshold};
+        
+        std::packaged_task<Event()> pt {std::move(task)};
+        
+        resq.put(pt.get_future());
+        
+        tq.put(std::move(pt));
+
+        mmap.erase(currentEvtId);
         
         ShowProgress(currentEvtId - firstEvtId, numEvts);
     }
