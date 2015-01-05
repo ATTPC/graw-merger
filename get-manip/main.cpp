@@ -136,9 +136,15 @@ int main(int argc, const char * argv[])
     pos_opts.add("input", 1);
     pos_opts.add("output", 1);
     
-    po::store(po::parse_command_line(argc, argv, opts_desc), vm);
-    
-    po::store(po::command_line_parser(argc, argv).options(opts_desc).positional(pos_opts).run(), vm);
+    try {
+        po::store(po::parse_command_line(argc, argv, opts_desc), vm);
+        po::store(po::command_line_parser(argc, argv).options(opts_desc).positional(pos_opts).run(), vm);
+    }
+    catch (po::error& e) {
+        std::cout << "Error parsing command line: " << e.what() << std::endl;
+        std::cout << usage << std::endl;
+        return 1;
+    }
 
     po::notify(vm);
     
@@ -217,7 +223,7 @@ int main(int argc, const char * argv[])
     }
     else {
         std::cout << usage << std::endl;
-        return 1;
+        return 0;
     }
     
     return 0;
