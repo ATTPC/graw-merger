@@ -52,5 +52,5 @@ target_link_libraries(getevt ${Boost_LIBRARIES})
 add_executable(get-manip ${MERGER_FILES} ${MAIN_FILE})
 target_link_libraries(get-manip ${Boost_LIBRARIES} getevt)
 
-add_executable(get-manip-tests ${SOURCE_FILES} ${TEST_FILES} ${TEST_MAIN})
+add_executable(get-manip-tests ${TEST_FILES} ${TEST_MAIN})
 target_link_libraries(get-manip-tests ${Boost_LIBRARIES} gtest getevt)
