@@ -9,7 +9,6 @@
 #include "gtest/gtest.h"
 #include "GRAWFrame.h"
 #include "FakeRawFrame.h"
-#include "MockGRAWFile.h"
 
 #include <vector>
 #include <iostream>
@@ -31,8 +30,7 @@ protected:
     unsigned long GetSizeOfDataVec(GRAWFrame& fr) {return fr.data.size();};
     
 public:
-    
-    MockGRAWFile mockdf;
+
     void TestConstructor(FakeRawFrame& fr, uint8_t cobo, uint8_t asad);
 };
 
@@ -115,21 +113,5 @@ TEST_F(GRAWFrameTestFixture, Constructor)
 {
     FakeRawFrame fr {1234567890, 12, 3, 2};
     TestConstructor(fr, 3, 2);
-}
-
-TEST_F(GRAWFrameTestFixture, Constructor_BadCobo)
-{
-    FakeRawFrame fakeData {1234567890, 12, 0, 2};
-    
-    GRAWFrame frame {fakeData.GenerateRawFrameVector()};
-    ASSERT_EQ(GetCoboId(frame), 3);
-}
-
-TEST_F(GRAWFrameTestFixture, Constructor_BadAsad)
-{
-    FakeRawFrame fakeData {1234567890, 12, 3, 0};
-    
-    GRAWFrame frame {fakeData.GenerateRawFrameVector()};
-    ASSERT_EQ(GetAsadId(frame), 2);
 }
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(get-manip)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Define all of the files to be built and included
 
@@ -36,7 +36,13 @@ include_directories(get-manip)
 find_package(Boost 1.50.0 REQUIRED COMPONENTS date_time system filesystem program_options log)
 include_directories(${Boost_INCLUDE_DIRS})
 
-find_package(GTest)
+# Build googletest
+
+set(GTEST_ROOT modules/gtest-1.7.0)
+add_subdirectory(${GTEST_ROOT})
+set(GTEST_INCLUDE_DIR ${GTEST_ROOT}/src)
+include_directories(${GTEST_INCLUDE_DIR})
+set(GTEST_LIBRARY ${CMAKE_BINARY_DIR}/${GTEST_ROOT}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 # Set up targets
 
@@ -46,8 +52,5 @@ target_link_libraries(getevt ${Boost_LIBRARIES})
 add_executable(get-manip ${MERGER_FILES} ${MAIN_FILE})
 target_link_libraries(get-manip ${Boost_LIBRARIES} getevt)
 
-if(GTEST_FOUND)
-    include_directories(${GTEST_INCLUDE_DIRS})
-    add_executable(get-manip-tests ${SOURCE_FILES} ${TEST_FILES} ${TEST_MAIN})
-    target_link_libraries(get-manip-tests ${GTEST_LIBRARIES} ${Boost_LIBRARIES})
-endif()
+add_executable(get-manip-tests ${SOURCE_FILES} ${TEST_FILES} ${TEST_MAIN})
+target_link_libraries(get-manip-tests ${Boost_LIBRARIES} gtest getevt)
