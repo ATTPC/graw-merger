@@ -34,7 +34,7 @@ public:
     
     // Construction of Events
     
-    //! \brief Default contstructor. 
+    //! \brief Default constructor.
     Event();
     
     /** \brief Deserialize an event.
