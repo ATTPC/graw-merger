@@ -8,6 +8,8 @@
 
 #include "DataFile.h"
 
+using namespace getevt;
+
 DataFile::DataFile() {};
 
 DataFile::DataFile(const boost::filesystem::path& path, const std::ios::openmode mode)
@@ -104,6 +106,12 @@ std::streamoff DataFile::GetPosition()
 {
     if (!isInitialized) throw Exceptions::Not_Init();
     return filestream.tellg();
+}
+
+void DataFile::SetPosition(const std::streamoff pos)
+{
+    if (!isInitialized) throw Exceptions::Not_Init();
+    filestream.seekg(pos);
 }
 
 const std::string DataFile::GetFilename() const

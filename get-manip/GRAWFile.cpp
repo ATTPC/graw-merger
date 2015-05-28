@@ -8,6 +8,8 @@
 
 #include "GRAWFile.h"
 
+using namespace getevt;
+
 // --------
 // Constructors
 // --------

@@ -8,22 +8,24 @@
 
 #include "Event.h"
 
+using namespace getevt;
+
 // --------
 // Static Variables
 // --------
 
-const uint8_t Event::magic {0xEE};
+const uint8_t getevt::Event::magic {0xEE};
 
 // --------
 // Constructors, Move, and Copy
 // --------
 
-Event::Event()
+getevt::Event::Event()
 : eventId(0),eventTime(0),lookupTable(nullptr),nFramesAppended(0)
 {
 }
 
-Event::Event(const std::vector<uint8_t>& raw)
+getevt::Event::Event(const std::vector<uint8_t>& raw)
 : eventId(0),eventTime(0),lookupTable(nullptr),nFramesAppended(0)
 {
     auto rawIter = raw.begin();
@@ -65,19 +67,19 @@ Event::Event(const std::vector<uint8_t>& raw)
     }
 }
 
-Event::Event(const Event& orig)
+getevt::Event::Event(const Event& orig)
 : lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime),nFramesAppended(orig.nFramesAppended)
 {
     traces = orig.traces;
 }
 
-Event::Event(Event&& orig)
+getevt::Event::Event(Event&& orig)
 : lookupTable(orig.lookupTable),eventId(orig.eventId),eventTime(orig.eventTime),nFramesAppended(orig.nFramesAppended)
 {
     traces = std::move(orig.traces);
 }
 
-Event& Event::operator=(const Event& orig)
+Event& getevt::Event::operator=(const Event& orig)
 {
     this->lookupTable = orig.lookupTable;  // could leak
     this->eventId = orig.eventId;
@@ -90,7 +92,7 @@ Event& Event::operator=(const Event& orig)
     return *this;
 }
 
-Event& Event::operator=(Event&& orig)
+Event& getevt::Event::operator=(Event&& orig)
 {
     this->lookupTable = orig.lookupTable;  // could leak
     this->eventId = orig.eventId;
@@ -107,22 +109,22 @@ Event& Event::operator=(Event&& orig)
 // Setting Properties
 // --------
 
-void Event::SetLookupTable(PadLookupTable * table)
+void getevt::Event::SetLookupTable(PadLookupTable * table)
 {
     lookupTable = table;
 }
 
-void Event::SetEventId(const evtid_t eventId_in)
+void getevt::Event::SetEventId(const evtid_t eventId_in)
 {
     eventId = eventId_in;
 }
 
-void Event::SetEventTime(const ts_t eventTime_in)
+void getevt::Event::SetEventTime(const ts_t eventTime_in)
 {
     eventTime = eventTime_in;
 }
 
-void Event::AppendFrame(const GRAWFrame& frame)
+void getevt::Event::AppendFrame(const GRAWFrame& frame)
 {
     // Make sure pointers to required objects are valid
 
@@ -183,7 +185,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
     }
 }
 
-std::vector<GRAWFrame> Event::ExtractAllFrames()
+std::vector<GRAWFrame> getevt::Event::ExtractAllFrames()
 {
     std::vector<GRAWFrame> frames;
     
@@ -229,7 +231,7 @@ std::vector<GRAWFrame> Event::ExtractAllFrames()
 // Getting Properties and Members
 // --------
 
-uint32_t Event::Size() const
+uint32_t getevt::Event::Size() const
 {
     // Size depends on what is written to disk. This is defined by
     // the stream insertion operator.
@@ -241,18 +243,18 @@ uint32_t Event::Size() const
     return size;
 }
 
-Trace& Event::GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
+Trace& getevt::Event::GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
 {
     auto index = CalculateHash(cobo, asad, aget, channel);
     return traces.at(index);  // could throw out_of_range
 }
 
-evtid_t Event::GetEventId() const
+evtid_t getevt::Event::GetEventId() const
 {
     return eventId;
 }
 
-ts_t Event::GetEventTime() const
+ts_t getevt::Event::GetEventTime() const
 {
     return eventTime;
 }
@@ -261,7 +263,7 @@ ts_t Event::GetEventTime() const
 // Manipulation of Contained Data
 // --------
 
-void Event::SubtractFPN()
+void getevt::Event::SubtractFPN()
 {
     std::vector<uint8_t> fpn_channels {11,22,45,56};  // from AGET Docs
     
@@ -333,7 +335,7 @@ void Event::SubtractFPN()
     }
 }
 
-void Event::SubtractPedestals(const LookupTable<sample_t>& pedsTable)
+void getevt::Event::SubtractPedestals(const LookupTable<sample_t>& pedsTable)
 {
     for (auto& trace : traces) {
         auto cobo = trace.second.coboId;
@@ -352,14 +354,14 @@ void Event::SubtractPedestals(const LookupTable<sample_t>& pedsTable)
     }
 }
 
-void Event::ApplyThreshold(const sample_t threshold)
+void getevt::Event::ApplyThreshold(const sample_t threshold)
 {
     for (auto& item : traces) {
         item.second.ApplyThreshold(threshold);
     }
 }
 
-void Event::DropZeros()
+void getevt::Event::DropZeros()
 {
     for (auto trIter = traces.begin(); trIter != traces.end();) {
         trIter->second.DropZeros();
@@ -376,32 +378,34 @@ void Event::DropZeros()
 // I/O Functions
 // --------
 
-std::ostream& operator<<(std::ostream& stream, const Event& event)
+namespace getevt
 {
-    uint32_t sizeOfEvent = event.Size();
-    
-    stream.write((char*) &(Event::magic), sizeof(Event::magic));
-    
-    stream.write((char*) &sizeOfEvent, sizeof(sizeOfEvent));
-    stream.write((char*) &event.eventId, sizeof(event.eventId));
-    stream.write((char*) &event.eventTime, sizeof(event.eventTime));
-    
-    uint16_t nTraces = (uint16_t) event.traces.size();
-    stream.write((char*) &nTraces, sizeof(nTraces));
-    
-    for (const auto& item : event.traces)
+    std::ostream& operator<<(std::ostream& stream, const getevt::Event& event)
     {
-        stream << item.second;
+        uint32_t sizeOfEvent = event.Size();
+
+        stream.write((char *) &(getevt::Event::magic), sizeof(getevt::Event::magic));
+
+        stream.write((char *) &sizeOfEvent, sizeof(sizeOfEvent));
+        stream.write((char *) &event.eventId, sizeof(event.eventId));
+        stream.write((char *) &event.eventTime, sizeof(event.eventTime));
+
+        uint16_t nTraces = (uint16_t) event.traces.size();
+        stream.write((char *) &nTraces, sizeof(nTraces));
+
+        for (const auto& item : event.traces) {
+            stream << item.second;
+        }
+
+        return stream;
     }
-    
-    return stream;
 }
 
 // --------
 // Private Functions
 // --------
 
-hash_t Event::CalculateHash(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
+hash_t getevt::Event::CalculateHash(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
 {
     // Widen the integers so they don't overflow on multiplication
     auto wcobo = hash_t(cobo);

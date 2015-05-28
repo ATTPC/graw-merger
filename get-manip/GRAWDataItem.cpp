@@ -8,6 +8,8 @@
 
 #include "GRAWDataItem.h"
 
+using namespace getevt;
+
 // --------
 // Constructor
 // --------

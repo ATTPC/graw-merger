@@ -8,6 +8,8 @@
 
 #include "GRAWFrame.h"
 
+using namespace getevt;
+
 // --------
 // Static constants
 // --------

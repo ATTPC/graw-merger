@@ -9,6 +9,8 @@
 #include "PadLookupTable.h"
 #include "GMExceptions.h"
 
+using namespace getevt;
+
 PadLookupTable::PadLookupTable()
 : LookupTable ()
 {

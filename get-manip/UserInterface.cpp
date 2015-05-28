@@ -8,6 +8,8 @@
 
 #include "UserInterface.h"
 
+using namespace getmanip;
+
 int UI::ProgressBar::width = 27;
 
 UI::ProgressBar::ProgressBar()

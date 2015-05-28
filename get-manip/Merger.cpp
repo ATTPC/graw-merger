@@ -8,6 +8,8 @@
 
 #include "Merger.h"
 
+using namespace getmanip;
+
 Merger::Merger()
 {}
 
@@ -15,11 +17,11 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
 {
     // Check if the file has already been read
     if (files.find(fpath.filename().string()) != files.end()) {
-        throw Exceptions::File_Already_Read(fpath.filename().string());
+        throw getevt::Exceptions::File_Already_Read(fpath.filename().string());
     }
     
     // Open the file
-    std::shared_ptr<GRAWFile> file {new GRAWFile(fpath, std::ios::in)};
+    std::shared_ptr<getevt::GRAWFile> file {new getevt::GRAWFile(fpath, std::ios::in)};
     
     int nFramesRead {0};
     
@@ -34,7 +36,7 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
             mmap.emplace(fm.evtId, me);
             nFramesRead++;
         }
-        catch (Exceptions::Frame_Read_Error& frErr) {
+        catch (getevt::Exceptions::Frame_Read_Error& frErr) {
             std::cerr << frErr.what() << std::endl;
             continue;
         }
@@ -52,11 +54,11 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     return nFramesRead;
 }
 
-void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
-                          LookupTable<sample_t>& pedsTable, bool suppZeros,
-                          sample_t threshold)
+void Merger::MergeByEvtId(const std::string &outfilename, getevt::PadLookupTable* lt,
+                          getevt::LookupTable<getevt::sample_t>& pedsTable, bool suppZeros,
+                          getevt::sample_t threshold)
 {
-    EventFile outfile;
+    getevt::EventFile outfile;
     outfile.OpenFileForWrite(outfilename);
     
     std::cout << "Beginning merge of " << mmap.size() << " frames." << std::endl;
@@ -82,17 +84,17 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
         if (currentRange.first->first > currentEvtId) continue; // no frames found
         
         // Extract frames from files
-        std::queue<GRAWFrame> frames;
+        std::queue<getevt::GRAWFrame> frames;
         for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
             auto& fref = frameRefPtr->second;
-            fref.filePtr->filestream.seekg(fref.filePos);
+            fref.filePtr->SetPosition(fref.filePos);
             std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
-            frames.push(GRAWFrame {rawFrame});
+            frames.push(getevt::GRAWFrame {rawFrame});
         }
         
         EventProcessingTask task {std::move(frames), lt, pedsTable, suppZeros, threshold};
         
-        std::packaged_task<Event()> pt {std::move(task)};
+        std::packaged_task<getevt::Event()> pt {std::move(task)};
         
         resq.put(pt.get_future());
         
@@ -115,16 +117,16 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     writer.join();
 }
 
-Merger::EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr,
-                                                 PadLookupTable* lt,
-                                                 LookupTable<sample_t> peds,
-                                                 bool suppZeros, sample_t th)
+Merger::EventProcessingTask::EventProcessingTask(std::queue<getevt::GRAWFrame> fr,
+                                                 getevt::PadLookupTable* lt,
+                                                 getevt::LookupTable<getevt::sample_t> peds,
+                                                 bool suppZeros, getevt::sample_t th)
 : frames(fr), pads(lt), peds(peds), suppZeros(suppZeros), threshold(th)
 {}
 
-Event Merger::EventProcessingTask::operator()()
+getevt::Event Merger::EventProcessingTask::operator()()
 {
-    Event res {};
+    getevt::Event res {};
     res.SetLookupTable(pads);
     
     while (!frames.empty()) {
@@ -138,7 +140,7 @@ Event Merger::EventProcessingTask::operator()()
         res.SubtractPedestals(peds);
     }
     
-    if (threshold > Constants::min_sample) {
+    if (threshold > getevt::Constants::min_sample) {
         res.ApplyThreshold(threshold);
     }
     
@@ -201,16 +203,16 @@ void Merger::TaskWorker()
     }
 }
 
-void Merger::ResultWriter(EventFile& of)
+void Merger::ResultWriter(getevt::EventFile& of)
 {
     while (true) {
         try {
-            std::future<Event> processed_fut;
+            std::future<getevt::Event> processed_fut;
             resq.get(processed_fut);
             auto processed = processed_fut.get();
             of.WriteEvent(processed);
         }
-        catch (Merger::SyncQueue<std::future<Event>>::NoMoreTasks& t) {
+        catch (Merger::SyncQueue<std::future<getevt::Event>>::NoMoreTasks& t) {
             return;
         }
         catch (std::exception& e) {

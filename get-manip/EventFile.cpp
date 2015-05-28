@@ -8,6 +8,8 @@
 
 #include "EventFile.h"
 
+using namespace getevt;
+
 // --------
 // Static constants
 // --------

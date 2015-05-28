@@ -8,6 +8,8 @@
 
 #include "Trace.h"
 
+using namespace getevt;
+
 // --------
 // Static constants
 // --------
@@ -265,24 +267,27 @@ void Trace::DropZeros()
 // I/O Operations
 // --------
 
-std::ostream& operator<<(std::ostream& stream, const Trace& trace)
+namespace getevt
 {
-    uint32_t size = trace.size();
-    
-    stream.write((char*) &size, sizeof(size));
-    stream.write((char*) &(trace.coboId), sizeof(trace.coboId));
-    stream.write((char*) &(trace.asadId), sizeof(trace.asadId));
-    stream.write((char*) &(trace.agetId), sizeof(trace.agetId));
-    stream.write((char*) &(trace.channel), sizeof(trace.channel));
-    stream.write((char*) &(trace.padId), sizeof(trace.padId));
-    
-    for (const auto& item : trace.data)
+
+    std::ostream& operator<<(std::ostream& stream, const Trace& trace)
     {
-        auto compacted_data = Trace::CompactSample(item.first, item.second);
-        stream.write((char*) &compacted_data ,Trace::sampleSize);
+        uint32_t size = trace.size();
+
+        stream.write((char *) &size, sizeof(size));
+        stream.write((char *) &(trace.coboId), sizeof(trace.coboId));
+        stream.write((char *) &(trace.asadId), sizeof(trace.asadId));
+        stream.write((char *) &(trace.agetId), sizeof(trace.agetId));
+        stream.write((char *) &(trace.channel), sizeof(trace.channel));
+        stream.write((char *) &(trace.padId), sizeof(trace.padId));
+
+        for (const auto& item : trace.data) {
+            auto compacted_data = Trace::CompactSample(item.first, item.second);
+            stream.write((char *) &compacted_data, Trace::sampleSize);
+        }
+
+        return stream;
     }
-    
-    return stream;
 }
 
 // --------

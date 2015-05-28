@@ -31,7 +31,7 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
     namespace fs = boost::filesystem;
     
     if (!exists(eventRoot)) {
-        throw Exceptions::Does_Not_Exist(eventRoot.string());
+        throw getevt::Exceptions::Does_Not_Exist(eventRoot.string());
     }
     
     fs::recursive_directory_iterator dirIter(eventRoot);
@@ -41,7 +41,7 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
     std::cout << "Looking for files." << std::endl;
     
     for ( ; dirIter != endOfDir; dirIter++) {
-        if (is_directory(dirIter->path())) {
+        if (fs::is_directory(dirIter->path())) {
             std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
         }
         else if ((boost::filesystem::is_regular_file(dirIter->path()) ||
@@ -61,12 +61,12 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
 void MergeFiles(boost::filesystem::path input_path,
                 boost::filesystem::path output_path,
                 boost::filesystem::path lookup_path,
-                LookupTable<sample_t>& pedsTable,
-                bool suppZeros, sample_t threshold)
+                getevt::LookupTable<getevt::sample_t>& pedsTable,
+                bool suppZeros, getevt::sample_t threshold)
 {
     // Import the lookup table
     
-    PadLookupTable lookupTable (lookup_path.string());
+    getevt::PadLookupTable lookupTable (lookup_path.string());
     
     // Find files in the provided directory
     
@@ -78,10 +78,10 @@ void MergeFiles(boost::filesystem::path input_path,
     filePaths = FindGRAWFilesInDir(input_path);
 
     if (filePaths.size() == 0) {
-        throw Exceptions::Dir_is_Empty(input_path.string());
+        throw getevt::Exceptions::Dir_is_Empty(input_path.string());
     }
     
-    Merger mg;
+    getmanip::Merger mg;
     
     // Add the files to the merger
     
@@ -126,7 +126,7 @@ int main(int argc, const char * argv[])
         ("help,h", "Output a help message")
         ("lookup,l", po::value<fs::path>(), "Lookup table")
         ("pedestals,p", po::value<fs::path>(), "Pedestals file")
-        ("threshold,t", po::value<sample_t>(), "Threshold")
+        ("threshold,t", po::value<getevt::sample_t>(), "Threshold")
         ("zerosupp,z", po::bool_switch(), "Zero suppression")
         ("input,i", po::value<fs::path>(), "Input directory")
         ("output,o", po::value<fs::path>(), "Output file")
@@ -188,7 +188,7 @@ int main(int argc, const char * argv[])
         
         // Load the pedestals file, if given
         
-        auto pedsTable = LookupTable<sample_t> {};
+        auto pedsTable = getevt::LookupTable<getevt::sample_t> {};
         if (vm.count("pedestals")) {
             // Load pedestals
             auto pedsPath = vm["pedestals"].as<fs::path>();
@@ -207,9 +207,9 @@ int main(int argc, const char * argv[])
         }
         
         // Init threshold to min sample value: like not having a threshold
-        sample_t threshold {Constants::min_sample};
+        getevt::sample_t threshold {getevt::Constants::min_sample};
         if (vm.count("threshold")) {
-            threshold = vm["threshold"].as<sample_t>();
+            threshold = vm["threshold"].as<getevt::sample_t>();
         }
         
         try {

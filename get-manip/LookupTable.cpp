@@ -11,6 +11,8 @@
 #include <string>
 #include <sstream>
 
+using namespace getevt;
+
 template <typename mapped_t>
 hash_t LookupTable<mapped_t>::CalculateHash(addr_t cobo, addr_t asad,
                                             addr_t aget, addr_t channel)
@@ -108,5 +110,11 @@ void LookupTable<mapped_t>::ReadFile(const std::string& path)
 
 // Explicit instantiations
 
-template class LookupTable<pad_t>;
-template class LookupTable<sample_t>;
+namespace getevt
+{
+    template
+    class LookupTable<pad_t>;
+
+    template
+    class LookupTable<sample_t>;
+}
