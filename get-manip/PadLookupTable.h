@@ -25,10 +25,25 @@ public:
     
     PadLookupTable();
     PadLookupTable(const std::string& file);
+
+    struct Address {
+        addr_t cobo {0};
+        addr_t asad {0};
+        addr_t aget {0};
+        addr_t channel {0};
+
+        Address() {};
+        Address(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
+                : cobo(cobo), asad(asad), aget(aget), channel(channel) {};
+    };
+
+    Address ReverseFind(const pad_t pad) const;
     
 private:
     
     friend class PadLookupTableTestFixture;
+
+    std::unordered_map<pad_t, Address> reverse_table;
 
 };
 

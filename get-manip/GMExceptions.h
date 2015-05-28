@@ -265,6 +265,16 @@ namespace Exceptions {
         //! \return The error message.
         virtual const char* what() const noexcept {return msg.c_str();};
     };
+
+    class Pad_Not_Mapped : public std::exception
+    {
+    private:
+        std::string msg {"This pad is not mapped: "};
+
+    public:
+        Pad_Not_Mapped(int pad) {msg.append(std::to_string(pad));};
+        virtual const char* what() const noexcept {return msg.c_str();};
+    };
 }
 
 
