@@ -119,7 +119,11 @@ Trace& Trace::operator=(Trace&& orig)
 
 void Trace::AppendSample(tb_t tBucket, sample_t sample)
 {
-    data.emplace(tBucket,sample);
+    auto res = data.insert(std::make_pair(tBucket,sample)); // res: pair of (ptr to element, is_inserted?)
+    if (!res.second) {
+        // The key already existed in the map, so replace it with the new value
+        res.first->second = sample;  // the element pointed to has structure (tb, sample)
+    }
 }
 
 sample_t Trace::GetSample(tb_t tBucket) const

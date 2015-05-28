@@ -38,6 +38,8 @@ public:
     void TestMoveAssignment();
     void TestCopyConstructor();
     void TestMoveConstructor();
+
+    void TestReplaceSample();
 };
 
 void TraceTestFixture::TestEquality(Trace &tr1, Trace &tr2)
@@ -559,4 +561,29 @@ void TraceTestFixture::TestMoveConstructor()
 TEST_F(TraceTestFixture, TestMoveConstructor)
 {
     TestMoveConstructor();
+}
+
+void TraceTestFixture::TestReplaceSample()
+{
+    addr_t cobo = 4;
+    addr_t asad = 2;
+    addr_t aget = 1;
+    addr_t channel = 14;
+    pad_t pad = 1942;
+
+    Trace tr {cobo, asad, aget, channel, pad};
+
+    for (tb_t tb = 0; tb < Constants::num_tbs; tb++) {
+        tr.data[tb] = tb;
+    }
+
+    tb_t some_tb = 53;
+    auto old = tr.GetSample(some_tb);
+    tr.AppendSample(some_tb, old*2);
+    ASSERT_EQ(old*2, tr.GetSample(some_tb));
+}
+
+TEST_F(TraceTestFixture, TestReplaceSample)
+{
+    TestReplaceSample();
 }
