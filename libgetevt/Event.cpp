@@ -129,7 +129,7 @@ void getevt::Event::AppendFrame(const GRAWFrame& frame)
     // Make sure pointers to required objects are valid
 
     if (lookupTable == NULL) {
-        LOG_ERROR << "No lookup table provided to Event." << std::endl;
+        std::cerr << "No lookup table provided to Event." << std::endl;
         throw Exceptions::Not_Init();
     }
     
@@ -142,7 +142,7 @@ void getevt::Event::AppendFrame(const GRAWFrame& frame)
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
-        LOG_WARNING << "Event ID mismatch: CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+        std::cerr << "Event ID mismatch: CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
     }
     
 //    long delta = static_cast<int64_t> (this->eventTime - frame.eventTime);

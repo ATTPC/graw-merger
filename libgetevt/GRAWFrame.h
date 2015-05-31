@@ -18,7 +18,6 @@
 
 #include "GRAWDataItem.h"
 #include "Utilities.h"
-#include "UserInterface.h"
 #include "Constants.h"
 
 namespace getevt

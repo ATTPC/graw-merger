@@ -21,7 +21,6 @@
 #include <unordered_map>
 #include <cmath>
 #include "Utilities.h"
-#include "UserInterface.h"
 
 namespace getevt {
     /** \brief Representation of an event in the detector.

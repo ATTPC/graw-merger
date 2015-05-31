@@ -41,6 +41,26 @@ namespace getevt
 
         Trace& operator=(Trace&& orig);
 
+        addr_t getCoboId() const { return coboId; }
+
+        void setCoboId(addr_t coboId) { this->coboId = coboId; }
+
+        addr_t getAsadId() const { return asadId; }
+
+        void setAsadId(addr_t asadId) { this->asadId = asadId; }
+
+        addr_t getAgetId() const { return agetId; }
+
+        void setAgetId(addr_t agetId) { this->agetId = agetId; }
+
+        addr_t getChannel() const { return channel; }
+
+        void setChannel(addr_t channel) { this->channel = channel; }
+
+        pad_t getPadId() const { return padId; }
+
+        void setPadId(pad_t padId) { this->padId = padId; }
+
         // Adding and getting data items
 
         void AppendSample(tb_t tBucket, sample_t sample);
@@ -80,6 +100,10 @@ namespace getevt
 
         friend std::ostream& operator<<(std::ostream& stream, const Trace& trace);
 
+        static uint32_t CompactSample(tb_t tb, sample_t val);
+
+        static std::pair<tb_t, sample_t> UnpackSample(const uint32_t packed);
+
     private:
 
         // Contained data
@@ -90,12 +114,6 @@ namespace getevt
         addr_t channel;
         pad_t padId;
         std::unordered_map<tb_t, sample_t> data;   // maps timebucket:sample
-
-        // Private functions to compress data on file write
-
-        static uint32_t CompactSample(tb_t tb, sample_t val);
-
-        static std::pair<tb_t, sample_t> UnpackSample(const uint32_t packed);
 
         // Friends
 

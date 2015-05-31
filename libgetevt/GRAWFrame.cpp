@@ -210,7 +210,7 @@ void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& 
 //        LOG_WARNING << "Found " << nUnexpected << " unexpected channels." << std::endl;
 //    
     if (data.size() != nItems) {
-        LOG_WARNING << "Missing data items." << std::endl;
+        std::cout << "Missing data items." << std::endl;
     }
 
 }

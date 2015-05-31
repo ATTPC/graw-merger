@@ -6,15 +6,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 # Define all of the files to be built and included
 
 set(LIBRARY_FILES
-    get-manip/DataFile.cpp
-    get-manip/Event.cpp
-    get-manip/EventFile.cpp
-    get-manip/GRAWDataItem.cpp
-    get-manip/GRAWFile.cpp
-    get-manip/GRAWFrame.cpp
-    get-manip/LookupTable.cpp
-    get-manip/PadLookupTable.cpp
-    get-manip/Trace.cpp)
+    libgetevt/DataFile.cpp
+    libgetevt/Event.cpp
+    libgetevt/EventFile.cpp
+    libgetevt/GRAWDataItem.cpp
+    libgetevt/GRAWFile.cpp
+    libgetevt/GRAWFrame.cpp
+    libgetevt/LookupTable.cpp
+    libgetevt/PadLookupTable.cpp
+    libgetevt/Trace.cpp)
 
 set(MERGER_FILES
     get-manip/Merger.cpp
@@ -31,7 +31,7 @@ set(TEST_FILES
 
 set(TEST_MAIN get-manip-tests/main.cpp)
 
-include_directories(get-manip)
+include_directories(.)
 
 find_package(Boost 1.50.0 REQUIRED COMPONENTS date_time system filesystem program_options log)
 include_directories(${Boost_INCLUDE_DIRS})
@@ -54,3 +54,6 @@ target_link_libraries(get-manip ${Boost_LIBRARIES} getevt)
 
 add_executable(get-manip-tests ${TEST_FILES} ${TEST_MAIN})
 target_link_libraries(get-manip-tests ${Boost_LIBRARIES} gtest getevt)
+
+add_executable(getevt-tests libgetevt-tests/main.cpp libgetevt-tests/Trace_tests.cpp)
+target_link_libraries(getevt-tests ${Boost_LIBRARIES} getevt)
