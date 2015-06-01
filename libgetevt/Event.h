@@ -108,6 +108,10 @@ namespace getevt {
         //! \brief Get the size of the event as written to a file, in bytes.
         uint32_t Size() const;
 
+        // \brief Insert a trace
+
+        void AppendTrace(Trace&& tr);
+
         /** \brief Get the Trace for the given set of parameters.
 
          \throws std::out_of_range if the trace is not present in the event.

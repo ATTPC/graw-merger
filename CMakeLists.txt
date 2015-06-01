@@ -55,5 +55,5 @@ target_link_libraries(get-manip ${Boost_LIBRARIES} getevt)
 add_executable(get-manip-tests ${TEST_FILES} ${TEST_MAIN})
 target_link_libraries(get-manip-tests ${Boost_LIBRARIES} gtest getevt)
 
-add_executable(getevt-tests libgetevt-tests/main.cpp libgetevt-tests/Trace_tests.cpp)
+add_executable(getevt-tests libgetevt-tests/main.cpp libgetevt-tests/Trace_tests.cpp libgetevt-tests/Event_tests.cpp)
 target_link_libraries(getevt-tests ${Boost_LIBRARIES} getevt)

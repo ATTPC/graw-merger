@@ -227,9 +227,24 @@ std::vector<GRAWFrame> getevt::Event::ExtractAllFrames()
     return frames;
 }
 
+
+
 // --------
 // Getting Properties and Members
 // --------
+
+void getevt::Event::AppendTrace(Trace&& tr)
+{
+    auto index = CalculateHash(tr.getCoboId(), tr.getAsadId(),
+                               tr.getAgetId(), tr.getChannel());
+
+    auto res = traces.insert(std::make_pair(index, std::move(tr)));
+    // res is (pointer, is_inserted?)
+    if (!res.second) {
+        // This trace was already in the map. Replace it.
+        res.first->second = std::move(tr);
+    }
+}
 
 uint32_t getevt::Event::Size() const
 {
