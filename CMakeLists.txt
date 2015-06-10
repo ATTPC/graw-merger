@@ -29,3 +29,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_executable(get-manip ${MERGER_FILES} ${MAIN_FILE})
 target_link_libraries(get-manip ${Boost_LIBRARIES} pthread)
+
+# Install
+
+install(TARGETS get-manip DESTINATION bin)
