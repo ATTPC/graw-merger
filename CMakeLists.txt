@@ -25,10 +25,12 @@ include_directories(get-manip)
 find_package(Boost 1.50.0 REQUIRED COMPONENTS date_time system filesystem program_options log)
 include_directories(${Boost_INCLUDE_DIRS})
 
+find_package(Armadillo REQUIRED)
+
 # Set up targets
 
 add_executable(get-manip ${MERGER_FILES} ${MAIN_FILE})
-target_link_libraries(get-manip ${Boost_LIBRARIES} pthread)
+target_link_libraries(get-manip ${Boost_LIBRARIES} pthread ${Armadillo_LIBRARIES})
 
 # Install
 
