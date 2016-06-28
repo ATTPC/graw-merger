@@ -17,12 +17,12 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     if (files.find(fpath.filename().string()) != files.end()) {
         throw Exceptions::File_Already_Read(fpath.filename().string());
     }
-    
+
     // Open the file
     std::shared_ptr<GRAWFile> file {new GRAWFile(fpath, std::ios::in)};
-    
+
     int nFramesRead {0};
-    
+
     // Index the frames in the file
     while (!file->eof()) {
         try {
@@ -30,7 +30,7 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
             MergingMapEntry me {};
             me.filePtr = file;
             me.filePos = fm.filePos;
-            
+
             mmap.emplace(fm.evtId, me);
             nFramesRead++;
         }
@@ -43,11 +43,11 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
             throw;
         }
     }
-    
+
     // Put the file in the list of files we've already read. This also copies
     // the shared pointer, which keeps the file around after this function
     // returns.
-    
+
     files.emplace(fpath.filename().string(),file);
     return nFramesRead;
 }
@@ -58,21 +58,21 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
 {
     EventFile outfile;
     outfile.OpenFileForWrite(outfilename);
-    
+
     std::cout << "Beginning merge of " << mmap.size() << " frames." << std::endl;
-    
+
     // Find first event and number of events
     uint32_t firstEvtId = mmap.lower_bound(0)->first;
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
-    
+
     int nWorkers = std::thread::hardware_concurrency();
     std::vector<std::thread> workers;
     for (int i = 0; i < nWorkers; i++) {
         workers.push_back(std::thread {[this]{ return TaskWorker(); }});
     }
-    
+
     std::thread writer {[this, &outfile]{ return ResultWriter(outfile); }};
-    
+
     // Create events and append to file
     for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; currentEvtId++) {
         // Find frames for this event. equal_range() returns a pair containing
@@ -80,7 +80,7 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
         // are found, they'll both point to the next highest event ID.
         auto currentRange = mmap.equal_range(currentEvtId);
         if (currentRange.first->first > currentEvtId) continue; // no frames found
-        
+
         // Extract frames from files
         std::queue<GRAWFrame> frames;
         for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
@@ -89,29 +89,29 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
             std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
             frames.push(GRAWFrame {rawFrame});
         }
-        
+
         EventProcessingTask task {std::move(frames), lt, pedsTable, suppZeros, threshold};
-        
+
         std::packaged_task<Event()> pt {std::move(task)};
-        
+
         resq.put(pt.get_future());
-        
+
         tq.put(std::move(pt));
 
         mmap.erase(currentEvtId);
-        
+
         ShowProgress(currentEvtId - firstEvtId, numEvts);
     }
-    
+
     // Now we're done reading events, so cause the threads to finish
-    
+
     tq.finish();
     resq.finish();
-    
+
     for (auto& th : workers) {
         th.join();
     }
-    
+
     writer.join();
 }
 
@@ -126,66 +126,29 @@ Event Merger::EventProcessingTask::operator()()
 {
     Event res {};
     res.SetLookupTable(pads);
-    
+
     while (!frames.empty()) {
         res.AppendFrame(frames.front());
         frames.pop();
     }
-    
+
     res.SubtractFPN();
-    
+
     if (not peds.Empty()) {
         res.SubtractPedestals(peds);
     }
-    
+
     if (threshold > Constants::min_sample) {
         res.ApplyThreshold(threshold);
     }
-    
+
     if (suppZeros) {
         res.DropZeros();
     }
-    
+
     return res;
 }
 
-template<typename T>
-void Merger::SyncQueue<T>::put(const T &task)
-{
-    std::unique_lock<std::mutex> lock(qmtx);
-    cond.wait(lock, [this]{ return q.size() < 20; });
-    q.push_back(task);
-    cond.notify_all();
-}
-
-template<typename T>
-void Merger::SyncQueue<T>::put(T &&task)
-{
-    std::unique_lock<std::mutex> lock(qmtx);
-    cond.wait(lock, [this]{ return q.size() < 20;});
-    q.push_back(std::move(task));
-    cond.notify_all();
-}
-
-template<typename T>
-void Merger::SyncQueue<T>::get(T &dest)
-{
-    std::unique_lock<std::mutex> lock(qmtx);
-    cond.wait(lock, [this]{ return !q.empty() or finished; });
-    if (finished) throw NoMoreTasks();
-    dest = std::move(q.front());
-    q.pop_front();
-    cond.notify_all();
-}
-
-template<typename T>
-void Merger::SyncQueue<T>::finish()
-{
-    std::unique_lock<std::mutex> lock {qmtx};
-    cond.wait(lock, [this]{ return q.empty(); });
-    finished = true;
-    cond.notify_all();
-}
 
 void Merger::TaskWorker()
 {
@@ -201,16 +164,16 @@ void Merger::TaskWorker()
     }
 }
 
-void Merger::ResultWriter(EventFile& of)
+void HDFWriterWorker::run()
 {
     while (true) {
         try {
             std::future<Event> processed_fut;
-            resq.get(processed_fut);
+            futureq->get(processed_fut);
             auto processed = processed_fut.get();
-            of.WriteEvent(processed);
+            hfile.writeEvent(processed);
         }
-        catch (Merger::SyncQueue<std::future<Event>>::NoMoreTasks& t) {
+        catch (qtype::NoMoreTasks& t) {
             return;
         }
         catch (std::exception& e) {
@@ -224,7 +187,7 @@ void Merger::ShowProgress(int currEvt, int numEvt)
     // Produces a progress bar like this:
     //  50% [==========          ] (50/100)
     // The last part is the current evt / num evts
-    
+
     const int progWidth = 40;
     int pct = floor(float(currEvt) / float(numEvt) * 100);
     std::cout << '\r' << std::string(progWidth,' ') << '\r';

@@ -217,10 +217,10 @@ void GRAWFile::WriteFrame(const GRAWFrame& frame)
     
     for (auto item : frame.data) {
         uint32_t ser_item {0};
-        ser_item |= item.GetSample();
-        ser_item |= (item.GetTimeBucketId() << 14);
-        ser_item |= (item.GetChannel() << 23);
-        ser_item |= (item.GetAgetId() << 30);
+        ser_item |= item.sample;
+        ser_item |= (item.timeBucketId << 14);
+        ser_item |= (item.channel << 23);
+        ser_item |= (item.agetId << 30);
         AppendBytes(ser, ser_item, 4);
     }
     

@@ -11,10 +11,12 @@
 
 #include "GRAWFile.h"
 #include "GRAWFrame.h"
-#include "EventFile.h"
 #include "GMExceptions.h"
 #include "PadLookupTable.h"
+#include "HDFDataStore.h"
 #include "Constants.h"
+#include "Event.h"
+#include "SyncQueue.h"
 
 #include <map>
 #include <vector>
@@ -78,31 +80,6 @@ private:
     
     using PTT = Event(void);
     
-    template<typename T>
-    class SyncQueue {
-    public:
-        SyncQueue() : finished(false) {};
-        
-        void put(const T& task);
-        void put(T&& task);
-        void get(T& dest);
-        
-        void finish();
-        
-        class NoMoreTasks : public std::exception
-        {
-        public:
-            virtual const char* what() { return "End of Queue"; };
-        };
-        
-    private:
-        std::mutex qmtx;
-        std::condition_variable cond;
-        std::list<T> q;
-        
-        bool finished;
-    };
-    
     SyncQueue<std::packaged_task<PTT>> tq;
     SyncQueue<std::future<Event>> resq;
     
@@ -128,6 +105,21 @@ private:
 
     //! \brief Creates the progress bar in the terminal
     void ShowProgress(int currEvt, int numEvt);
+};
+
+class HDFWriterWorker
+{
+    using qtype = SyncQueue<std::future<Event>>;
+
+public:
+    HDFWriterWorker(const std::string& filePath, const std::shared_ptr<qtype>& outputQueue)
+    : hfile(filePath, true), futureq(outputQueue) {}
+
+    void run();
+
+private:
+    HDFDataStore hfile;
+    std::shared_ptr<qtype> futureq;
 };
 
 #endif /* defined(__get_manip__Merger__) */

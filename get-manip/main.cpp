@@ -16,7 +16,6 @@
 #include "LookupTable.h"
 #include "Event.h"
 #include "GRAWFile.h"
-#include "EventFile.h"
 #include "GMExceptions.h"
 #include <exception>
 #include <queue>
