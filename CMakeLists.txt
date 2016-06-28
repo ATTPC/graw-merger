@@ -14,7 +14,8 @@ set(MERGER_FILES
     get-manip/PadLookupTable.cpp
     get-manip/Trace.cpp
     get-manip/Merger.cpp
-    get-manip/UserInterface.cpp)
+    get-manip/UserInterface.cpp
+    get-manip/HDFDataStore.cpp)
 
 set(MAIN_FILE get-manip/main.cpp)
 
@@ -25,10 +26,13 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 find_package(Armadillo REQUIRED)
 
+find_package(HDF5 REQUIRED COMPONENTS CXX)
+include_directories(${HDF5_INCLUDE_DIRS})
+
 # Set up targets
 
 add_executable(get-manip ${MERGER_FILES} ${MAIN_FILE})
-target_link_libraries(get-manip ${Boost_LIBRARIES} pthread ${Armadillo_LIBRARIES})
+target_link_libraries(get-manip ${Boost_LIBRARIES} pthread ${Armadillo_LIBRARIES} ${HDF5_CXX_LIBRARIES})
 
 # Install
 

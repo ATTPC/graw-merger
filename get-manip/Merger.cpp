@@ -9,7 +9,10 @@
 #include "Merger.h"
 
 Merger::Merger()
-{}
+{
+    tq = std::make_shared<taskQueue_type>();
+    resq = std::make_shared<futureQueue_type>();
+}
 
 int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
 {
@@ -56,9 +59,6 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
                           LookupTable<sample_t>& pedsTable, bool suppZeros,
                           sample_t threshold)
 {
-    EventFile outfile;
-    outfile.OpenFileForWrite(outfilename);
-
     std::cout << "Beginning merge of " << mmap.size() << " frames." << std::endl;
 
     // Find first event and number of events
@@ -66,12 +66,16 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
 
     int nWorkers = std::thread::hardware_concurrency();
-    std::vector<std::thread> workers;
+    std::vector<TaskWorker> workers;
     for (int i = 0; i < nWorkers; i++) {
-        workers.push_back(std::thread {[this]{ return TaskWorker(); }});
+        workers.emplace_back(tq, resq);
+    }
+    for (auto& worker : workers) {
+        worker.start();
     }
 
-    std::thread writer {[this, &outfile]{ return ResultWriter(outfile); }};
+    HDFWriterWorker writer (outfilename, resq);
+    writer.start();
 
     // Create events and append to file
     for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; currentEvtId++) {
@@ -94,9 +98,9 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
 
         std::packaged_task<Event()> pt {std::move(task)};
 
-        resq.put(pt.get_future());
+        resq->put(pt.get_future());
 
-        tq.put(std::move(pt));
+        tq->put(std::move(pt));
 
         mmap.erase(currentEvtId);
 
@@ -105,8 +109,8 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
 
     // Now we're done reading events, so cause the threads to finish
 
-    tq.finish();
-    resq.finish();
+    tq->finish();
+    resq->finish();
 
     for (auto& th : workers) {
         th.join();
@@ -115,14 +119,14 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     writer.join();
 }
 
-Merger::EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr,
+EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr,
                                                  PadLookupTable* lt,
                                                  LookupTable<sample_t> peds,
                                                  bool suppZeros, sample_t th)
 : frames(fr), pads(lt), peds(peds), suppZeros(suppZeros), threshold(th)
 {}
 
-Event Merger::EventProcessingTask::operator()()
+Event EventProcessingTask::operator()()
 {
     Event res {};
     res.SetLookupTable(pads);
@@ -132,33 +136,33 @@ Event Merger::EventProcessingTask::operator()()
         frames.pop();
     }
 
-    res.SubtractFPN();
+    // res.SubtractFPN();
 
-    if (not peds.Empty()) {
-        res.SubtractPedestals(peds);
-    }
+    // if (not peds.Empty()) {
+    //     res.SubtractPedestals(peds);
+    // }
+    //
+    // if (threshold > Constants::min_sample) {
+    //     res.ApplyThreshold(threshold);
+    // }
 
-    if (threshold > Constants::min_sample) {
-        res.ApplyThreshold(threshold);
-    }
-
-    if (suppZeros) {
-        res.DropZeros();
-    }
+    // if (suppZeros) {
+    //     res.DropZeros();
+    // }
 
     return res;
 }
 
 
-void Merger::TaskWorker()
+void TaskWorker::run()
 {
     while (true) {
-        std::packaged_task<PTT> task;
+        std::packaged_task<Event(void)> task;
         try {
-            tq.get(task);
+            inq->get(task);
             task();
         }
-        catch (Merger::SyncQueue<std::packaged_task<PTT>>::NoMoreTasks& t) {
+        catch (taskQueue_type::NoMoreTasks& t) {
             return;
         }
     }
@@ -173,7 +177,7 @@ void HDFWriterWorker::run()
             auto processed = processed_fut.get();
             hfile.writeEvent(processed);
         }
-        catch (qtype::NoMoreTasks& t) {
+        catch (futureQueue_type::NoMoreTasks& t) {
             return;
         }
         catch (std::exception& e) {
