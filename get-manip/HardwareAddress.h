@@ -10,7 +10,7 @@ struct HardwareAddress
     addr_t asad;
     addr_t aget;
     addr_t channel;
-    addr_t pad;
+    pad_t pad;
 
     bool operator==(const HardwareAddress& other) const
     {

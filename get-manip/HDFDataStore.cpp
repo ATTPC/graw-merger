@@ -19,7 +19,13 @@ void HDFDataStore::writeEvent(const Event& evt)
         const HardwareAddress& addr = it->first;
         const arma::Col<sample_t>& tr = it->second;
 
-        dataMat.row(rowNumber) = tr.t();
+        dataMat(rowNumber, 0) = addr.cobo;
+        dataMat(rowNumber, 1) = addr.asad;
+        dataMat(rowNumber, 2) = addr.aget;
+        dataMat(rowNumber, 3) = addr.channel;
+        dataMat(rowNumber, 4) = addr.pad;
+
+        dataMat(rowNumber, arma::span(5, nColumns-1)) = tr.t();
 
         rowNumber++;
     }

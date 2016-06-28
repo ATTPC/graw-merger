@@ -123,20 +123,14 @@ void Event::AppendFrame(const GRAWFrame& frame)
 
         auto pad = lookupTable->Find(cobo, asad, aget, channel);
 
-        HardwareAddress hwaddr = {cobo, asad, aget, channel};
+        HardwareAddress hwaddr = {cobo, asad, aget, channel, pad};
 
         // Find trace in hash table, if it exists
         arma::Col<sample_t>& tr = data[hwaddr];
 
         if (tr.is_empty()) {
             // The trace was just default-constructed, so it's new
-            tr.set_size(Constants::num_tbs + 5);
-
-            tr(0) = cobo;
-            tr(1) = asad;
-            tr(2) = aget;
-            tr(3) = channel;
-            tr(4) = pad;
+            tr.set_size(Constants::num_tbs);
         }
 
         tr(tbid) = sample;
