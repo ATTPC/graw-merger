@@ -14,7 +14,6 @@
 #include "Constants.h"
 #include "GRAWFrame.h"
 #include "GRAWDataItem.h"
-#include "Trace.h"
 #include "LookupTable.h"
 #include "PadLookupTable.h"
 #include "GMExceptions.h"
@@ -33,6 +32,7 @@
 class Event
 {
 public:
+    using mapType = std::unordered_map<HardwareAddress, arma::Col<sample_t>>;
 
     // Construction of Events
 
@@ -50,6 +50,11 @@ public:
 
     //! \brief Move operator
     Event& operator=(Event&& orig);
+
+    mapType::iterator begin();
+    mapType::iterator end();
+    mapType::const_iterator cbegin() const;
+    mapType::const_iterator cend() const;
 
     // Setting properties
 
@@ -75,7 +80,7 @@ public:
 
      \throws std::out_of_range if the trace is not present in the event.
      */
-    Trace& GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel);
+    arma::Col<sample_t>& GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel);
 
     // Manipulations of contained data
 
@@ -109,6 +114,8 @@ public:
 
     */
     void ApplyThreshold(const sample_t threshold);
+
+    size_t numTraces() const;
 
 
     // I/O functions
