@@ -136,7 +136,7 @@ Event EventProcessingTask::operator()()
         frames.pop();
     }
 
-    // res.SubtractFPN();
+    res.SubtractFPN();
 
     // if (not peds.Empty()) {
     //     res.SubtractPedestals(peds);
