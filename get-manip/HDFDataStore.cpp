@@ -2,7 +2,7 @@
 
 HDFDataStore::HDFDataStore(const std::string& filename, const bool writable)
 {
-    auto mode = writable ? H5F_ACC_RDWR : H5F_ACC_RDONLY;
+    auto mode = writable ? H5F_ACC_TRUNC : H5F_ACC_RDONLY;
     file = H5::H5File(filename, mode);
 
     gp = file.createGroup(groupName);
@@ -19,13 +19,7 @@ void HDFDataStore::writeEvent(const Event& evt)
         const HardwareAddress& addr = it->first;
         const arma::Col<sample_t>& tr = it->second;
 
-        dataMat(rowNumber, 0) = addr.cobo;
-        dataMat(rowNumber, 1) = addr.asad;
-        dataMat(rowNumber, 2) = addr.aget;
-        dataMat(rowNumber, 3) = addr.channel;
-        dataMat(rowNumber, 4) = addr.pad;
-
-        dataMat(rowNumber, arma::span(5, 511)) = tr.t();
+        dataMat.row(rowNumber) = tr.t();
 
         rowNumber++;
     }
