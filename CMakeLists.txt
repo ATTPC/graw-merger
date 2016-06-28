@@ -12,7 +12,6 @@ set(MERGER_FILES
     get-manip/GRAWFrame.cpp
     get-manip/LookupTable.cpp
     get-manip/PadLookupTable.cpp
-    get-manip/Trace.cpp
     get-manip/Merger.cpp
     get-manip/UserInterface.cpp
     get-manip/HDFDataStore.cpp)

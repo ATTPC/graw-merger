@@ -55,9 +55,7 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     return nFramesRead;
 }
 
-void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
-                          LookupTable<sample_t>& pedsTable, bool suppZeros,
-                          sample_t threshold)
+void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt)
 {
     std::cout << "Beginning merge of " << mmap.size() << " frames." << std::endl;
 
@@ -94,7 +92,7 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
             frames.push(GRAWFrame {rawFrame});
         }
 
-        EventProcessingTask task {std::move(frames), lt, pedsTable, suppZeros, threshold};
+        EventProcessingTask task {std::move(frames), lt};
 
         std::packaged_task<Event()> pt {std::move(task)};
 
@@ -119,11 +117,8 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt,
     writer.join();
 }
 
-EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr,
-                                                 PadLookupTable* lt,
-                                                 LookupTable<sample_t> peds,
-                                                 bool suppZeros, sample_t th)
-: frames(fr), pads(lt), peds(peds), suppZeros(suppZeros), threshold(th)
+EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr, PadLookupTable* lt)
+: frames(fr), pads(lt)
 {}
 
 Event EventProcessingTask::operator()()
@@ -137,18 +132,6 @@ Event EventProcessingTask::operator()()
     }
 
     res.SubtractFPN();
-
-    // if (not peds.Empty()) {
-    //     res.SubtractPedestals(peds);
-    // }
-    //
-    // if (threshold > Constants::min_sample) {
-    //     res.ApplyThreshold(threshold);
-    // }
-
-    // if (suppZeros) {
-    //     res.DropZeros();
-    // }
 
     return res;
 }
