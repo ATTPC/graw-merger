@@ -71,7 +71,7 @@ Event::mapType::const_iterator Event::cend() const
 // Setting Properties
 // --------
 
-void Event::SetLookupTable(PadLookupTable * table)
+void Event::SetLookupTable(const std::shared_ptr<PadLookupTable>& table)
 {
     lookupTable = table;
 }

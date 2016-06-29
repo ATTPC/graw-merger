@@ -47,7 +47,7 @@ int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
     return nFramesRead;
 }
 
-void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt)
+void Merger::MergeByEvtId(const std::string &outfilename, const std::shared_ptr<PadLookupTable>& lt)
 {
     std::cout << "Beginning merge of " << mmap.size() << " frames." << std::endl;
 
@@ -114,10 +114,6 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt)
 
     writer.join();
 }
-
-EventProcessingTask::EventProcessingTask(std::queue<GRAWFrame> fr, PadLookupTable* lt)
-: frames(fr), pads(lt)
-{}
 
 Event EventProcessingTask::operator()()
 {

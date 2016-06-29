@@ -55,7 +55,7 @@ void MergeFiles(boost::filesystem::path input_path,
 {
     // Import the lookup table
 
-    PadLookupTable lookupTable (lookup_path.string());
+    std::shared_ptr<PadLookupTable> lookupTable = std::make_shared<PadLookupTable>(lookup_path.string());
 
     // Find files in the provided directory
 
@@ -85,7 +85,7 @@ void MergeFiles(boost::filesystem::path input_path,
 
     std::string output_path_string = output_path.string();
 
-    mg.MergeByEvtId(output_path_string, &lookupTable);
+    mg.MergeByEvtId(output_path_string, lookupTable);
 
     std::cout << '\n' << "Finished merging files." << std::endl;
 }

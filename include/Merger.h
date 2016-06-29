@@ -35,13 +35,13 @@ using futureQueue_type = SyncQueue<std::future<Event>>;
  */
  class EventProcessingTask {
  public:
-     EventProcessingTask(std::queue<GRAWFrame> fr, PadLookupTable* lt);
+     EventProcessingTask(std::queue<GRAWFrame> fr, const std::shared_ptr<PadLookupTable>& lt) : frames(fr), pads(lt) {}
 
      Event operator()();
 
  private:
      std::queue<GRAWFrame> frames;
-     PadLookupTable* pads;
+     std::shared_ptr<PadLookupTable> pads;
  };
 
 class Merger
@@ -49,7 +49,7 @@ class Merger
 public:
     Merger();
     int AddFramesFromFileToIndex(const boost::filesystem::path& fpath);
-    void MergeByEvtId(const std::string& outfilename, PadLookupTable* lt);
+    void MergeByEvtId(const std::string& outfilename, const std::shared_ptr<PadLookupTable>& lt);
 
 private:
     std::shared_ptr<taskQueue_type> tq;

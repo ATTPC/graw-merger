@@ -15,7 +15,7 @@
 #include "UserInterface.h"
 #include "HardwareAddress.h"
 #include <armadillo>
-#include <limits>
+#include <memory>
 
 /** \brief Representation of an event in the detector.
 
@@ -58,7 +58,7 @@ public:
      \param table A pointer to an initialized PadLookupTable.
 
      */
-    void SetLookupTable(PadLookupTable* table);
+    void SetLookupTable(const std::shared_ptr<PadLookupTable>& table);
 
     /** \brief Append a frame to the event.
 
@@ -133,7 +133,7 @@ private:
 
     // Lookup table pointer and hash functions
 
-    PadLookupTable *lookupTable;
+    std::shared_ptr<PadLookupTable> lookupTable;
 
     int nFramesAppended;  // The number of frames appended to this event
 
