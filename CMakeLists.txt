@@ -1,32 +1,39 @@
 cmake_minimum_required(VERSION 3.0)
 project(get-manip)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2")
-
 # Define all of the files to be built and included
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DARMA_NO_DEBUG")
+
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything -Wno-c++98-compat -Wno-padded -Wno-weak-vtables -Wno-shadow -Wno-exit-time-destructors -Wno-documentation-unknown-command")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Wfloat-equal -Wpointer-arith -Wcast-qual")
+endif()
+
 set(MERGER_FILES
-    get-manip/DataFile.cpp
-    get-manip/Event.cpp
-    get-manip/GRAWFile.cpp
-    get-manip/GRAWFrame.cpp
-    get-manip/LookupTable.cpp
-    get-manip/PadLookupTable.cpp
-    get-manip/Merger.cpp
-    get-manip/UserInterface.cpp
-    get-manip/HDFDataStore.cpp)
+    src/DataFile.cpp
+    src/Event.cpp
+    src/GRAWFile.cpp
+    src/GRAWFrame.cpp
+    src/LookupTable.cpp
+    src/PadLookupTable.cpp
+    src/Merger.cpp
+    src/UserInterface.cpp
+    src/HDFDataStore.cpp)
 
-set(MAIN_FILE get-manip/main.cpp)
+set(MAIN_FILE src/main.cpp)
 
-include_directories(get-manip)
+include_directories(include)
 
 find_package(Boost 1.50.0 REQUIRED COMPONENTS date_time system filesystem program_options log)
-include_directories(${Boost_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
 find_package(Armadillo REQUIRED)
 
 find_package(HDF5 REQUIRED COMPONENTS CXX)
-include_directories(${HDF5_INCLUDE_DIRS})
+include_directories(SYSTEM ${HDF5_INCLUDE_DIRS})
 
 # Set up targets
 

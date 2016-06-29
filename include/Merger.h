@@ -1,13 +1,5 @@
-//
-//  Merger.h
-//  get-manip
-//
-//  Created by Joshua Bradt on 9/19/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
-#ifndef __get_manip__Merger__
-#define __get_manip__Merger__
+#ifndef MERGER_H
+#define MERGER_H
 
 #include "GRAWFile.h"
 #include "GRAWFrame.h"
@@ -123,4 +115,4 @@ private:
     std::shared_ptr<futureQueue_type> futureq;
 };
 
-#endif /* defined(__get_manip__Merger__) */
+#endif /* defined(MERGER_H) */

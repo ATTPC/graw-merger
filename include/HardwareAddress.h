@@ -1,5 +1,5 @@
-#ifndef __get_manip__HARDWARE_ADDRESS__
-#define __get_manip__HARDWARE_ADDRESS__
+#ifndef HARDWAREADDRESS_H
+#define HARDWAREADDRESS_H
 
 #include "Constants.h"
 #include <unordered_map>
@@ -36,4 +36,4 @@ struct std::hash<HardwareAddress>
     }
 };
 
-#endif /* end of include guard: __get_manip__HARDWARE_ADDRESS__ */
+#endif /* end of include guard: HARDWAREADDRESS_H */

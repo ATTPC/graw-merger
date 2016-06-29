@@ -1,13 +1,5 @@
-//
-//  GRAWFrame.h
-//  get-manip
-//
-//  Created by Joshua Bradt on 5/5/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
-#ifndef __get_manip__GRAWFrame__
-#define __get_manip__GRAWFrame__
+#ifndef GRAWFRAME_H
+#define GRAWFRAME_H
 
 #include <iostream>
 #include <vector>
@@ -89,4 +81,4 @@ private:
     friend class GRAWFile;
 };
 
-#endif /* defined(__getmanip__GRAWFrame__) */
+#endif 

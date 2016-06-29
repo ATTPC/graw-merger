@@ -1,13 +1,5 @@
-//
-//  GRAWDataItem.h
-//  get-manip
-//
-//  Created by Joshua Bradt on 5/5/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
-#ifndef __get_manip__GRAWDataItem__
-#define __get_manip__GRAWDataItem__
+#ifndef GRAWDATAITEM_H
+#define GRAWDATAITEM_H
 
 #include <iostream>
 #include "Constants.h"
@@ -24,4 +16,4 @@ public:
     sample_t sample;
 };
 
-#endif /* defined(__get_manip__GRAWDataItem__) */
+#endif /* defined(GRAWDATAITEM_H) */

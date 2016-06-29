@@ -1,10 +1,15 @@
-#ifndef GET_MANIP_SYNCQUEUE_H
-#define GET_MANIP_SYNCQUEUE_H
+#ifndef SYNCQUEUE_H
+#define SYNCQUEUE_H
+
+#include <thread>
+#include <condition_variable>
+#include <list>
+#include <exception>
 
 template<typename T>
 class SyncQueue {
 public:
-    SyncQueue() : finished(false) {};
+    SyncQueue() : finished(false) {}
 
     void put(const T& task)
     {
@@ -43,7 +48,7 @@ public:
     class NoMoreTasks : public std::exception
     {
     public:
-        virtual const char* what() const noexcept { return "End of Queue"; };
+        virtual const char* what() const noexcept { return "End of Queue"; }
     };
 
 private:
@@ -54,4 +59,4 @@ private:
     bool finished;
 };
 
-#endif //GET_MANIP_SYNCQUEUE_H
+#endif //SYNCQUEUE_H

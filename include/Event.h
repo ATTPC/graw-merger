@@ -1,13 +1,5 @@
-//
-//  Event.h
-//  get-manip
-//
-//  Created by Joshua Bradt on 5/6/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
-#ifndef __get_manip__Event__
-#define __get_manip__Event__
+#ifndef EVENT_H
+#define EVENT_H
 
 #include <iostream>
 #include <vector>
@@ -152,4 +144,4 @@ private:
     friend class EventTestFixture;
 };
 
-#endif /* defined(__get_manip__Event__) */
+#endif /* defined(EVENT_H) */
