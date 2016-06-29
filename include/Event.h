@@ -15,6 +15,7 @@
 #include "UserInterface.h"
 #include "HardwareAddress.h"
 #include <armadillo>
+#include <limits>
 
 /** \brief Representation of an event in the detector.
 

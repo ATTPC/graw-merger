@@ -8,8 +8,6 @@
 
 #include "DataFile.h"
 
-DataFile::DataFile() {};
-
 DataFile::DataFile(const boost::filesystem::path& path, const std::ios::openmode mode)
 {
     if (mode & std::ios::in) {
@@ -37,13 +35,13 @@ DataFile::DataFile(const std::string& path, const std::ios::openmode mode)
 void DataFile::OpenFileForWrite(const boost::filesystem::path& path)
 {
     namespace fs = boost::filesystem;
-    
+
     if (isInitialized) throw Exceptions::Already_Init();
-    
+
     filePath = path;
-    
+
     filestream.open(path.string(), std::ios::out|std::ios::trunc|std::ios::binary);
-    
+
     if (filestream.good()) {
         isInitialized = true;
     }
@@ -55,29 +53,29 @@ void DataFile::OpenFileForWrite(const boost::filesystem::path& path)
 void DataFile::OpenFileForWrite(const std::string& path)
 {
     namespace fs = boost::filesystem;
-    
+
     fs::path fp {path};
-    
+
     OpenFileForWrite(fp);
 }
 
 void DataFile::OpenFileForRead(const boost::filesystem::path& path)
 {
     namespace fs = boost::filesystem;
-    
+
     if (isInitialized) throw Exceptions::Already_Init();
-    
+
     filePath = path;
-    
+
     if (!fs::exists(path)) {
         throw Exceptions::Does_Not_Exist(path.string());
     }
     if (!fs::is_regular_file(path)) {
         throw Exceptions::Wrong_File_Type(path.string());
     }
-    
+
     filestream.open(path.string(), std::ios::in|std::ios::binary);
-    
+
     if (filestream.good()) {
         isInitialized = true;
     }
@@ -89,9 +87,9 @@ void DataFile::OpenFileForRead(const boost::filesystem::path& path)
 void DataFile::OpenFileForRead(const std::string& path)
 {
     namespace fs = boost::filesystem;
-    
+
     fs::path fp {path};
-    
+
     OpenFileForRead(fp);
 }
 

@@ -1,11 +1,3 @@
-//
-//  Merger.cpp
-//  get-manip
-//
-//  Created by Joshua Bradt on 9/19/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
 #include "Merger.h"
 
 Merger::Merger()
@@ -63,9 +55,9 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt)
     uint32_t firstEvtId = mmap.lower_bound(0)->first;
     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
 
-    int nWorkers = std::thread::hardware_concurrency();
+    unsigned nWorkers = std::thread::hardware_concurrency();
     std::vector<TaskWorker> workers;
-    for (int i = 0; i < nWorkers; i++) {
+    for (unsigned i = 0; i < nWorkers; i++) {
         workers.emplace_back(tq, resq);
     }
     for (auto& worker : workers) {
@@ -145,7 +137,7 @@ void TaskWorker::run()
             inq->get(task);
             task();
         }
-        catch (taskQueue_type::NoMoreTasks& t) {
+        catch (taskQueue_type::NoMoreTasks&) {
             return;
         }
     }
@@ -160,7 +152,7 @@ void HDFWriterWorker::run()
             auto processed = processed_fut.get();
             hfile.writeEvent(processed);
         }
-        catch (futureQueue_type::NoMoreTasks& t) {
+        catch (futureQueue_type::NoMoreTasks&) {
             return;
         }
         catch (std::exception& e) {
@@ -169,14 +161,14 @@ void HDFWriterWorker::run()
     }
 }
 
-void Merger::ShowProgress(int currEvt, int numEvt)
+void Merger::ShowProgress(uint64_t currEvt, uint64_t numEvt)
 {
     // Produces a progress bar like this:
     //  50% [==========          ] (50/100)
     // The last part is the current evt / num evts
 
     const int progWidth = 40;
-    int pct = floor(float(currEvt) / float(numEvt) * 100);
+    unsigned pct = static_cast<unsigned>(std::floor(float(currEvt) / float(numEvt) * 100));
     std::cout << '\r' << std::string(progWidth,' ') << '\r';
     std::cout << std::setw(3) << pct << "% ";
     std::cout << '[' << std::string(2*pct/10,'=') << std::string(20-2*pct/10,' ') << ']';

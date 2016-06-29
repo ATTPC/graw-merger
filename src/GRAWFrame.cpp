@@ -1,11 +1,3 @@
-//
-//  GRAWFrame.cpp
-//  get-manip
-//
-//  Created by Joshua Bradt on 5/5/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
 #include "GRAWFrame.h"
 
 // --------
@@ -114,9 +106,9 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame)
 
     for (int aget = 0; aget<4; aget++) {
         std::bitset<9*8> bs {};   // init to 0
-        for (int byte = 8; byte >=0; byte--) {
+        for (int byte = 8; byte >= 0; byte--) {
             std::bitset<72> temp {*rawFrameIter};
-            temp <<= byte*8;
+            temp <<= static_cast<size_t>(byte*8);
             bs |= temp;
             rawFrameIter++;
         }
@@ -198,8 +190,8 @@ void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& 
     unsigned int nMissing = 0;
     unsigned int nUnexpected = 0;
 
-    for (int aget_iter = 0; aget_iter < 4; aget_iter++) {
-        for (int ch_iter = 0; ch_iter < 68; ch_iter ++) {
+    for (size_t aget_iter = 0; aget_iter < 4; aget_iter++) {
+        for (size_t ch_iter = 0; ch_iter < 68; ch_iter ++) {
             bool isExpected = hitPatterns.at(aget_iter).test(ch_iter);
             bool isFound = actualHitPattern.at(aget_iter).test(ch_iter);
 

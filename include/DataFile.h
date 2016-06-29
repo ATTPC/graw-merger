@@ -13,7 +13,9 @@
 
 /** \brief A generic class representing a data file.
 
- This class represents a binary data file on disk. It cannot be used directly, but should be inherited from. It provides basic functionality like opening and closing files, and checking if files are at EOF. The method ReadRawFrame must be overridden with an appropriate method for reading from the file.
+ This class represents a binary data file on disk. It cannot be used directly, but should be inherited from. It provides
+ basic functionality like opening and closing files, and checking if files are at EOF. The method ReadRawFrame must be
+ overridden with an appropriate method for reading from the file.
 
  */
 class DataFile
@@ -21,16 +23,20 @@ class DataFile
 public:
     /** \brief The default constructor.
 
-     This constructs a valid object, but it does not set a file path. Therefore, the object is left in an uninitialized state, and cannot be used yet. To use it after construction, call one of the OpenFile methods.
+     This constructs a valid object, but it does not set a file path. Therefore, the object is left in an uninitialized
+     state, and cannot be used yet. To use it after construction, call one of the OpenFile methods.
 
      */
-    DataFile();
+    DataFile() = default;
+    virtual ~DataFile() = default;
 
     /** \brief Construct the object and open a file.
 
      \rst
 
-     This constructor constructs the object and opens the file located at the supplied path. Internally, it simply calls one of the OpenFile methods, so any exceptions that they throw can be thrown by this constructor as well. The second argument takes a standard open mode from the `fstream` library. This could be
+     This constructor constructs the object and opens the file located at the supplied path. Internally, it simply calls
+     one of the OpenFile methods, so any exceptions that they throw can be thrown by this constructor as well. The
+     second argument takes a standard open mode from the `fstream` library. This could be
 
      *  `std::ios::in` --- to open a file for reading
 
@@ -40,8 +46,7 @@ public:
 
      \endrst
 
-     \param path The path to the file or output location.
-     \param mode The open mode for the file (in or out).
+     \param path The path to the file or output location. \param mode The open mode for the file (in or out).
 
      */
     DataFile(const std::string& path, const std::ios::openmode mode);
@@ -51,7 +56,9 @@ public:
 
     /** \brief Open a file for output
 
-     This method opens the given file for output. If the file does not exist, it is created. If the file does exist, it is overwritten. This method can only be called on a DataFile object that does not currently have an open filestream associated with it. Most often, this would be an object created using the default constructor.
+     This method opens the given file for output. If the file does not exist, it is created. If the file does exist, it
+     is overwritten. This method can only be called on a DataFile object that does not currently have an open filestream
+     associated with it. Most often, this would be an object created using the default constructor.
 
      \param path The path to the file.
 
@@ -67,7 +74,10 @@ public:
 
     /** \brief Open a file for input
 
-     This method opens the given file for input. This should perhaps be overridden by derived classes if they need to do anything more specific than open the file and make sure it is readable. This method can only be called on a DataFile object that does not currently have an open filestream associated with it. Most often, this would be an object created using the default constructor.
+     This method opens the given file for input. This should perhaps be overridden by derived classes if they need to do
+     anything more specific than open the file and make sure it is readable. This method can only be called on a
+     DataFile object that does not currently have an open filestream associated with it. Most often, this would be an
+     object created using the default constructor.
 
      \param path The path to the file.
 
@@ -94,7 +104,9 @@ public:
 
     /** \brief Read the next chunk of raw data from the file.
 
-     This method must be overridden by the derived class, and it should extract a raw frame, event, or whatever unit of raw data makes sense for the file. This would usually represent a serialized object that is represented in memory by a different class.
+     This method must be overridden by the derived class, and it should extract a raw frame, event, or whatever unit of
+     raw data makes sense for the file. This would usually represent a serialized object that is represented in memory
+     by a different class.
 
      */
     virtual std::vector<uint8_t> ReadRawFrame() = 0;

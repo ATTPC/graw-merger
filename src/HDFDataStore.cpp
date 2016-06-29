@@ -23,7 +23,7 @@ void HDFDataStore::writeEvent(const Event& evt)
         dataMat(rowNumber, 1) = addr.asad;
         dataMat(rowNumber, 2) = addr.aget;
         dataMat(rowNumber, 3) = addr.channel;
-        dataMat(rowNumber, 4) = addr.pad;
+        dataMat(rowNumber, 4) = static_cast<sample_t>(addr.pad);
 
         dataMat(rowNumber, arma::span(5, nColumns-1)) = tr.t();
 

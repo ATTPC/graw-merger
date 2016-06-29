@@ -1,11 +1,3 @@
-//
-//  Event.cpp
-//  get-manip
-//
-//  Created by Joshua Bradt on 5/6/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
 #include "Event.h"
 
 // --------
@@ -102,7 +94,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
-        LOG_WARNING << "Event ID mismatch: CoBo " << (int) cobo << ", AsAd " << (int) asad << std::endl;
+        LOG_WARNING << "Event ID mismatch: CoBo " << cobo << ", AsAd " << asad << std::endl;
     }
 
     if (nFramesAppended == 0) {
@@ -143,7 +135,8 @@ void Event::AppendFrame(const GRAWFrame& frame)
 
 arma::Col<sample_t>& Event::GetTrace(addr_t cobo, addr_t asad, addr_t aget, addr_t channel)
 {
-    HardwareAddress hwaddr {cobo, asad, aget, channel};
+    pad_t pad = lookupTable->Find(cobo, asad, aget, channel);
+    HardwareAddress hwaddr {cobo, asad, aget, channel, pad};
     return data.at(hwaddr);  // could throw out_of_range
 }
 
@@ -160,8 +153,10 @@ static void renormalizeVectorToZero(arma::Col<sample_t> v)
 {
     arma::Col<sample_t> nz = arma::nonzeros(v);
     int64_t total = arma::accu(nz);
-    int64_t mean = total / nz.n_elem;
-    v /= mean;
+    int64_t nzCount = static_cast<int64_t>(nz.n_elem);
+    sample_t mean = narrow_cast<sample_t>(total / nzCount);
+
+    v -= mean;
 }
 
 void Event::SubtractFPN()
@@ -183,7 +178,7 @@ void Event::SubtractFPN()
 
                 for (auto ch : fpn_channels) {
                     try {
-                        auto& tr = GetTrace(cobo, asad, aget, ch);
+                        arma::Col<sample_t>& tr = GetTrace(cobo, asad, aget, ch);
                         mean_fpn += tr;
                         for (arma::uword i = 0; i < mean_fpn.n_elem; i++) {
                             if (tr(i) != 0) {
@@ -192,7 +187,7 @@ void Event::SubtractFPN()
                         }
                         num_fpns++;
                     }
-                    catch (std::out_of_range& e) {
+                    catch (std::out_of_range&) {
                         continue;
                     }
                 }
@@ -202,7 +197,7 @@ void Event::SubtractFPN()
                 if (num_fpns == 0) continue;
 
                 // Divide by the multiplicity if that value is nonzero.
-                for (int i = 0; i < mean_fpn.n_elem; i++) {
+                for (arma::uword i = 0; i < mean_fpn.n_elem; i++) {
                     if (tb_multip(i) != 0) {
                         mean_fpn(i) /= tb_multip(i);
                     }
@@ -213,9 +208,6 @@ void Event::SubtractFPN()
 
                 // Now subtract this mean from the other channels, binwise.
                 // This iteration includes the FPN channels.
-
-//                auto begin = traces.lower_bound(CalculateHash(cobo, asad, aget, 0));
-//                auto end = traces.upper_bound(CalculateHash(cobo, asad, aget, 68));
 
                 for (addr_t ch = 0; ch < Constants::num_channels; ch++) {
                     try {
@@ -231,35 +223,9 @@ void Event::SubtractFPN()
                 // we don't need them for anything else
 
                 for (auto ch : fpn_channels) {
-                    data.erase(HardwareAddress{cobo, asad, aget, ch});
+                    data.erase(HardwareAddress{cobo, asad, aget, ch, lookupTable->missingValue});
                 }
             }
         }
     }
 }
-
-// void Event::SubtractPedestals(const LookupTable<sample_t>& pedsTable)
-// {
-//     for (auto& trace : traces) {
-//         auto cobo = trace.second.coboId;
-//         auto asad = trace.second.asadId;
-//         auto aget = trace.second.agetId;
-//         auto channel = trace.second.channel;
-//
-//         auto pedValue = pedsTable.Find(cobo, asad, aget, channel);
-//
-//         if (pedValue != 0) {
-//             trace.second -= pedValue;
-//         }
-//         else {
-//             continue;
-//         }
-//     }
-// }
-//
-// void Event::ApplyThreshold(const sample_t threshold)
-// {
-//     for (auto& item : traces) {
-//         item.second.ApplyThreshold(threshold);
-//     }
-// }

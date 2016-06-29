@@ -68,12 +68,18 @@ private:
     std::map<std::string, std::shared_ptr<GRAWFile>> files;
 
     //! \brief Creates the progress bar in the terminal
-    void ShowProgress(int currEvt, int numEvt);
+    void ShowProgress(uint64_t currEvt, uint64_t numEvt);
 };
 
 class Worker
 {
 public:
+    Worker() = default;
+    Worker(const Worker&) = delete;
+    Worker(Worker&&) = default;
+
+    virtual ~Worker() = default;
+
     virtual void run() = 0;
     virtual void start()
     {
@@ -94,6 +100,8 @@ public:
     TaskWorker(const std::shared_ptr<taskQueue_type>& inputQueue,
                const std::shared_ptr<futureQueue_type>& outputQueue)
     : inq(inputQueue), outq(outputQueue) {}
+    TaskWorker(TaskWorker&&) = default;
+    virtual ~TaskWorker() = default;
 
     void run() override;
 
@@ -107,6 +115,7 @@ class HDFWriterWorker : public Worker
 public:
     HDFWriterWorker(const std::string& filePath, const std::shared_ptr<futureQueue_type>& outputQueue)
     : hfile(filePath, true), futureq(outputQueue) {}
+    virtual ~HDFWriterWorker() = default;
 
     void run() override;
 

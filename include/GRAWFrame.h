@@ -67,7 +67,7 @@ public:
 //    uint8_t hitPattern[4][9];
     std::vector< std::bitset<9*8> > hitPatterns;
 //    uint16_t multiplicity[4];
-    std::vector<uint8_t> multiplicity;
+    std::vector<uint16_t> multiplicity;
 
 private:
     // Data items
@@ -81,4 +81,4 @@ private:
     friend class GRAWFile;
 };
 
-#endif 
+#endif

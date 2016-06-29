@@ -26,17 +26,17 @@ class UI::ProgressBar
 {
 public:
     ProgressBar();
-    ProgressBar(int i);
+    ProgressBar(unsigned i);
 
 	void Write();
-	void SetPercent(int pct_in);
-	int GetPercent(int pct_in);
-    int GetWidth();
+	void SetPercent(unsigned pct_in);
+	unsigned GetPercent();
+    unsigned GetWidth();
 
-    static int width;
+    static unsigned width;
 
 private:
-	int pct;
+	unsigned pct;
 };
 
 class UI::Logger
