@@ -87,8 +87,6 @@ GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame)
     eventTime = Utilities::ExtractByteSwappedInt<uint64_t>(rawFrameIter, rawFrameIter+6);
     rawFrameIter += 6;
 
-    assert((eventTime & 0xff00000000000000) == 0);
-
     eventId = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
     rawFrameIter += 4;
 
@@ -170,13 +168,15 @@ void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& 
         uint32_t item = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+itemSize);
 
         addr_t aget    = ExtractAgetId(item);
-        addr_t channel = ExtractChannel(item);
-        tb_t tbid   = ExtractTBid(item);
-        sample_t sample  = ExtractSample(item);
+        if (aget >= Constants::num_agets) throw Exceptions::Bad_Data("Invalid AGET value " + std::to_string(aget));
 
-        assert(aget >= 0 and aget < 4);
-        assert(channel >= 0 and channel < 68);
-        assert(tbid >= 0 and tbid < 512);
+        addr_t channel = ExtractChannel(item);
+        if (channel >= Constants::num_channels) throw Exceptions::Bad_Data("Invalid channel " + std::to_string(channel));
+
+        tb_t tbid   = ExtractTBid(item);
+        if (tbid >= Constants::num_tbs) throw Exceptions::Bad_Data("Invalid TB " + std::to_string(tbid));
+
+        sample_t sample  = ExtractSample(item);
 
         data.push_back(GRAWDataItem(aget,channel,tbid,sample));
 
@@ -224,9 +224,8 @@ void GRAWFrame::ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& beg
         uint16_t item = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+itemSize);
 
         addr_t aget    = ExtractAgetIdFullReadout(item);
+        if (aget >= Constants::num_agets) throw Exceptions::Bad_Data("Invalid AGET value " + std::to_string(aget));
         sample_t sample  = ExtractSampleFullReadout(item);
-
-        assert(aget >= 0 and aget < 4);
 
         dataQueues.at(aget).push(sample);
     }

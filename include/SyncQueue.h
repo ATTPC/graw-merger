@@ -30,7 +30,7 @@ public:
     void get(T& dest)
     {
         std::unique_lock<std::mutex> lock(qmtx);
-        cond.wait(lock, [this]{ return !q.empty() or finished; });
+        cond.wait(lock, [this]{ return !q.empty() || finished; });
         if (finished) throw NoMoreTasks();
         dest = std::move(q.front());
         q.pop_front();

@@ -78,7 +78,12 @@ public:
     Worker(const Worker&) = delete;
     Worker(Worker&&) = default;
 
-    virtual ~Worker() = default;
+    virtual ~Worker()
+    {
+        if (thr.joinable()) {
+            thr.join();
+        }
+    }
 
     virtual void run() = 0;
     virtual void start()

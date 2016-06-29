@@ -81,7 +81,13 @@ void Merger::MergeByEvtId(const std::string &outfilename, PadLookupTable* lt)
             auto& fref = frameRefPtr->second;
             fref.filePtr->filestream.seekg(fref.filePos);
             std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
-            frames.push(GRAWFrame {rawFrame});
+
+            try {
+                frames.push(GRAWFrame {rawFrame});
+            }
+            catch (const std::exception& e) {
+                std::cout << e.what() << std::endl;
+            }
         }
 
         EventProcessingTask task {std::move(frames), lt};

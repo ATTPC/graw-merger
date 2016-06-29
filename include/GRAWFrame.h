@@ -9,6 +9,7 @@
 #include <assert.h>
 
 #include "GRAWDataItem.h"
+#include "GMExceptions.h"
 #include "Utilities.h"
 #include "UserInterface.h"
 #include "Constants.h"

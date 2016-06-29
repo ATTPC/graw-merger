@@ -168,12 +168,13 @@ namespace Exceptions {
      */
     class Bad_Data : public std::exception
     {
-    private:
-        std::string msg {"Corrupted or invalid data encountered."};
-
     public:
-        //! \return The string "Corrupted or invalid data encountered."
+        Bad_Data() : msg("Bad Data") {}
+        Bad_Data(const std::string& s) : msg("Bad Data: " + s) {}
         virtual const char* what() const noexcept {return msg.c_str();}
+
+    private:
+        std::string msg;
     };
 
     //! \brief The end of the file was encountered.
