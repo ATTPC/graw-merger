@@ -1,11 +1,3 @@
-//
-//  DataFile.cpp
-//  get-manip
-//
-//  Created by Joshua Bradt on 5/19/14.
-//  Copyright (c) 2014 NSCL. All rights reserved.
-//
-
 #include "DataFile.h"
 
 DataFile::DataFile(const boost::filesystem::path& path, const std::ios::openmode mode)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(get-manip)
+project(graw2hdf)
 
 # Define all of the files to be built and included
 
@@ -37,9 +37,9 @@ include_directories(SYSTEM ${HDF5_INCLUDE_DIRS})
 
 # Set up targets
 
-add_executable(get-manip ${MERGER_FILES} ${MAIN_FILE})
-target_link_libraries(get-manip ${Boost_LIBRARIES} pthread ${Armadillo_LIBRARIES} ${HDF5_CXX_LIBRARIES})
+add_executable(graw2hdf ${MERGER_FILES} ${MAIN_FILE})
+target_link_libraries(graw2hdf ${Boost_LIBRARIES} pthread ${Armadillo_LIBRARIES} ${HDF5_CXX_LIBRARIES})
 
 # Install
 
-install(TARGETS get-manip DESTINATION bin)
+install(TARGETS graw2hdf DESTINATION bin)

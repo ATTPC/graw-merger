@@ -98,12 +98,12 @@ int main(int argc, const char * argv[])
     // Usage:
 
     std::string usage =
-        "get-manip (v2.0): A tool for merging GRAW files into Event files.\n"
+        "graw2hdf (v2.0): A tool for merging GRAW files into HDF5 files.\n"
         "\n"
-        "usage: get-manip --lookup <path> <input_path> [<output_path>]\n"
+        "usage: graw2hdf --lookup <path> <input_path> [<output_path>]\n"
         "\n"
         "If output file is not specified, default is based on input path.\n"
-        "Ex: /data/run_0001/ as input produces /data/run_0001.evt as output.";
+        "Ex: /data/run_0001/ as input produces /data/run_0001.h5 as output.";
 
     po::options_description opts_desc ("Allowed options.");
 
@@ -161,11 +161,11 @@ int main(int argc, const char * argv[])
             if (rootDir.string().back() == '/') {
                 std::string outputFilePathString = rootDir.string();
                 outputFilePathString.pop_back();
-                outputFilePathString.append(".evt");
+                outputFilePathString.append(".h5");
                 outputFilePath = fs::path {outputFilePathString};
             }
             else {
-                std::string outputFilePathString = rootDir.string() + ".evt";
+                std::string outputFilePathString = rootDir.string() + ".h5";
                 outputFilePath = fs::path {outputFilePathString};
             }
         }
