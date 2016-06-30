@@ -109,16 +109,15 @@ uint16_t GRAWFile::GetNextFrameSize()
     return size;
 }
 
-std::vector<uint8_t> GRAWFile::ReadRawFrame()
+RawFrame GRAWFile::ReadRawFrame()
 {
-    std::vector<uint8_t> frame_raw;
-    uint16_t size = GetNextFrameSize();
+    uint16_t sizeFromFile = GetNextFrameSize();
+    size_t dataSize = sizeFromFile * static_cast<size_t>(GRAWFrame::sizeUnit);
+    RawFrame frame_raw(dataSize);
 
-    for (int i = 0; i < size*GRAWFrame::sizeUnit; i++) {
-        char temp;
-        filestream.read(&temp, sizeof(uint8_t));
-        frame_raw.push_back(static_cast<uint8_t>(temp));
-    }
+    char* rawPtr = reinterpret_cast<char*>(frame_raw.getRawPointer());
+
+    filestream.read(rawPtr, static_cast<std::streamsize>(frame_raw.size()));
 
     return frame_raw;
 }

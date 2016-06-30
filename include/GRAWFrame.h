@@ -13,12 +13,13 @@
 #include "Utilities.h"
 #include "UserInterface.h"
 #include "Constants.h"
+#include "RawFrame.h"
 
 class GRAWFrame
 {
 public:
     GRAWFrame();
-    GRAWFrame(const std::vector<uint8_t>& rawFrame);
+    GRAWFrame(const RawFrame& rawFrame);
 
     // Iteration
 
@@ -29,10 +30,11 @@ public:
 
     // Data extraction functions
 
-    void ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& begin,
-                                   std::vector<uint8_t>::const_iterator& end);
-    void ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& begin,
-                                std::vector<uint8_t>::const_iterator& end);
+    template <typename charIter>
+    void ExtractPartialReadoutData(charIter& begin, charIter& end);
+
+    template <typename charIter>
+    void ExtractFullReadoutData(charIter& begin, charIter& end);
 
     static addr_t ExtractAgetId(const uint32_t raw);
     static addr_t ExtractChannel(const uint32_t raw);

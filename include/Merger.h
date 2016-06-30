@@ -9,6 +9,7 @@
 #include "Constants.h"
 #include "Event.h"
 #include "SyncQueue.h"
+#include "RawFrame.h"
 
 #include <map>
 #include <vector>
@@ -35,12 +36,13 @@ using futureQueue_type = SyncQueue<std::future<Event>>;
  */
  class EventProcessingTask {
  public:
-     EventProcessingTask(std::queue<GRAWFrame> fr, const std::shared_ptr<PadLookupTable>& lt) : frames(fr), pads(lt) {}
+     EventProcessingTask(std::queue<RawFrame>&& fr, const std::shared_ptr<PadLookupTable>& lt)
+     : pads(lt) { frames = std::move(fr); }
 
      Event operator()();
 
  private:
-     std::queue<GRAWFrame> frames;
+     std::queue<RawFrame> frames;
      std::shared_ptr<PadLookupTable> pads;
  };
 

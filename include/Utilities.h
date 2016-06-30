@@ -49,9 +49,9 @@ namespace Utilities {
         return result;
     }
 
-    template<typename outType>
-    outType ExtractByteSwappedInt(std::vector<uint8_t>::const_iterator begin,
-                                  std::vector<uint8_t>::const_iterator end)
+    template<typename outType, typename charIter>
+    outType ExtractByteSwappedInt(charIter begin,
+                                  charIter end)
     {
         outType result = 0;
         outType n = 0;

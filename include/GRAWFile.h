@@ -14,6 +14,7 @@
 #include "DataFile.h"
 #include "GRAWFrame.h"
 #include "Constants.h"
+#include "RawFrame.h"
 
 /** \brief Interface to a .GRAW file.
 
@@ -81,7 +82,7 @@ public:
 
      \throws Exceptions::Frame_Read_Error Thrown if the read frame has size zero.
      */
-    std::vector<uint8_t> ReadRawFrame() override;
+    RawFrame ReadRawFrame() override;
 
     /** \brief A structure containing metadata describing a frame.
 

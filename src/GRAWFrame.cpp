@@ -23,7 +23,7 @@ GRAWFrame::GRAWFrame()
     multiplicity = {0,0,0,0};
 }
 
-GRAWFrame::GRAWFrame(const std::vector<uint8_t>& rawFrame)
+GRAWFrame::GRAWFrame(const RawFrame& rawFrame)
 {
     auto rawFrameIter = rawFrame.begin();
 
@@ -159,8 +159,8 @@ std::vector<GRAWDataItem>::const_iterator GRAWFrame::cend() const
 // Data Extraction Functions
 // --------
 
-void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& begin,
-                                          std::vector<uint8_t>::const_iterator& end)
+template <typename charIter>
+void GRAWFrame::ExtractPartialReadoutData(charIter& begin, charIter& end)
 {
     std::vector< std::bitset<72> > actualHitPattern {0,0,0,0};
 
@@ -215,8 +215,8 @@ void GRAWFrame::ExtractPartialReadoutData(std::vector<uint8_t>::const_iterator& 
 
 }
 
-void GRAWFrame::ExtractFullReadoutData(std::vector<uint8_t>::const_iterator& begin,
-                                       std::vector<uint8_t>::const_iterator& end)
+template <typename charIter>
+void GRAWFrame::ExtractFullReadoutData(charIter& begin, charIter& end)
 {
     std::vector<std::queue<int16_t>> dataQueues (4);
 

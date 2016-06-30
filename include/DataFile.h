@@ -10,6 +10,7 @@
 
 #include "GMExceptions.h"
 #include "Constants.h"
+#include "RawFrame.h"
 
 /** \brief A generic class representing a data file.
 
@@ -109,7 +110,7 @@ public:
      by a different class.
 
      */
-    virtual std::vector<uint8_t> ReadRawFrame() = 0;
+    virtual RawFrame ReadRawFrame() = 0;
 
     //! \brief Check if the end of the file has been reached.
     virtual bool eof() const;

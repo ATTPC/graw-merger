@@ -76,18 +76,12 @@ void Merger::MergeByEvtId(const std::string &outfilename, const std::shared_ptr<
         if (currentRange.first->first > currentEvtId) continue; // no frames found
 
         // Extract frames from files
-        std::queue<GRAWFrame> frames;
+        std::queue<RawFrame> frames;
         for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
             auto& fref = frameRefPtr->second;
             fref.filePtr->filestream.seekg(fref.filePos);
-            std::vector<uint8_t> rawFrame = fref.filePtr->ReadRawFrame();
-
-            try {
-                frames.push(GRAWFrame {rawFrame});
-            }
-            catch (const std::exception& e) {
-                std::cout << e.what() << std::endl;
-            }
+            RawFrame rf = fref.filePtr->ReadRawFrame();
+            frames.push(std::move(rf));
         }
 
         EventProcessingTask task {std::move(frames), lt};
@@ -121,8 +115,9 @@ Event EventProcessingTask::operator()()
     res.SetLookupTable(pads);
 
     while (!frames.empty()) {
-        res.AppendFrame(frames.front());
+        GRAWFrame f (frames.front());
         frames.pop();
+        res.AppendFrame(f);
     }
 
     res.SubtractFPN();
