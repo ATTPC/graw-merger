@@ -21,7 +21,8 @@ set(MERGER_FILES
     src/PadLookupTable.cpp
     src/Merger.cpp
     src/UserInterface.cpp
-    src/HDFDataStore.cpp)
+    src/HDFDataStore.cpp
+    src/FileIndexer.cpp)
 
 set(MAIN_FILE src/main.cpp)
 

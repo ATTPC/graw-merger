@@ -114,6 +114,11 @@ public:
     //! \throws Exceptions::End_of_File if there is not another frame.
     virtual evtid_t NextFrameEvtId();
 
+    void seek(const std::streampos pos) { filestream.seekg(pos); }
+    void seek(const std::streamoff offset, std::ios_base::seekdir dir) { filestream.seekg(offset, dir); }
+
+    void Rewind() { filestream.seekg(0); }
+
 private:
 
     template<typename T>
