@@ -22,7 +22,7 @@ set(MERGER_FILES
     src/Merger.cpp
     src/UserInterface.cpp
     src/HDFDataStore.cpp
-    src/FileIndexer.cpp)
+    src/FileIndex.cpp)
 
 set(MAIN_FILE src/main.cpp)
 

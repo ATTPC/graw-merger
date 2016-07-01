@@ -11,6 +11,7 @@
 #include "SyncQueue.h"
 #include "RawFrame.h"
 #include "LRUCache.h"
+#include "FileIndex.h"
 
 #include <map>
 #include <vector>
@@ -30,7 +31,8 @@ using futureQueue_type = SyncQueue<std::future<Event>>;
 
 /** \brief GRAW file merger class
 
- This class implements the actual file merging functionality. It receives GRAW file paths from the caller, opens them, indexes their contents by event ID, and merges events by event ID into an output file.
+ This class implements the actual file merging functionality. It receives GRAW file paths from the caller, opens them,
+ indexes their contents by event ID, and merges events by event ID into an output file.
 
  The design of the merger was inspired by a similar program found in the cobo-frame-viewer code.
 
@@ -50,25 +52,18 @@ using futureQueue_type = SyncQueue<std::future<Event>>;
 class Merger
 {
 public:
-    Merger();
-    int AddFramesFromFileToIndex(const boost::filesystem::path& fpath);
-    void MergeByEvtId(const std::string& outfilename, const std::shared_ptr<PadLookupTable>& lt);
+    Merger(const std::vector<std::string>& filePaths, const std::shared_ptr<PadLookupTable>& lt);
+    void MergeByEvtId(const std::string& outfilename);
 
 private:
     std::shared_ptr<taskQueue_type> tq;
     std::shared_ptr<futureQueue_type> resq;
 
-    struct MergingMapEntry
-    {
-        std::shared_ptr<GRAWFile> filePtr;
-        std::streamoff filePos;
-    };
 
-    typedef std::multimap<evtid_t, MergingMapEntry> MergingMap;
-    MergingMap mmap;
+    std::shared_ptr<PadLookupTable> lookupTable;
+    std::vector<std::shared_ptr<GRAWFile>> files;
 
-    // This map is for keeping track of what files we've already seen
-    std::map<std::string, std::shared_ptr<GRAWFile>> files;
+    FileIndex findex;
 
     //! \brief Creates the progress bar in the terminal
     void ShowProgress(uint64_t currEvt, uint64_t numEvt);
@@ -102,20 +97,23 @@ private:
     std::thread thr;
 };
 
-class TaskWorker : public Worker
+class EventBuilder : public Worker
 {
 public:
-    TaskWorker(const std::shared_ptr<taskQueue_type>& inputQueue,
-               const std::shared_ptr<futureQueue_type>& outputQueue)
-    : inq(inputQueue), outq(outputQueue) {}
-    TaskWorker(TaskWorker&&) = default;
-    virtual ~TaskWorker() = default;
+    EventBuilder(const std::shared_ptr<SyncQueue<RawFrame>>& rawFrameQueue,
+                 const std::shared_ptr<SyncQueue<Event>>& outputQueue)
+    : rawFrameQueue(rawFrameQueue), outputQueue(outputQueue),
+      eventCache(10, std::bind(&EventBuilder::processAndOutputEvent, this, std::placeholders::_1)) {}
+    EventBuilder(EventBuilder&&) = default;
+    virtual ~EventBuilder() = default;
 
     void run() override;
+    void processAndOutputEvent(const Event& evt);
 
 private:
-    std::shared_ptr<taskQueue_type> inq;
-    std::shared_ptr<futureQueue_type> outq;
+    std::shared_ptr<SyncQueue<RawFrame>> rawFrameQueue;
+    std::shared_ptr<SyncQueue<Event>> outputQueue;
+    LRUCache<evtid_t, Event> eventCache;
 };
 
 class HDFWriterWorker : public Worker

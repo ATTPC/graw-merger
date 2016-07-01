@@ -6,6 +6,7 @@
 class RawFrame
 {
 public:
+    RawFrame() : data_size(0) {}
     RawFrame(const size_t size) : data(new uint8_t[size]), data_size(size) {}
     RawFrame(RawFrame&&) = default;
 

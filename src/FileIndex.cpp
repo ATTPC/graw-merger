@@ -1,15 +1,13 @@
-#include "FileIndexer.h"
+#include "FileIndex.h"
 
-FileIndexer::FileIndexer(const std::vector<std::shared_ptr<GRAWFile>>& files)
+FileIndex::FileIndex(const std::vector<std::shared_ptr<GRAWFile>>& files)
 {
-    filemap = indexFiles(files);
+    indexFiles(files);
 }
 
-std::multimap<evtid_t, std::shared_ptr<GRAWFile>>
-FileIndexer::indexFiles(const std::vector<std::shared_ptr<GRAWFile>>& files)
+void FileIndex::indexFiles(const std::vector<std::shared_ptr<GRAWFile>>& files)
 {
     const int indexDepth = 5;
-    std::multimap<evtid_t, std::shared_ptr<GRAWFile>> fmap;
 
     for (const auto& file : files) {
         // Read metadata for first `indexDepth` events
@@ -27,14 +25,12 @@ FileIndexer::indexFiles(const std::vector<std::shared_ptr<GRAWFile>>& files)
         evtid_t minEvtId = minElem->evtId;
 
         // Insert into map
-        fmap.emplace(minEvtId, file);
+        filemap.emplace(minEvtId, file);
     }
-
-    return fmap;
 }
 
 std::vector<std::shared_ptr<GRAWFile>>
-FileIndexer::findFilesForEvtId(const evtid_t evtid) const
+FileIndex::findFilesForEvtId(const evtid_t evtid) const
 {
     auto upperBd = filemap.upper_bound(evtid);
 

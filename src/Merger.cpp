@@ -1,50 +1,16 @@
 #include "Merger.h"
 
-Merger::Merger()
+Merger::Merger(const std::vector<std::string>& filePaths, const std::shared_ptr<PadLookupTable>& lt)
+: lookupTable(lt)
 {
     tq = std::make_shared<taskQueue_type>();
     resq = std::make_shared<futureQueue_type>();
-}
 
-int Merger::AddFramesFromFileToIndex(const boost::filesystem::path& fpath)
-{
-    // Check if the file has already been read
-    if (files.find(fpath.filename().string()) != files.end()) {
-        throw Exceptions::File_Already_Read(fpath.filename().string());
+    for (const auto& path : filePaths) {
+        files.emplace_back(path, std::ios::in);
     }
 
-    // Open the file
-    std::shared_ptr<GRAWFile> file {new GRAWFile(fpath, std::ios::in)};
-
-    int nFramesRead {0};
-
-    // Index the frames in the file
-    while (!file->eof()) {
-        try {
-            auto fm = file->ReadFrameMetadata();
-            MergingMapEntry me {};
-            me.filePtr = file;
-            me.filePos = fm.filePos;
-
-            mmap.emplace(fm.evtId, me);
-            nFramesRead++;
-        }
-        catch (Exceptions::Frame_Read_Error& frErr) {
-            std::cerr << frErr.what() << std::endl;
-            continue;
-        }
-        catch (std::exception& e) {
-            std::cout << "Exception: " << e.what() << std::endl;
-            throw;
-        }
-    }
-
-    // Put the file in the list of files we've already read. This also copies
-    // the shared pointer, which keeps the file around after this function
-    // returns.
-
-    files.emplace(fpath.filename().string(),file);
-    return nFramesRead;
+    findex.indexFiles(files);
 }
 
 void Merger::MergeByEvtId(const std::string &outfilename, const std::shared_ptr<PadLookupTable>& lt)
@@ -126,17 +92,21 @@ Event EventProcessingTask::operator()()
 }
 
 
-void TaskWorker::run()
+void EventBuilder::run()
 {
     while (true) {
-        std::packaged_task<Event(void)> task;
+        RawFrame raw;
         try {
-            inq->get(task);
-            task();
+            rawFrameQueue->get(raw);
         }
         catch (taskQueue_type::NoMoreTasks&) {
             return;
         }
+
+        GRAWFrame frame (raw);
+        evtid_t evtid = frame.eventId;
+
+
     }
 }
 
