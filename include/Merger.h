@@ -10,6 +10,7 @@
 #include "Event.h"
 #include "SyncQueue.h"
 #include "RawFrame.h"
+#include "LRUCache.h"
 
 #include <map>
 #include <vector>
