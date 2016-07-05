@@ -23,6 +23,18 @@ public:
         }
     }
 
+    T* get(const Key& key)
+    {
+        typename decltype(iterMap)::mapped_type& iterPair = iterMap.at(key);
+
+        // Move this item to the front of the list
+        itemList.splice(itemList.begin(), itemList, iterPair);
+
+        std::pair<Key, T>& item = itemList.front();
+
+        return &(item.second);
+    }
+
     T extract(const Key& key)
     {
         auto iter = iterMap.at(key);
@@ -35,7 +47,7 @@ public:
     void evictOldestElement()
     {
         auto oldest = itemList.back();
-        beforeDeleteCallback(oldest.second);
+        beforeDeleteCallback(std::move(oldest.second));
 
         itemList.pop_back();
         iterMap.erase(oldest.first);
@@ -51,7 +63,7 @@ private:
     std::unordered_map<Key, typename std::list<std::pair<Key, T>>::iterator> iterMap;
 
     size_t maxSize;
-    std::function<void(T)> beforeDeleteCallback;
+    std::function<void(T&&)> beforeDeleteCallback;
 };
 
 #endif /* end of include guard: LRUCACHE_H */

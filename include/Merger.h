@@ -16,6 +16,7 @@
 #include <map>
 #include <vector>
 #include <queue>
+#include <unordered_set>
 #include <list>
 #include <boost/filesystem.hpp>
 #include <memory>
@@ -24,6 +25,7 @@
 #include <thread>
 #include <string>
 #include <iostream>
+#include <cassert>
 
 using task_type = Event(void);
 using taskQueue_type = SyncQueue<std::packaged_task<task_type>>;
@@ -101,19 +103,25 @@ class EventBuilder : public Worker
 {
 public:
     EventBuilder(const std::shared_ptr<SyncQueue<RawFrame>>& rawFrameQueue,
-                 const std::shared_ptr<SyncQueue<Event>>& outputQueue)
+                 const std::shared_ptr<SyncQueue<Event>>& outputQueue,
+                 const std::shared_ptr<PadLookupTable>& lookupTable)
     : rawFrameQueue(rawFrameQueue), outputQueue(outputQueue),
-      eventCache(10, std::bind(&EventBuilder::processAndOutputEvent, this, std::placeholders::_1)) {}
+      eventCache(10, std::bind(&EventBuilder::processAndOutputEvent, this, std::placeholders::_1)),
+      lookupTable(lookupTable) {}
     EventBuilder(EventBuilder&&) = default;
     virtual ~EventBuilder() = default;
 
     void run() override;
-    void processAndOutputEvent(const Event& evt);
+    Event* makeNewEvent(const evtid_t evtid);
+    bool eventWasAlreadyWritten(const evtid_t evtid) const;
+    void processAndOutputEvent(Event&& evt);
 
 private:
     std::shared_ptr<SyncQueue<RawFrame>> rawFrameQueue;
     std::shared_ptr<SyncQueue<Event>> outputQueue;
     LRUCache<evtid_t, Event> eventCache;
+    std::shared_ptr<PadLookupTable> lookupTable;
+    std::unordered_set<evtid_t> finishedEventIds;
 };
 
 class HDFWriterWorker : public Worker

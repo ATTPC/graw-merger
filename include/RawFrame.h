@@ -10,6 +10,8 @@ public:
     RawFrame(const size_t size) : data(new uint8_t[size]), data_size(size) {}
     RawFrame(RawFrame&&) = default;
 
+    RawFrame& operator=(RawFrame&& rhs) = default;
+
     typedef uint8_t* iterator;
     typedef const uint8_t* const_iterator;
 
@@ -24,7 +26,7 @@ public:
 
 private:
     std::unique_ptr<uint8_t> data;
-    const size_t data_size;
+    size_t data_size;
 };
 
 #endif /* end of include guard: RAWFRAME_H */
