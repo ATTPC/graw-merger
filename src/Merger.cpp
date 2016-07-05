@@ -149,20 +149,19 @@ void EventBuilder::processAndOutputEvent(Event&& evt)
     outputQueue->put(std::forward<Event&&>(evt));
 }
 
-void HDFWriterWorker::run()
+void HDFWriter::run()
 {
     while (true) {
         try {
-            std::future<Event> processed_fut;
-            futureq->get(processed_fut);
-            auto processed = processed_fut.get();
-            hfile.writeEvent(processed);
+            Event evt;
+            eventQueue->get(evt);
+            hfile.writeEvent(evt);
         }
         catch (futureQueue_type::NoMoreTasks&) {
             return;
         }
         catch (std::exception& e) {
-            std::cout << "Error in thread: " << e.what() << std::endl;
+            std::cout << "Error in writer: " << e.what() << std::endl;
         }
     }
 }

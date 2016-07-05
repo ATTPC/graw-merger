@@ -124,18 +124,19 @@ private:
     std::unordered_set<evtid_t> finishedEventIds;
 };
 
-class HDFWriterWorker : public Worker
+class HDFWriter : public Worker
 {
 public:
-    HDFWriterWorker(const std::string& filePath, const std::shared_ptr<futureQueue_type>& outputQueue)
-    : hfile(filePath, true), futureq(outputQueue) {}
-    virtual ~HDFWriterWorker() = default;
+    HDFWriter(const std::string& filePath,
+              const std::shared_ptr<SyncQueue<Event>>& outputQueue)
+    : hfile(filePath, true), eventQueue(outputQueue) {}
+    virtual ~HDFWriter() = default;
 
     void run() override;
 
 private:
     HDFDataStore hfile;
-    std::shared_ptr<futureQueue_type> futureq;
+    std::shared_ptr<SyncQueue<Event>> eventQueue;
 };
 
 #endif /* defined(MERGER_H) */
