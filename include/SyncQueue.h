@@ -6,6 +6,12 @@
 #include <list>
 #include <exception>
 
+class NoMoreTasks : public std::exception
+{
+public:
+    virtual const char* what() const noexcept { return "End of Queue"; }
+};
+
 template<typename T>
 class SyncQueue {
 public:
@@ -44,12 +50,6 @@ public:
         finished = true;
         cond.notify_all();
     }
-
-    class NoMoreTasks : public std::exception
-    {
-    public:
-        virtual const char* what() const noexcept { return "End of Queue"; }
-    };
 
 private:
     std::mutex qmtx;

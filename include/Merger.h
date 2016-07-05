@@ -27,30 +27,6 @@
 #include <iostream>
 #include <cassert>
 
-using task_type = Event(void);
-using taskQueue_type = SyncQueue<std::packaged_task<task_type>>;
-using futureQueue_type = SyncQueue<std::future<Event>>;
-
-/** \brief GRAW file merger class
-
- This class implements the actual file merging functionality. It receives GRAW file paths from the caller, opens them,
- indexes their contents by event ID, and merges events by event ID into an output file.
-
- The design of the merger was inspired by a similar program found in the cobo-frame-viewer code.
-
- */
- class EventProcessingTask {
- public:
-     EventProcessingTask(std::queue<RawFrame>&& fr, const std::shared_ptr<PadLookupTable>& lt)
-     : pads(lt) { frames = std::move(fr); }
-
-     Event operator()();
-
- private:
-     std::queue<RawFrame> frames;
-     std::shared_ptr<PadLookupTable> pads;
- };
-
 class Merger
 {
 public:
@@ -58,10 +34,8 @@ public:
     void MergeByEvtId(const std::string& outfilename);
 
 private:
-    std::shared_ptr<taskQueue_type> tq;
-    std::shared_ptr<futureQueue_type> resq;
-
-
+    std::shared_ptr<SyncQueue<RawFrame>> frameQueue;
+    std::shared_ptr<SyncQueue<Event>> eventQueue;
     std::shared_ptr<PadLookupTable> lookupTable;
     std::vector<std::shared_ptr<GRAWFile>> files;
 

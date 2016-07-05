@@ -53,9 +53,21 @@ public:
         iterMap.erase(oldest.first);
     }
 
+    void flush()
+    {
+        while (!empty()) {
+            evictOldestElement();
+        }
+    }
+
     size_t size() const
     {
         return itemList.size();
+    }
+
+    bool empty() const
+    {
+        return size() == 0;
     }
 
 private:

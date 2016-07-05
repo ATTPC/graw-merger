@@ -3,8 +3,8 @@
 Merger::Merger(const std::vector<std::string>& filePaths, const std::shared_ptr<PadLookupTable>& lt)
 : lookupTable(lt)
 {
-    tq = std::make_shared<taskQueue_type>();
-    resq = std::make_shared<futureQueue_type>();
+    frameQueue = std::make_shared<SyncQueue<RawFrame>>();
+    eventQueue = std::make_shared<SyncQueue<Event>>();
 
     for (const auto& path : filePaths) {
         files.emplace_back(std::make_shared<GRAWFile>(path, std::ios::in));
@@ -13,87 +13,43 @@ Merger::Merger(const std::vector<std::string>& filePaths, const std::shared_ptr<
     findex.indexFiles(files);
 }
 
-// void Merger::MergeByEvtId(const std::string &outfilename, const std::shared_ptr<PadLookupTable>& lt)
-// {
-//     std::cout << "Beginning merge of " << mmap.size() << " frames." << std::endl;
-//
-//     // Find first event and number of events
-//     uint32_t firstEvtId = mmap.lower_bound(0)->first;
-//     uint32_t numEvts = mmap.rbegin()->first - firstEvtId;
-//
-//     unsigned nWorkers = std::thread::hardware_concurrency();
-//     std::vector<TaskWorker> workers;
-//     for (unsigned i = 0; i < nWorkers; i++) {
-//         workers.emplace_back(tq, resq);
-//     }
-//     for (auto& worker : workers) {
-//         worker.start();
-//     }
-//
-//     HDFWriterWorker writer (outfilename, resq);
-//     writer.start();
-//
-//     // Create events and append to file
-//     for (uint32_t currentEvtId = firstEvtId ; mmap.size() > 0; currentEvtId++) {
-//         // Find frames for this event. equal_range() returns a pair containing
-//         // iterators to the first and last frame with this event ID. If no frames
-//         // are found, they'll both point to the next highest event ID.
-//         auto currentRange = mmap.equal_range(currentEvtId);
-//         if (currentRange.first->first > currentEvtId) continue; // no frames found
-//
-//         // Extract frames from files
-//         std::queue<RawFrame> frames;
-//         for (auto frameRefPtr = currentRange.first; frameRefPtr != currentRange.second; frameRefPtr++) {
-//             auto& fref = frameRefPtr->second;
-//             fref.filePtr->filestream.seekg(fref.filePos);
-//             RawFrame rf = fref.filePtr->ReadRawFrame();
-//             frames.push(std::move(rf));
-//         }
-//
-//         EventProcessingTask task {std::move(frames), lt};
-//
-//         std::packaged_task<Event()> pt {std::move(task)};
-//
-//         resq->put(pt.get_future());
-//
-//         tq->put(std::move(pt));
-//
-//         mmap.erase(currentEvtId);
-//
-//         ShowProgress(currentEvtId - firstEvtId, numEvts);
-//     }
-//
-//     // Now we're done reading events, so cause the threads to finish
-//
-//     tq->finish();
-//     resq->finish();
-//
-//     for (auto& th : workers) {
-//         th.join();
-//     }
-//
-//     writer.join();
-// }
-
-Event EventProcessingTask::operator()()
+void Merger::MergeByEvtId(const std::string &outfilename)
 {
-    Event res {};
-    res.SetLookupTable(pads);
+    std::cout << "Beginning merge" << std::endl;
 
-    while (!frames.empty()) {
-        GRAWFrame f (frames.front());
-        frames.pop();
-        res.AppendFrame(f);
+    EventBuilder builder (frameQueue, eventQueue, lookupTable);
+    HDFWriter writer (outfilename, eventQueue);
+
+    builder.start();
+    writer.start();
+
+    for (evtid_t currentEvt = 0; files.size() > 0; currentEvt++) {
+        std::vector<std::shared_ptr<GRAWFile>> thisEvtFiles = findex.findFilesForEvtId(currentEvt);
+        for (auto& file : thisEvtFiles) {
+            try {
+                RawFrame fr = file->ReadRawFrame();
+                frameQueue->put(std::move(fr));
+            }
+            catch (const Exceptions::End_of_File&) {
+                // Find the file in *our* list and erase it
+                auto doneFileIter = std::find(files.begin(), files.end(), file);
+                files.erase(doneFileIter);
+            }
+        }
     }
 
-    res.SubtractFPN();
+    // Now we're done reading frames, so cause the frame queue and threads to finish.
+    // The event queue will be finished by the EventBuilder.
 
-    return res;
+    frameQueue->finish();
+
+    builder.join();
+    writer.join();
 }
 
 bool EventBuilder::eventWasAlreadyWritten(const evtid_t evtid) const
 {
-    return finishedEventIds.find(evtid) == finishedEventIds.end();
+    return finishedEventIds.find(evtid) != finishedEventIds.end();
 }
 
 Event* EventBuilder::makeNewEvent(const evtid_t evtid)
@@ -112,7 +68,10 @@ void EventBuilder::run()
         try {
             rawFrameQueue->get(raw);
         }
-        catch (taskQueue_type::NoMoreTasks&) {
+        catch (const NoMoreTasks&) {
+            // There won't be more frames, so write all pending events to disk and return
+            eventCache.flush();
+            outputQueue->finish();
             return;
         }
 
@@ -130,6 +89,7 @@ void EventBuilder::run()
                 // This event was already evicted. This is a problem.
                 std::cout << "Found frame for event " << evtid << ", but this event was already written!"
                           << std::endl;
+                continue;
             }
             else {
                 // This must be an event we haven't seen yet, so make a new one.
@@ -155,9 +115,10 @@ void HDFWriter::run()
         try {
             Event evt;
             eventQueue->get(evt);
+            std::cout << "Event " << evt.eventId << " was written" << std::endl;
             hfile.writeEvent(evt);
         }
-        catch (futureQueue_type::NoMoreTasks&) {
+        catch (const NoMoreTasks&) {
             return;
         }
         catch (std::exception& e) {

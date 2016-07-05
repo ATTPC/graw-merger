@@ -17,7 +17,7 @@
 #include "Merger.h"
 #include "Constants.h"
 
-std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
+std::vector<std::string> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
 {
     namespace fs = boost::filesystem;
 
@@ -27,7 +27,7 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
 
     fs::recursive_directory_iterator dirIter(eventRoot);
     fs::recursive_directory_iterator endOfDir;
-    std::vector<fs::path> filesFound;
+    std::vector<std::string> filesFound;
 
     std::cout << "Looking for files." << std::endl;
 
@@ -40,7 +40,7 @@ std::vector<boost::filesystem::path> FindGRAWFilesInDir(boost::filesystem::path 
                  && dirIter->path().extension() == ".graw") {
             auto resolved_path = boost::filesystem::canonical(dirIter->path());
             std::cout << "    Found file: " << resolved_path.filename().string() << std::endl;
-            filesFound.push_back(resolved_path);
+            filesFound.push_back(resolved_path.string());
         }
     }
 
@@ -59,33 +59,16 @@ void MergeFiles(boost::filesystem::path input_path,
 
     // Find files in the provided directory
 
-    std::vector<boost::filesystem::path> filePaths;
+    std::vector<std::string> filePaths = FindGRAWFilesInDir(input_path);
 
-    // This could throw if the dir is empty, but I can't do anything about it
-    // here, so let the caller catch it.
-
-    filePaths = FindGRAWFilesInDir(input_path);
 
     if (filePaths.size() == 0) {
         throw Exceptions::Dir_is_Empty(input_path.string());
     }
 
-    Merger mg;
+    Merger mg (filePaths, lookupTable);
 
-    // Add the files to the merger
-
-    std::cout << "Mapping frames in files..." << std::endl;
-
-    for (const auto& path : filePaths) {
-        int numFound = mg.AddFramesFromFileToIndex(path);
-        std::cout << "    Found " << numFound << " frames in file " << path.filename().string() << std::endl;
-    }
-
-    std::cout << "Finished mapping files." << std::endl;
-
-    std::string output_path_string = output_path.string();
-
-    mg.MergeByEvtId(output_path_string, lookupTable);
+    mg.MergeByEvtId(output_path.string());
 
     std::cout << '\n' << "Finished merging files." << std::endl;
 }
