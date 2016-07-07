@@ -7,7 +7,7 @@ FileIndex::FileIndex(const std::vector<std::shared_ptr<GRAWFile>>& files)
 
 void FileIndex::indexFiles(const std::vector<std::shared_ptr<GRAWFile>>& files)
 {
-    const int indexDepth = 5;
+    const int indexDepth = 5*4;  // 4 AsAds => 4 frames, and read 5 events
 
     for (const auto& file : files) {
         // Read metadata for first `indexDepth` events
@@ -26,6 +26,9 @@ void FileIndex::indexFiles(const std::vector<std::shared_ptr<GRAWFile>>& files)
 
         // Insert into map
         filemap.emplace(minEvtId, file);
+
+        // Rewind again to leave file read pointer at the beginning
+        file->Rewind();
     }
 }
 

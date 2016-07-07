@@ -27,8 +27,10 @@ void Merger::MergeByEvtId(const std::string &outfilename)
         std::vector<std::shared_ptr<GRAWFile>> thisEvtFiles = findex.findFilesForEvtId(currentEvt);
         for (auto& file : thisEvtFiles) {
             try {
-                RawFrame fr = file->ReadRawFrame();
-                frameQueue->put(std::move(fr));
+                for (int i = 0; i < 4*2; i++) {
+                    RawFrame fr = file->ReadRawFrame();
+                    frameQueue->put(std::move(fr));
+                }
             }
             catch (const Exceptions::End_of_File&) {
                 // Find the file in *our* list and erase it

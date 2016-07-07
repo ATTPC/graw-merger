@@ -20,7 +20,7 @@ public:
     void put(const T& task)
     {
         std::unique_lock<std::mutex> lock(qmtx);
-        cond.wait(lock, [this]{ return q.size() < 20; });
+        cond.wait(lock, [this]{ return q.size() < 100; });
         q.push_back(task);
         cond.notify_all();
     }
@@ -28,7 +28,7 @@ public:
     void put(T&& task)
     {
         std::unique_lock<std::mutex> lock(qmtx);
-        cond.wait(lock, [this]{ return q.size() < 20; });
+        cond.wait(lock, [this]{ return q.size() < 100; });
         q.push_back(std::move(task));
         cond.notify_all();
     }
