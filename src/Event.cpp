@@ -81,7 +81,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
     // Make sure pointers to required objects are valid
 
     if (lookupTable == NULL) {
-        LOG_ERROR << "No lookup table provided to Event." << std::endl;
+        BOOST_LOG_TRIVIAL(error) << "No lookup table provided to Event." << std::endl;
         throw Exceptions::Not_Init();
     }
 
@@ -94,7 +94,7 @@ void Event::AppendFrame(const GRAWFrame& frame)
         this->eventId = frame.eventId;
     }
     else if (this->eventId != frame.eventId) {
-        LOG_WARNING << "Event ID mismatch: CoBo " << cobo << ", AsAd " << asad << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Event ID mismatch: CoBo " << cobo << ", AsAd " << asad;
     }
 
     if (nFramesAppended == 0) {

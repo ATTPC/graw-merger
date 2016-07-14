@@ -15,7 +15,7 @@ Merger::Merger(const std::vector<std::string>& filePaths, const std::shared_ptr<
 
 void Merger::MergeByEvtId(const std::string &outfilename)
 {
-    std::cout << "Beginning merge" << std::endl;
+    BOOST_LOG_TRIVIAL(info) << "Beginning merge";
 
     EventBuilder builder (frameQueue, eventQueue, lookupTable);
     HDFWriter writer (outfilename, eventQueue);
@@ -89,8 +89,7 @@ void EventBuilder::run()
             // Event was not in the cache. Was it already evicted?
             if (eventWasAlreadyWritten(evtid)) {
                 // This event was already evicted. This is a problem.
-                std::cout << "Found frame for event " << evtid << ", but this event was already written!"
-                          << std::endl;
+                BOOST_LOG_TRIVIAL(warning) << "Found frame for event " << evtid << ", but this event was already written!";
                 continue;
             }
             else {
@@ -117,29 +116,18 @@ void HDFWriter::run()
         try {
             Event evt;
             eventQueue->get(evt);
-            std::cout << "Event " << evt.eventId << " was written" << std::endl;
+            BOOST_LOG_TRIVIAL(trace) << "Event " << evt.eventId << " was written";
             hfile.writeEvent(evt);
+            numEvtsWritten++;
+            if (numEvtsWritten % 100 == 0) {
+                BOOST_LOG_TRIVIAL(info) << numEvtsWritten << " events have been written";
+            }
         }
         catch (const NoMoreTasks&) {
             return;
         }
         catch (std::exception& e) {
-            std::cout << "Error in writer: " << e.what() << std::endl;
+            BOOST_LOG_TRIVIAL(error) << "Error in writer: " << e.what() << std::endl;
         }
     }
-}
-
-void Merger::ShowProgress(uint64_t currEvt, uint64_t numEvt)
-{
-    // Produces a progress bar like this:
-    //  50% [==========          ] (50/100)
-    // The last part is the current evt / num evts
-
-    const int progWidth = 40;
-    unsigned pct = static_cast<unsigned>(std::floor(float(currEvt) / float(numEvt) * 100));
-    std::cout << '\r' << std::string(progWidth,' ') << '\r';
-    std::cout << std::setw(3) << pct << "% ";
-    std::cout << '[' << std::string(2*pct/10,'=') << std::string(20-2*pct/10,' ') << ']';
-    std::cout << " (" << currEvt << "/" << numEvt << ")";
-    std::cout.flush();
 }

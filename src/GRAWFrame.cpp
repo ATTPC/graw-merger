@@ -27,18 +27,16 @@ GRAWFrame::GRAWFrame(const RawFrame& rawFrame)
 {
     auto rawFrameIter = rawFrame.begin();
 
-//    std::cout << "Parsing raw frame." << std::endl;
-
     metaType = *rawFrameIter;
     rawFrameIter++;
     if (metaType != Expected_metaType) {
-        std::cout << "    Unexpected metaType " << int(metaType) << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Unexpected metaType " << int(metaType);
     }
 
     frameSize = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter + 3);
     rawFrameIter += 3;
     if (frameSize*sizeUnit != rawFrame.size()) {
-        std::cout << "    Wrong frameSize. Using raw frame size." << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Wrong frameSize. Using raw frame size.";
         frameSize = static_cast<decltype(frameSize)>(rawFrame.size()/sizeUnit);
     }
 
@@ -49,7 +47,7 @@ GRAWFrame::GRAWFrame(const RawFrame& rawFrame)
     rawFrameIter += 2;
     if (frameType != Expected_frameTypeFullReadout and
         frameType != Expected_frameTypePartialReadout) {
-        std::cout << "    Unknown frameType. Read will likely fail." << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Unknown frameType. Read will likely fail.";
     }
 
     revision = *rawFrameIter;
@@ -58,7 +56,7 @@ GRAWFrame::GRAWFrame(const RawFrame& rawFrame)
     headerSize = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+2);
     rawFrameIter += 2;
     if (headerSize != Expected_headerSize) {
-        std::cout << "    Wrong headerSize " << int(headerSize) << ". Correcting." << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Wrong headerSize " << int(headerSize) << ". Correcting.";
         headerSize = Expected_headerSize;
     }
 
@@ -68,7 +66,7 @@ GRAWFrame::GRAWFrame(const RawFrame& rawFrame)
          itemSize != Expected_itemSizePartialReadout) or
         (frameType == Expected_frameTypeFullReadout and
          itemSize != Expected_itemSizeFullReadout)) {
-            std::cout << "    Wrong itemSize " << int(itemSize) << ". Correcting." << std::endl;
+            BOOST_LOG_TRIVIAL(warning) << "Wrong itemSize " << int(itemSize) << ". Correcting.";
             if (frameType == Expected_frameTypePartialReadout) {
                 itemSize = Expected_itemSizePartialReadout;
             }
@@ -80,7 +78,7 @@ GRAWFrame::GRAWFrame(const RawFrame& rawFrame)
     nItems = Utilities::ExtractByteSwappedInt<uint32_t>(rawFrameIter, rawFrameIter+4);
     rawFrameIter += 4;
     if (frameSize != ceil(double(nItems*itemSize + headerSize*sizeUnit)/sizeUnit)) {
-        std::cout << "    Mismatched nItems. Correcting." << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Mismatched nItems. Correcting.";
         nItems = (frameSize*sizeUnit - headerSize*sizeUnit)/itemSize;
     }
 
@@ -204,13 +202,8 @@ void GRAWFrame::ExtractPartialReadoutData(charIter& begin, charIter& end)
         }
     }
 
-//    if (nMissing > 0)
-//        LOG_WARNING << "Missing " << nMissing << " channels." << std::endl;
-//    if (nUnexpected > 0)
-//        LOG_WARNING << "Found " << nUnexpected << " unexpected channels." << std::endl;
-//
     if (data.size() != nItems) {
-        LOG_WARNING << "Missing data items." << std::endl;
+        BOOST_LOG_TRIVIAL(warning) << "Missing data items";
     }
 
 }

@@ -18,7 +18,7 @@
 #include <queue>
 #include <unordered_set>
 #include <list>
-#include <boost/filesystem.hpp>
+#include <boost/log/trivial.hpp>
 #include <memory>
 #include <mutex>
 #include <future>
@@ -103,7 +103,7 @@ class HDFWriter : public Worker
 public:
     HDFWriter(const std::string& filePath,
               const std::shared_ptr<SyncQueue<Event>>& outputQueue)
-    : hfile(filePath, true), eventQueue(outputQueue) {}
+    : hfile(filePath, true), eventQueue(outputQueue), numEvtsWritten(0) {}
     virtual ~HDFWriter() = default;
 
     void run() override;
@@ -111,6 +111,7 @@ public:
 private:
     HDFDataStore hfile;
     std::shared_ptr<SyncQueue<Event>> eventQueue;
+    evtid_t numEvtsWritten;
 };
 
 #endif /* defined(MERGER_H) */

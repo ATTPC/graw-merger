@@ -12,10 +12,10 @@
 #include <unordered_map>
 #include <cmath>
 #include "Utilities.h"
-#include "UserInterface.h"
 #include "HardwareAddress.h"
 #include <armadillo>
 #include <memory>
+#include <boost/log/trivial.hpp>
 
 /** \brief Representation of an event in the detector.
 

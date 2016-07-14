@@ -20,7 +20,6 @@ set(MERGER_FILES
     src/LookupTable.cpp
     src/PadLookupTable.cpp
     src/Merger.cpp
-    src/UserInterface.cpp
     src/HDFDataStore.cpp
     src/FileIndex.cpp)
 
@@ -28,7 +27,7 @@ set(MAIN_FILE src/main.cpp)
 
 include_directories(include)
 
-find_package(Boost 1.50.0 REQUIRED COMPONENTS date_time system filesystem program_options log)
+find_package(Boost 1.50.0 REQUIRED COMPONENTS log date_time system filesystem program_options thread)
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
 find_package(Armadillo REQUIRED)

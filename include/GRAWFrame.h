@@ -7,11 +7,11 @@
 #include <bitset>
 #include <cmath>
 #include <assert.h>
+#include <boost/log/trivial.hpp>
 
 #include "GRAWDataItem.h"
 #include "GMExceptions.h"
 #include "Utilities.h"
-#include "UserInterface.h"
 #include "Constants.h"
 #include "RawFrame.h"
 

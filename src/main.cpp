@@ -2,6 +2,9 @@
 #include <iomanip>
 #include <fstream>
 #include <boost/filesystem.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/program_options.hpp>
 #include "GRAWFrame.h"
 #include "PadLookupTable.h"
@@ -13,7 +16,6 @@
 #include <queue>
 #include <vector>
 #include <algorithm>
-#include "UserInterface.h"
 #include "Merger.h"
 #include "Constants.h"
 
@@ -29,22 +31,22 @@ std::vector<std::string> FindGRAWFilesInDir(boost::filesystem::path eventRoot)
     fs::recursive_directory_iterator endOfDir;
     std::vector<std::string> filesFound;
 
-    std::cout << "Looking for files." << std::endl;
+    BOOST_LOG_TRIVIAL(info) << "Looking for files";
 
     for ( ; dirIter != endOfDir; dirIter++) {
         if (is_directory(dirIter->path())) {
-            std::cout << "Entering directory: " << dirIter->path().string() << std::endl;
+            BOOST_LOG_TRIVIAL(info) << "Entering directory: " << dirIter->path().string();
         }
         else if ((boost::filesystem::is_regular_file(dirIter->path()) ||
                   boost::filesystem::is_symlink(dirIter->path()))
                  && dirIter->path().extension() == ".graw") {
             auto resolved_path = boost::filesystem::canonical(dirIter->path());
-            std::cout << "    Found file: " << resolved_path.filename().string() << std::endl;
+            BOOST_LOG_TRIVIAL(info) << "Found file: " << resolved_path.filename().string();
             filesFound.push_back(resolved_path.string());
         }
     }
 
-    std::cout << "Found " << filesFound.size() << " GRAW files." << std::endl;
+    BOOST_LOG_TRIVIAL(info) << "Found " << filesFound.size() << " GRAW files";
 
     return filesFound;
 }
@@ -70,7 +72,7 @@ void MergeFiles(boost::filesystem::path input_path,
 
     mg.MergeByEvtId(output_path.string());
 
-    std::cout << '\n' << "Finished merging files." << std::endl;
+    BOOST_LOG_TRIVIAL(info) << "Finished merging files.";
 }
 
 int main(int argc, const char * argv[])
@@ -83,7 +85,7 @@ int main(int argc, const char * argv[])
     std::string usage =
         "graw2hdf (v2.0): A tool for merging GRAW files into HDF5 files.\n"
         "\n"
-        "usage: graw2hdf --lookup <path> <input_path> [<output_path>]\n"
+        "usage: graw2hdf [-v] --lookup <path> <input_path> [<output_path>]\n"
         "\n"
         "If output file is not specified, default is based on input path.\n"
         "Ex: /data/run_0001/ as input produces /data/run_0001.h5 as output.";
@@ -94,6 +96,7 @@ int main(int argc, const char * argv[])
 
     opts_desc.add_options()
         ("help,h", "Output a help message")
+        ("verbose,v", "Show more output")
         ("lookup,l", po::value<fs::path>(), "Lookup table")
         ("input,i", po::value<fs::path>(), "Input directory")
         ("output,o", po::value<fs::path>(), "Output file")
@@ -108,7 +111,7 @@ int main(int argc, const char * argv[])
         po::store(po::command_line_parser(argc, argv).options(opts_desc).positional(pos_opts).run(), vm);
     }
     catch (po::error& e) {
-        std::cout << "Error parsing command line: " << e.what() << std::endl;
+        BOOST_LOG_TRIVIAL(fatal) << "Error parsing command line: " << e.what();
         std::cout << usage << std::endl;
         return 1;
     }
@@ -120,18 +123,24 @@ int main(int argc, const char * argv[])
         return 0;
     }
 
+    if (!vm.count("verbose")) {
+        boost::log::core::get()->set_filter(
+            boost::log::trivial::severity >= boost::log::trivial::info
+        );
+    }
+
     if (vm.count("lookup") and vm.count("input")) {
         // This is the typical execution path
 
         auto rootDir = vm["input"].as<fs::path>();
         if (not fs::exists(rootDir)) {
-            std::cout << "Error: Provided input path does not exist." << std::endl;
+            BOOST_LOG_TRIVIAL(fatal) << "Error: Provided input path does not exist.";
             return 1;
         }
 
         auto lookupTablePath = vm["lookup"].as<fs::path>();
         if (not fs::exists(lookupTablePath)) {
-            std::cout << "Error: Provided lookup table path does not exist." << std::endl;
+            BOOST_LOG_TRIVIAL(fatal) << "Error: Provided lookup table path does not exist.";
             return 1;
         }
 
@@ -157,7 +166,7 @@ int main(int argc, const char * argv[])
             MergeFiles(rootDir, outputFilePath, lookupTablePath);
         }
         catch (std::exception& e) {
-            std::cout << "Error: " << e.what() << std::endl;
+            BOOST_LOG_TRIVIAL(fatal) << "Error: " << e.what();
             return 1;
         }
     }
