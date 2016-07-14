@@ -39,7 +39,11 @@ FileIndex::findFilesForEvtId(const evtid_t evtid) const
 
     std::vector<std::shared_ptr<GRAWFile>> fileList;
     for (auto iter = filemap.begin(); iter != upperBd; iter++) {
-        fileList.push_back(iter->second);
+        auto& filePtr = iter->second;
+
+        if (filePtr->is_open()) {
+            fileList.push_back(filePtr);
+        }
     }
 
     return fileList;

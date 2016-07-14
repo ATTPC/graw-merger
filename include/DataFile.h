@@ -115,6 +115,8 @@ public:
     //! \brief Check if the end of the file has been reached.
     virtual bool eof() const;
 
+    bool is_open() const;
+
     //! \brief Returns the current file position.
     virtual std::streamoff GetPosition();
 

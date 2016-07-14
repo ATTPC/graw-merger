@@ -32,9 +32,13 @@ void Merger::MergeByEvtId(const std::string &outfilename)
                     frameQueue->put(std::move(fr));
                 }
             }
-            catch (const Exceptions::End_of_File&) {
+            catch (const std::exception& err) {
+                BOOST_LOG_TRIVIAL(error) << "Error reading " << file->GetFilename() << ": " << err.what()
+                                         << ". File will be closed.";
+
                 // Find the file in *our* list and erase it
                 auto doneFileIter = std::find(files.begin(), files.end(), file);
+                (*doneFileIter)->CloseFile();  // This should prevent findFilesForEvtId from returning this file again
                 files.erase(doneFileIter);
             }
         }
