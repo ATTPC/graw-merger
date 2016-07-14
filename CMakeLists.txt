@@ -28,7 +28,7 @@ set(MAIN_FILE src/main.cpp)
 
 include_directories(include)
 
-find_package(Boost 1.50.0 REQUIRED COMPONENTS log date_time system filesystem program_options thread)
+find_package(Boost 1.55.0 REQUIRED COMPONENTS log date_time system filesystem program_options thread)
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
 find_package(Armadillo REQUIRED)
