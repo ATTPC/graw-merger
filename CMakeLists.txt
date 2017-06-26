@@ -18,8 +18,6 @@ set(MERGER_FILES
     src/Event.cpp
     src/GRAWFile.cpp
     src/GRAWFrame.cpp
-    src/LookupTable.cpp
-    src/PadLookupTable.cpp
     src/Merger.cpp
     src/HDFDataStore.cpp
     src/FileIndex.cpp)
