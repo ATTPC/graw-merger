@@ -23,15 +23,15 @@ set(MAIN_FILE src/main.cpp)
 include_directories(include)
 
 add_definitions(-DBOOST_ALL_DYN_LINK)
-set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_STATIC_LIBS OFF)
 
 if(APPLE)
-   set(Boost_USE_MULTITHREADED ON)  
-   set(Boost_USE_STATIC_RUNTIME OFF) 
+   set(Boost_USE_MULTITHREADED ON)
+   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
+find_package(Boost 1.55.0 REQUIRED COMPONENTS log date_time system filesystem program_options thread)
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-find_package(Boost 1.55.0 REQUIRED COMPONENTS log date_time system filesystem program_options thread) 
 
 
 find_package(Armadillo REQUIRED)
