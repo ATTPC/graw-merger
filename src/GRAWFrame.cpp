@@ -220,7 +220,9 @@ void GRAWFrame::ExtractPartialReadoutData(charIter& begin, charIter& end)
 template <typename charIter>
 void GRAWFrame::ExtractFullReadoutData(charIter& begin, charIter& end)
 {
-    std::vector<std::queue<int16_t>> dataQueues (4);
+//    std::vector<std::queue<int16_t>> dataQueues (4);
+    std::vector<std::array<int16_t,34816>> dataArrays (4);
+    uint16_t i[4]={0,0,0,0};
 
     for (auto rawFrameIter = begin; rawFrameIter != end; rawFrameIter += itemSize) {
         uint16_t item = Utilities::ExtractByteSwappedInt<uint16_t>(rawFrameIter, rawFrameIter+itemSize);
@@ -231,14 +233,21 @@ void GRAWFrame::ExtractFullReadoutData(charIter& begin, charIter& end)
         }
         sample_t sample  = ExtractSampleFullReadout(item);
 
-        dataQueues.at(aget).push(sample);
+//        dataQueues.at(aget).push(sample);
+        dataArrays.at(aget).at(i[aget]) = sample;
+        i[aget]++;
+        
     }
 
+	i[0]=0;i[1]=0;i[2]=0;i[3]=0;
     for (addr_t aget = 0; aget < 4; aget++) {
         for (tb_t tbid = 0; tbid < 512; tbid ++) {
             for (addr_t channel = 0; channel < 68; channel++) {
-                auto sample = dataQueues.at(aget).front();
-                dataQueues.at(aget).pop();
+//                auto sample = dataQueues.at(aget).front();
+//                dataQueues.at(aget).pop();
+				auto sample = dataArrays.at(aget).at(i[aget]);
+				i[aget]++;
+
 
                 data.push_back(GRAWDataItem(aget,channel,tbid,sample));
             }
